@@ -8,23 +8,13 @@
     tools:context="com.example.quynh.virtualrunproject.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <LinearLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainContents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="?attr/actionBarSize">
 
-        <include
-            layout="@layout/custom_header">
-        </include>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/mainContents"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </android.support.v4.view.ViewPager>
-
-    </LinearLayout>
+    </android.support.v4.view.ViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,5 +64,7 @@
             android:src="@drawable/user_black" />
 
     </LinearLayout>
+
+    <include layout="@layout/custom_header"></include>
 
 </RelativeLayout>

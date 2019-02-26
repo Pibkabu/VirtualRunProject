@@ -86,10 +86,15 @@ public class RacesFragment extends Fragment {
                 InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-                double from = Double.valueOf(fromDistance.getText().toString());
-                double to = Double.valueOf(toDistance.getText().toString());
-                getRacesWithDistanceRange(from, to);
-
+                if(fromDistance.getText().toString().equalsIgnoreCase("")){
+                    fromDistance.setError("This does not filled yet");
+                }else if(toDistance.getText().toString().equalsIgnoreCase("")){
+                    toDistance.setError("This does not filled yet");
+                }else{
+                    double from = Double.valueOf(fromDistance.getText().toString());
+                    double to = Double.valueOf(toDistance.getText().toString());
+                    getRacesWithDistanceRange(from, to);
+                }
             }
         });
     }

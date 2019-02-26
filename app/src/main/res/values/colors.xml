@@ -8,4 +8,5 @@
     <color name="fbButton">#3B5998</color>
     <color name="red">#C60808</color>
     <color name="transparent">#00000000</color>
+    <color name="gray">#D6D6D6</color>
 </resources>

@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     private UserAccount account;
     private UserProfile profile;
     private ProfileRegisterDialog registerDialog;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity
             Gson gson = new Gson();
             profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
             userDisplayName.setText(profile.getDisplayName());
+            if(UserProfileFragment.displayName != null){
+                UserProfileFragment.displayName.setText(profile.getDisplayName());
+            }
         }
     }
 
@@ -106,7 +110,8 @@ public class MainActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        TextView title = (TextView) findViewById(R.id.toolbar_title);
+        title = (TextView) findViewById(R.id.toolbar_title);
+        title.setText("Home");
 
         userDisplayName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_display_name);
         userId = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_id);
@@ -222,6 +227,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.racesBtn:
                 mainContents.setCurrentItem(0);
+                title.setText("Home");
                 newsfeedBtn.setImageResource(R.drawable.note_black);
                 racesBtn.setImageResource(R.drawable.home_red);
                 notificationBtn.setImageResource(R.drawable.notification_black);
@@ -235,6 +241,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.newsfeedBtn:
                 mainContents.setCurrentItem(1);
+                title.setText("Trending");
                 newsfeedBtn.setImageResource(R.drawable.note_red);
                 racesBtn.setImageResource(R.drawable.home_black);
                 notificationBtn.setImageResource(R.drawable.notification_black);
@@ -248,6 +255,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.notificationBtn:
                 mainContents.setCurrentItem(2);
+                title.setText("Notification");
                 newsfeedBtn.setImageResource(R.drawable.note_black);
                 racesBtn.setImageResource(R.drawable.home_black);
                 notificationBtn.setImageResource(R.drawable.notification_red);
@@ -261,6 +269,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.profileBtn:
                 mainContents.setCurrentItem(3);
+                title.setText("Profile");
                 newsfeedBtn.setImageResource(R.drawable.note_black);
                 racesBtn.setImageResource(R.drawable.home_black);
                 notificationBtn.setImageResource(R.drawable.notification_black);
