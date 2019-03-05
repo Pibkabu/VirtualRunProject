@@ -21,14 +21,13 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".LoginScreen"></activity>
-        <activity android:name=".functionscreen.race.RaceDetailScreen"></activity>
+        <activity android:name=".LoginScreen" />
+        <activity android:name=".functionscreen.race.RaceDetailScreen" />
         <activity
             android:name=".functionscreen.useraccountandprofile.ProfileChangeScreen"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen"></activity>
-        <activity android:name=".functionscreen.useraccountandprofile.RegisterScreen"></activity>
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />
+        <activity android:name=".functionscreen.useraccountandprofile.RegisterScreen" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -59,6 +58,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".functionscreen.players.PlayerAchievementScreen"></activity>
     </application>
 
 </manifest>

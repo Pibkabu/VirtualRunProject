@@ -54,7 +54,7 @@ public class RacesFragment extends Fragment {
     private Button filterBtn;
 
     private RecyclerView recyclerView;
-    private List<Race> races = new ArrayList<>();
+    private List<Race> races;
     private RacesAdapter adapter;
 
 
@@ -72,6 +72,7 @@ public class RacesFragment extends Fragment {
         filterBtn = (Button) view.findViewById(R.id.filter_btn);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.racesList);
+        races = new ArrayList<>();
         adapter = new RacesAdapter(races, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);

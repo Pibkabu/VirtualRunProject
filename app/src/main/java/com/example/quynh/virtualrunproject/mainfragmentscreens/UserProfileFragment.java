@@ -65,10 +65,10 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        adapter = new FragmentScreensAdapter(getActivity().getSupportFragmentManager());
+        adapter = new FragmentScreensAdapter(getChildFragmentManager());
         adapter.addFragment(new ProfileAchievementFragment(), "Information");
         adapter.addFragment(new UserPostFragment(), "Post");
-        viewPager.setOffscreenPageLimit(2);
+        //viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
     }

@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new NewsFeedFragment(), NewsFeedFragment.class.getSimpleName());
         adapter.addFragment(new NotificationFragment(), NotificationFragment.class.getSimpleName());
         adapter.addFragment(new UserProfileFragment(), UserProfileFragment.class.getSimpleName());
-        viewPager.setOffscreenPageLimit(4);
+        //viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(adapter);
     }
 

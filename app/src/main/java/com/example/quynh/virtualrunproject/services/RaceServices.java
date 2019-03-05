@@ -62,4 +62,26 @@ public class RaceServices {
         customRequest.setRetryPolicy(AppController.myRetryPolicy);
         AppController.getInstance().addToRequestQueue(customRequest);
     }
+
+    public static void getRaceById(int id, Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/races/id?id=" + id;
+        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+                Log.d("RaceServices", "onResponse: " + error);
+                //dialog
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
 }
