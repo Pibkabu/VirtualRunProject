@@ -15,6 +15,7 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizerHandler;
+import com.google.gson.Gson;
 
 import java.util.Date;
 import java.util.List;
@@ -69,6 +70,8 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
                 intent.putExtra("race", races.get(position));
                 intent.putExtra("startTime", races.get(position).getStartTime().toString());
                 intent.putExtra("endTime", races.get(position).getEndTime().toString());
+                Gson gson = new Gson();
+                intent.putExtra("raceString", gson.toJson(races.get(position)));
                 context.startActivity(intent);
             }
         });

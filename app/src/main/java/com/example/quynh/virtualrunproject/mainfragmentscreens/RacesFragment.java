@@ -63,7 +63,8 @@ public class RacesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupView(view);
         setupAction();
-        getAllRaces();
+        //getAllRaces();
+        getOngoingRaces();
     }
 
     private void setupView(View view){
@@ -127,6 +128,23 @@ public class RacesFragment extends Fragment {
                 Log.d("RacesFragment", "onResponse: " + response);
                 RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
                 if (response != null || !response.toString().equals("")) {
+                    for (Race race : racesListDAO.getRaces()) {
+                        races.add(race);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void getOngoingRaces(){
+        RaceServices.getOngoingRaces(getActivity(), new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                Log.d("RacesFragment", "onResponse: " + response);
+                RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
+                if (!racesListDAO.getRaces().isEmpty()) {
                     for (Race race : racesListDAO.getRaces()) {
                         races.add(race);
                     }

@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -71,18 +72,24 @@ public class ProfileAchievementFragment extends Fragment {
                 PlayerListDAO dao = gson.fromJson(response.toString(), PlayerListDAO.class);
                 players = dao.getPlayers();
                 if(!players.isEmpty()){
-                    txtNumberOfRuns.setText("Number of Runs: " + players.size());
+                    List<Player> completedRecords = new ArrayList<>();
+                    for (Player player : players){
+                        if(!(player.getRankInRace() == 0)){
+                            completedRecords.add(player);
+                        }
+                    }
+                    txtNumberOfRuns.setText("Number of Runs: " + completedRecords.size());
                     int numberOf1stMedals = 0;
                     int numberOf2ndMedals = 0;
                     int numberOf3rdMedals = 0;
                     int totalDistance = 0;
-                    for (int i = 0; i < players.size(); i++){
-                        totalDistance += players.get(i).getTravelDistance();
-                        if(players.get(i).getRankInRace() == 1){
+                    for (int i = 0; i < completedRecords.size(); i++){
+                        totalDistance += completedRecords.get(i).getTravelDistance();
+                        if(completedRecords.get(i).getRankInRace() == 1){
                             numberOf1stMedals++;
-                        }else if(players.get(i).getRankInRace() == 2){
+                        }else if(completedRecords.get(i).getRankInRace() == 2){
                             numberOf2ndMedals++;
-                        }else if(players.get(i).getRankInRace() == 3){
+                        }else if(completedRecords.get(i).getRankInRace() == 3){
                             numberOf3rdMedals++;
                         }
                     }

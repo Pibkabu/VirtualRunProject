@@ -1,6 +1,7 @@
 package com.example.quynh.virtualrunproject.customGUI;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
@@ -49,15 +51,17 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
         RaceServices.getRaceById(player.getUserAndRaceMaped().getRaceId(), context, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
-                Gson gson = new Gson();
-                Race race = gson.fromJson(response.toString(), Race.class);
+                final Gson gson = new Gson();
+                final Race race = gson.fromJson(response.toString(), Race.class);
                 holder.txtRaceName.setText(race.getName());
                 holder.txtTime.setText(race.getStartTime().toString());
 
                 holder.txtRaceName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(context, RaceDetailScreen.class);
+                        intent.putExtra("raceString", gson.toJson(race));
+                        context.startActivity(intent);
                     }
                 });
             }

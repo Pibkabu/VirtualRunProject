@@ -16,6 +16,7 @@ import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizerHandler;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,6 +33,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     private TextView raceTime ;
     private ReadMoreTextView description;
     private Button joinRaceBtn;
+    private ImageView backBtn;
     private CountDownTimer countDownTimer = null;
 
 
@@ -47,13 +49,17 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
     private void setupRaceInfo() {
         Intent intent = getIntent();
-        Race race = intent.getParcelableExtra("race");
+        //Race race = intent.getParcelableExtra("race");
+        Gson gson = new Gson();
+        Race race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
         toolbarTitle.setText(race.getName());
         title.setText(race.getName());
         numberOfPlayer.setText(race.getTotalPlayer() + " Runners have joined the race");
 
-        Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("startTime"));
-        Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("endTime"));
+//        Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("startTime"));
+//        Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("endTime"));
+        Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getStartTime().toString());
+        Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
         String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
                 + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Vietnam time";
         String endTime = DateFormatHandler.dateToString("dd MMM", endDate) + " ("
@@ -90,8 +96,6 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
             };
             countDownTimer.start();
         }
-
-
     }
 
     private void setupView() {
@@ -99,6 +103,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         raceImage = (ImageView) findViewById(R.id.race_head_image);
         playerIcons = (RecyclerView) findViewById(R.id.players_icon);
         title = (TextView) findViewById(R.id.race_detail_title);
+        backBtn = (ImageView) findViewById(R.id.back_btn);
+        backBtn.setVisibility(View.VISIBLE);
         numberOfPlayer = (TextView) findViewById(R.id.number_of_players_detail);
         countDownDays = (TextView) findViewById(R.id.countdown_days);
         countDownHours = (TextView) findViewById(R.id.countdown_hours);
@@ -113,6 +119,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     }
 
     private void setupAction() {
+        backBtn.setOnClickListener(this);
         joinRaceBtn.setOnClickListener(this);
     }
 
@@ -121,6 +128,9 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         switch (v.getId()){
             case R.id.race_join_btn:
                 //join the race || cancel race
+                break;
+            case R.id.back_btn:
+                finish();
                 break;
         }
     }

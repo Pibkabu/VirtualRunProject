@@ -13,6 +13,7 @@ import com.example.quynh.virtualrunproject.entity.Player;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PlayerAchievementScreen extends AppCompatActivity {
@@ -35,7 +36,13 @@ public class PlayerAchievementScreen extends AppCompatActivity {
         Intent intent = getIntent();
         Gson gson = new Gson();
         records = gson.fromJson(intent.getStringExtra("playerRecords"), PlayerListDAO.class).getPlayers();
-        adapter = new PlayerAchievementAdapter(records, this);
+        List<Player> completedRecords = new ArrayList<>();
+        for (Player player : records){
+            if(!(player.getRankInRace() == 0)){
+                completedRecords.add(player);
+            }
+        }
+        adapter = new PlayerAchievementAdapter(completedRecords, this);
         achievementsList.setLayoutManager(new LinearLayoutManager(this));
         achievementsList.setAdapter(adapter);
         achievementsList.setNestedScrollingEnabled(false);
