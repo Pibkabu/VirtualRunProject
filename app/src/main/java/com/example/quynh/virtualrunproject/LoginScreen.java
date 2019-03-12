@@ -225,8 +225,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                     public void onReceive(JSONObject response) {
                                         profilePrefs.saveUserProfile(response.toString());
                                         Log.d("CHECKRESULT", "onReceive: " + response);
-//                                        UserProfile profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
-//                                        Log.d("CHECKDOB", "onReceive: " + profile.getDOB().toString());
                                         Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
                                         startActivity(intent1);
                                         finish();

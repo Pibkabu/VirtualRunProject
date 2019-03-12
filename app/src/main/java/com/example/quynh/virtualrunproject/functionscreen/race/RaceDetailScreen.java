@@ -1,4 +1,5 @@
 package com.example.quynh.virtualrunproject.functionscreen.race;
+import com.example.quynh.virtualrunproject.LoginScreen;
 import com.example.quynh.virtualrunproject.R;
 
 import android.content.Intent;
@@ -11,15 +12,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
+import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.entity.UserAccount;
+import com.example.quynh.virtualrunproject.entity.UserAndRaceMaped;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizerHandler;
+import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
+import com.example.quynh.virtualrunproject.services.PlayerServices;
+import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RaceDetailScreen extends AppCompatActivity implements View.OnClickListener{
@@ -35,7 +48,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     private Button joinRaceBtn;
     private ImageView backBtn;
     private CountDownTimer countDownTimer = null;
-
+    private List<Player> players;
+    private Player individual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +65,15 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         //Race race = intent.getParcelableExtra("race");
         Gson gson = new Gson();
+        UserAccountPrefs prefs = new UserAccountPrefs(this);
+        UserAccount account = gson.fromJson(prefs.getUserAccount(), UserAccount.class);
         Race race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
+        individual = new Player();
+        individual.setUserAndRaceMaped(new UserAndRaceMaped(account.getUserId(), race.getRaceId()));
         toolbarTitle.setText(race.getName());
         title.setText(race.getName());
         numberOfPlayer.setText(race.getTotalPlayer() + " Runners have joined the race");
 
-//        Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("startTime"));
-//        Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", intent.getStringExtra("endTime"));
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
         String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
@@ -96,6 +112,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
             };
             countDownTimer.start();
         }
+
+        getRaceParticipants(race.getRaceId());
     }
 
     private void setupView() {
@@ -123,11 +141,48 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn.setOnClickListener(this);
     }
 
+    private void getRaceParticipants(int raceId){
+        players = new ArrayList<>();
+        PlayerServices.getRaceParticipants(raceId, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                PlayerListDAO dao = gson.fromJson(response.toString(), PlayerListDAO.class);
+                UserAccountPrefs prefs = new UserAccountPrefs(RaceDetailScreen.this);
+                UserAccount account = gson.fromJson(prefs.getUserAccount(), UserAccount.class);
+                players = dao.getPlayers();
+                if(!players.isEmpty()){
+                    for (Player player : players){
+                        if(player.getUserAndRaceMaped().getUserId() == account.getUserId()){
+                            joinRaceBtn.setEnabled(false);
+                            joinRaceBtn.setText("Already Registered");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.race_join_btn:
                 //join the race || cancel race
+                PlayerServices.playerRegister(individual, this, new OnReceiveResponse() {
+                    @Override
+                    public void onReceive(JSONObject response) {
+                        Gson gson = new Gson();
+                        Player player = gson.fromJson(response.toString(), Player.class);
+                        if(player != null){
+                            joinRaceBtn.setEnabled(false);
+                            joinRaceBtn.setText("Already Registered");
+                            Toast.makeText(RaceDetailScreen.this, "You just successfully register to this race", Toast.LENGTH_LONG).show();
+                        }else{
+                            Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
                 break;
             case R.id.back_btn:
                 finish();

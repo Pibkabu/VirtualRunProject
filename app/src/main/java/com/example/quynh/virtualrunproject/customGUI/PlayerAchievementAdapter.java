@@ -13,12 +13,14 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
+import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,7 +56,8 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
                 final Gson gson = new Gson();
                 final Race race = gson.fromJson(response.toString(), Race.class);
                 holder.txtRaceName.setText(race.getName());
-                holder.txtTime.setText(race.getStartTime().toString());
+                Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", race.getStartTime().toString());
+                holder.txtTime.setText(DateFormatHandler.dateToString("dd/MM/yyyy", date));
 
                 holder.txtRaceName.setOnClickListener(new View.OnClickListener() {
                     @Override

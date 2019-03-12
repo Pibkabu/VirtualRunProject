@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     private void setupAction() {
         accountPrefs = new UserAccountPrefs(this);
+        profilePrefs = new UserProfilePrefs(this);
         backBtn.setOnClickListener(this);
         normSignUpBtn.setOnClickListener(this);
         txtSignIn.setOnClickListener(this);
@@ -71,8 +73,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.normSignUpBtn:
-                String email = signUpEmail.getText().toString();
-                String password = signUpPassword.getText().toString();
+                final String email = signUpEmail.getText().toString();
+                final String password = signUpPassword.getText().toString();
                 String confirmPassword = signUpConfirmPassword.getText().toString();
                 if(email.equalsIgnoreCase("")){
                     signUpEmail.setError("This does not filled yet");
@@ -102,6 +104,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .show();
                             }else{
+                                account.setEmail(email);
+                                account.setPassword(password);
                                 UserAccountServices.addUserAccount(account, RegisterScreen.this, new OnReceiveResponse() {
                                     @Override
                                     public void onReceive(JSONObject response) {

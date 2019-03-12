@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity
         registerDialog = new ProfileRegisterDialog(this);
         accountPrefs = new UserAccountPrefs(this);
         profilePrefs = new UserProfilePrefs(this);
-        //setContentView(R.layout.activity_main);
         checkUserProfile();
         if (registerDialog.isShowing()){
             registerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

@@ -8,6 +8,11 @@ public class UserAndRaceMaped {
     private int userId;
     private int raceId;
 
+    public UserAndRaceMaped(int userId, int raceId) {
+        this.userId = userId;
+        this.raceId = raceId;
+    }
+
     public int getUserId() {
         return userId;
     }
