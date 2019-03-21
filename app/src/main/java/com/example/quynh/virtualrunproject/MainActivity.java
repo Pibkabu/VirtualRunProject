@@ -1,23 +1,18 @@
 package com.example.quynh.virtualrunproject;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,8 +21,7 @@ import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ProfileChangeScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.FragmentScreensAdapter;
-import com.example.quynh.virtualrunproject.mainfragmentscreens.NewsFeedFragment;
-import com.example.quynh.virtualrunproject.mainfragmentscreens.NotificationFragment;
+import com.example.quynh.virtualrunproject.mainfragmentscreens.HostingFragment;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.RacesFragment;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.UserProfileFragment;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
@@ -35,15 +29,11 @@ import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.Base64;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private DrawerLayout drawer;
-    private ImageView newsfeedBtn, racesBtn, notificationBtn, profileBtn;
+    private ImageView racesBtn, profileBtn, hosting;
     private ImageView menu, message;
     private ImageView userProfilePic;
     private TextView userDisplayName, userId;
@@ -121,10 +111,9 @@ public class MainActivity extends AppCompatActivity
         message = (ImageView) findViewById(R.id.message_icon);
         message.setVisibility(View.VISIBLE);
         mainContents = (ViewPager) findViewById(R.id.mainContents);
-        newsfeedBtn = (ImageView) findViewById(R.id.newsfeedBtn);
         racesBtn = (ImageView) findViewById(R.id.racesBtn);
-        notificationBtn = (ImageView) findViewById(R.id.notificationBtn);
         profileBtn = (ImageView) findViewById(R.id.profileBtn);
+        hosting = (ImageView) findViewById(R.id.hosting);
 
         Gson gson = new Gson();
         profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
@@ -138,10 +127,28 @@ public class MainActivity extends AppCompatActivity
         message.setOnClickListener(this);
         adapter = new FragmentScreensAdapter(getSupportFragmentManager());
         setupViewPager(mainContents);
-        newsfeedBtn.setOnClickListener(this);
+        hosting.setOnClickListener(this);
         racesBtn.setOnClickListener(this);
-        notificationBtn.setOnClickListener(this);
         profileBtn.setOnClickListener(this);
+
+        mainContents.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                viewPagerTabChanged(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
     }
 
     @Override
@@ -159,15 +166,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.home_page) {
-        } else if (id == R.id.races) {
-
-        } else if (id == R.id.edit_profile) {
+        if (id == R.id.edit_profile) {
             //temporary
             Intent intent = new Intent(this, ProfileChangeScreen.class);
             startActivityForResult(intent, 1);
-        } else if (id == R.id.setting) {
-
         } else if (id == R.id.introduction) {
 
         } else if (id == R.id.logout) {
@@ -209,11 +211,45 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         adapter.addFragment(new RacesFragment(), RacesFragment.class.getSimpleName());
-        adapter.addFragment(new NewsFeedFragment(), NewsFeedFragment.class.getSimpleName());
-        adapter.addFragment(new NotificationFragment(), NotificationFragment.class.getSimpleName());
+        adapter.addFragment(new HostingFragment(), HostingFragment.class.getSimpleName());
         adapter.addFragment(new UserProfileFragment(), UserProfileFragment.class.getSimpleName());
         //viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(adapter);
+    }
+
+    private void viewPagerTabChanged(int position){
+        if(position == 0){
+            title.setText("Home");
+            racesBtn.setImageResource(R.drawable.home_red);
+            hosting.setImageResource(R.drawable.icon_hosting);
+            profileBtn.setImageResource(R.drawable.user_black);
+
+            //set enable
+            racesBtn.setEnabled(false);
+            hosting.setEnabled(true);
+            profileBtn.setEnabled(true);
+        }
+        else if(position == 1){
+            title.setText("Hosting");
+            racesBtn.setImageResource(R.drawable.home_black);
+            hosting.setImageResource(R.drawable.icon_hosting_red);
+            profileBtn.setImageResource(R.drawable.user_black);
+
+            //set enable
+            racesBtn.setEnabled(true);
+            hosting.setEnabled(false);
+            profileBtn.setEnabled(true);
+        }else if(position == 2){
+            title.setText("Profile");
+            racesBtn.setImageResource(R.drawable.home_black);
+            hosting.setImageResource(R.drawable.icon_hosting);
+            profileBtn.setImageResource(R.drawable.user_red);
+
+            //set enable
+            racesBtn.setEnabled(true);
+            hosting.setEnabled(true);
+            profileBtn.setEnabled(false);
+        }
     }
 
     @Override
@@ -227,59 +263,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.racesBtn:
                 mainContents.setCurrentItem(0);
-                title.setText("Home");
-                newsfeedBtn.setImageResource(R.drawable.note_black);
-                racesBtn.setImageResource(R.drawable.home_red);
-                notificationBtn.setImageResource(R.drawable.notification_black);
-                profileBtn.setImageResource(R.drawable.user_black);
-
-                //set enable
-                newsfeedBtn.setEnabled(true);
-                racesBtn.setEnabled(false);
-                notificationBtn.setEnabled(true);
-                profileBtn.setEnabled(true);
+                viewPagerTabChanged(0);
                 break;
-            case R.id.newsfeedBtn:
+            case R.id.hosting:
                 mainContents.setCurrentItem(1);
-                title.setText("Trending");
-                newsfeedBtn.setImageResource(R.drawable.note_red);
-                racesBtn.setImageResource(R.drawable.home_black);
-                notificationBtn.setImageResource(R.drawable.notification_black);
-                profileBtn.setImageResource(R.drawable.user_black);
-
-                //set enable
-                newsfeedBtn.setEnabled(false);
-                racesBtn.setEnabled(true);
-                notificationBtn.setEnabled(true);
-                profileBtn.setEnabled(true);
-                break;
-            case R.id.notificationBtn:
-                mainContents.setCurrentItem(2);
-                title.setText("Notification");
-                newsfeedBtn.setImageResource(R.drawable.note_black);
-                racesBtn.setImageResource(R.drawable.home_black);
-                notificationBtn.setImageResource(R.drawable.notification_red);
-                profileBtn.setImageResource(R.drawable.user_black);
-
-                //set enable
-                newsfeedBtn.setEnabled(true);
-                racesBtn.setEnabled(true);
-                notificationBtn.setEnabled(false);
-                profileBtn.setEnabled(true);
+                viewPagerTabChanged(1);
                 break;
             case R.id.profileBtn:
-                mainContents.setCurrentItem(3);
-                title.setText("Profile");
-                newsfeedBtn.setImageResource(R.drawable.note_black);
-                racesBtn.setImageResource(R.drawable.home_black);
-                notificationBtn.setImageResource(R.drawable.notification_black);
-                profileBtn.setImageResource(R.drawable.user_red);
-
-                //set enable
-                newsfeedBtn.setEnabled(true);
-                racesBtn.setEnabled(true);
-                notificationBtn.setEnabled(true);
-                profileBtn.setEnabled(false);
+                mainContents.setCurrentItem(2);
+                viewPagerTabChanged(2);
                 break;
         }
     }

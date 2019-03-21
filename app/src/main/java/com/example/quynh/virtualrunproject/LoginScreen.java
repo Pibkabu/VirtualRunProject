@@ -174,26 +174,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 //        AppController.getInstance().addToRequestQueue(customRequest);
 //    }
 
-    //testing server
-//    private void restfulCall(){
-//        Gson gson = new Gson();
-//        String URL = "http://192.168.1.76:8080/user/id?id=User03";
-//        Map<String, String> params = new HashMap<>();
-//        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("LoginScreen", "onResponse: " + response);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("LoginScreen", "onResponse: " + error);
-//            }
-//        });
-//        customRequest.setRetryPolicy(AppController.myRetryPolicy);
-//        AppController.getInstance().addToRequestQueue(customRequest);
-//    }
-
     @Override
     public void onClick(View view) {
         Intent intent = null;

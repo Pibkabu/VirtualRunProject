@@ -38,7 +38,7 @@ public class PlayerServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismiss();
-                Log.d("UserAccountServices", "onResponse: " + error);
+                Log.d("PlayerService", "onResponse: " + error);
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);
@@ -59,7 +59,7 @@ public class PlayerServices {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismiss();
-                Log.d("UserAccountServices", "onResponse: " + error);
+                Log.d("PlayerService", "onResponse: " + error);
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);
@@ -74,7 +74,6 @@ public class PlayerServices {
         Map<String, String> params = new HashMap<>();
         Gson gson = new Gson();
         params.put("paticipant", gson.toJson(player));
-        Log.d("CHECKREGISTER", "playerRegister: " + gson.toJson(player));
         CustomRequest customRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -86,7 +85,33 @@ public class PlayerServices {
             public void onErrorResponse(VolleyError error) {
                 //dialog
                 loadingDialog.dismiss();
-                Log.e("UserAccountServices", "onResponse: ", error);
+                Log.e("PlayerService", "onResponse: ", error);
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
+
+    public static void cancelRegister(Player player, Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        //dialog.show();
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/players/register/cancel";
+        Map<String, String> params = new HashMap<>();
+        Gson gson = new Gson();
+        params.put("paticipant", gson.toJson(player));
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //dialog
+                loadingDialog.dismiss();
+                Log.e("PlayerService", "onResponse: ", error);
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);

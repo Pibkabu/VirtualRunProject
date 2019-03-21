@@ -179,6 +179,17 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/race_cancel_btn"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:textColor="@color/white"
+        android:text="Cancel Register"
+        android:background="@drawable/round_corner_button_red"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <Button
         android:id="@+id/race_join_btn"
         android:layout_width="match_parent"
         android:layout_height="30dp"

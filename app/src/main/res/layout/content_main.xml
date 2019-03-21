@@ -32,28 +32,12 @@
             android:src="@drawable/home_red" />
 
         <ImageView
-            android:id="@+id/newsfeedBtn"
+            android:id="@+id/hosting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/note_black" />
-
-        <ImageView
-            android:id="@+id/add_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/icon_plus" />
-
-        <ImageView
-            android:id="@+id/notificationBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/notification_black" />
+            android:src="@drawable/icon_hosting" />
 
         <ImageView
             android:id="@+id/profileBtn"

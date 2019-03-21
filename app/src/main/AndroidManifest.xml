@@ -25,7 +25,7 @@
         <activity android:name=".functionscreen.race.RaceDetailScreen" />
         <activity
             android:name=".functionscreen.useraccountandprofile.ProfileChangeScreen"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />
         <activity android:name=".functionscreen.useraccountandprofile.RegisterScreen" />
         <activity
@@ -58,7 +58,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".functionscreen.players.PlayerAchievementScreen"></activity>
+        <activity android:name=".functionscreen.players.PlayerAchievementScreen" />
+        <activity android:name=".functionscreen.hosting.RacePlayersRecordScreen" />
+        <activity android:name=".functionscreen.hosting.RaceDonationScreen"></activity>
     </application>
 
 </manifest>

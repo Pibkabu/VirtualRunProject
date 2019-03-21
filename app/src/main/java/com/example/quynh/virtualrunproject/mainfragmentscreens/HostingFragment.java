@@ -11,14 +11,14 @@ import android.view.ViewGroup;
 import com.example.quynh.virtualrunproject.R;
 
 /**
- * Created by quynh on 12/26/2018.
+ * Created by quynh on 3/21/2019.
  */
 
-public class NotificationFragment extends Fragment {
+public class HostingFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.notification_fragment_layout, container, false);
+        View view = inflater.inflate(R.layout.hosting_fragment_layout, container, false);
         return view;
     }
 }

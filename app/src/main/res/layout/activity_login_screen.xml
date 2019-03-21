@@ -26,21 +26,12 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:paddingBottom="30dp"
-            android:text="@string/login_screen"/>v
-
-        <Button
-            android:id="@+id/googleLoginBtn"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textAllCaps="false"
-            android:text="@string/google_login"
-            android:textColor="@color/white"
-            android:background="@drawable/round_corner_button_red"/>
+            android:text="@string/login_screen"/>
 
         <Button
             android:id="@+id/fbLoginBtn"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:textAllCaps="false"
             android:background="@drawable/round_corner_button_blue"
