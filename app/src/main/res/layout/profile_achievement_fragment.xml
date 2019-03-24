@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:textColor="@color/red"
-                android:text="Distance:"/>
+                android:text="Distance: 0 (km)"/>
         </LinearLayout>
 
         <LinearLayout
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
                 android:textColor="@color/red"
-                android:text="Number of Runs:"/>
+                android:text="Number of Runs: 0"/>
         </LinearLayout>
 
     </LinearLayout>

@@ -69,18 +69,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == RESULT_OK){
-            Gson gson = new Gson();
-            profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
-            userDisplayName.setText(profile.getDisplayName());
-            if(UserProfileFragment.displayName != null){
-                UserProfileFragment.displayName.setText(profile.getDisplayName());
-            }
-        }
-    }
+
 
     private void checkUserProfile() {
         Gson gson = new Gson();
@@ -147,8 +136,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-
     }
 
     @Override
@@ -273,6 +260,21 @@ public class MainActivity extends AppCompatActivity
                 mainContents.setCurrentItem(2);
                 viewPagerTabChanged(2);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            Gson gson = new Gson();
+            profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
+            userDisplayName.setText(profile.getDisplayName());
+            if(UserProfileFragment.displayName != null){
+                UserProfileFragment.displayName.setText(profile.getDisplayName());
+            }
+            mainContents.setCurrentItem(2);
+            viewPagerTabChanged(2);
         }
     }
 }

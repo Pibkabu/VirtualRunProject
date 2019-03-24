@@ -63,7 +63,6 @@ public class RacesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupView(view);
         setupAction();
-        //getAllRaces();
         getOngoingRaces();
     }
 
@@ -118,23 +117,6 @@ public class RacesFragment extends Fragment {
             }
         });
 
-    }
-
-    private void getAllRaces(){
-        RaceServices.getAllRaces(getActivity(), new OnReceiveResponse() {
-            @Override
-            public void onReceive(JSONObject response) {
-                Gson gson = new Gson();
-                Log.d("RacesFragment", "onResponse: " + response);
-                RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
-                if (response != null || !response.toString().equals("")) {
-                    for (Race race : racesListDAO.getRaces()) {
-                        races.add(race);
-                    }
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     private void getOngoingRaces(){
