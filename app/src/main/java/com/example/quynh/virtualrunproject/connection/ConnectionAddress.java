@@ -5,5 +5,5 @@ package com.example.quynh.virtualrunproject.connection;
  */
 
 public class ConnectionAddress {
-    public static String connection = "http://192.168.1.75:8080";
+    public static String connection = "http://192.168.1.168:8080";
 }

@@ -60,7 +60,11 @@
         </activity>
         <activity android:name=".functionscreen.players.PlayerAchievementScreen" />
         <activity android:name=".functionscreen.hosting.RacePlayersRecordScreen" />
-        <activity android:name=".functionscreen.hosting.RaceDonationScreen"></activity>
+        <activity android:name=".functionscreen.hosting.RaceDonationScreen" />
+        <activity
+            android:name=".functionscreen.hosting.CreateRaceScreen"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
     </application>
 
 </manifest>

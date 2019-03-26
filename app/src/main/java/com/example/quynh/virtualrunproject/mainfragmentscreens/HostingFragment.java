@@ -1,5 +1,6 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,8 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.quynh.virtualrunproject.R;
+import com.example.quynh.virtualrunproject.functionscreen.hosting.CreateRaceScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments.OngoingRunFragment;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments.PastRunFragment;
 
@@ -29,17 +32,30 @@ public class HostingFragment extends Fragment{
     private FragmentScreensAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager tablayoutContent;
+    private ImageView createRaceBtn;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupView(view);
+        setupAction();
         setupViewPager(tablayoutContent);
     }
 
     private void setupView(View view) {
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         tablayoutContent = (ViewPager) view.findViewById(R.id.tablayout_content);
+        createRaceBtn = (ImageView) view.findViewById(R.id.create_race_btn);
+    }
+
+    private void setupAction() {
+        createRaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateRaceScreen.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupViewPager(ViewPager viewPager) {
