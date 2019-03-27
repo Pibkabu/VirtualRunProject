@@ -13,7 +13,7 @@ import android.view.Display;
  * Created by quynh on 2/9/2019.
  */
 
-public class PictureResizerHandler {
+public class PictureResizeHandler {
     public static Drawable resizeImage(int imageResource, FragmentActivity context){
         Display display = context.getWindowManager().getDefaultDisplay();
         double deviceWidth = display.getWidth();
@@ -29,6 +29,22 @@ public class PictureResizerHandler {
         Bitmap bMap = BitmapFactory.decodeResource(context.getResources(), imageResource);
         Drawable drawable = new BitmapDrawable(context.getResources(),
                 getResizedBitmap(bMap, newImageHeight, (int) deviceWidth));
+
+        return drawable;
+    }
+
+    public static Drawable resizeImageWithBitmap(Bitmap bitmap, FragmentActivity context){
+        Display display = context.getWindowManager().getDefaultDisplay();
+        double deviceWidth = display.getWidth();
+
+        double imageHeight = bitmap.getHeight();
+        double imageWidth = bitmap.getWidth();
+
+        double ratio = deviceWidth / imageWidth;
+        int newImageHeight = (int) (imageHeight * ratio);
+
+        Drawable drawable = new BitmapDrawable(context.getResources(),
+                getResizedBitmap(bitmap, newImageHeight, (int) deviceWidth));
 
         return drawable;
     }

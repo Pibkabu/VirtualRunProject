@@ -1,5 +1,4 @@
 package com.example.quynh.virtualrunproject.functionscreen.race;
-import com.example.quynh.virtualrunproject.LoginScreen;
 import com.example.quynh.virtualrunproject.R;
 
 import android.content.Intent;
@@ -7,7 +6,6 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,7 +19,7 @@ import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserAndRaceMaped;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
-import com.example.quynh.virtualrunproject.helper.PictureResizerHandler;
+import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.PlayerServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
@@ -133,7 +131,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
         cancelRaceBtn = (Button) findViewById(R.id.race_cancel_btn);
 
-        raceImage.setImageDrawable(PictureResizerHandler.resizeImage(R.drawable.dummy_picture, this));
+        raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
     }
 
     private void setupAction() {

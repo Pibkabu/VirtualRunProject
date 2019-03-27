@@ -20,6 +20,7 @@ public class Race implements Parcelable{
     private String regulation;
     private String description;
     private int totalPlayer;
+    private String raceImage;
 
     public Race() {
     }
@@ -127,6 +128,14 @@ public class Race implements Parcelable{
 
     public void setTotalPlayer(int totalPlayer) {
         this.totalPlayer = totalPlayer;
+    }
+
+    public String getRaceImage() {
+        return raceImage;
+    }
+
+    public void setRaceImage(String raceImage) {
+        this.raceImage = raceImage;
     }
 
     @Override

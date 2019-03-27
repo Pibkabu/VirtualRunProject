@@ -3,12 +3,15 @@ package com.example.quynh.virtualrunproject.functionscreen.hosting;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,11 +19,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.R;
+import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
+import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
+import com.example.quynh.virtualrunproject.services.RaceServices;
+import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
+import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,6 +46,7 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
     private Button confirmCreateRaceBtn;
     private ImageView backBtn;
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    private String raceImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +118,31 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-            File f = new File(picturePath);
-            String imageName = f.getName();
-            pictureName.setText(imageName);
+
+            try {
+//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                //raceImage = Base64.encodeToString(b, Base64.DEFAULT);
+                File f = new File(picturePath);
+                String imageName = f.getName();
+                pictureName.setText(imageName);
+                Log.d("TestPicturePath", "pictureParh: " + picturePath);
+            }catch (Exception e){
+                Log.e("CreateRaceScreen", "onActivityResult: ", e);
+            }
+
         }
+    }
+
+    private boolean checkPickedDate(){
+        Date startTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
+        Date endTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
+        Calendar calendar = Calendar.getInstance();
+        if(startTime.getTime() < calendar.getTimeInMillis() || endTime.getTime() < startTime.getTime()){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -140,7 +176,43 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                 showDatePickerDialog(dateSetListener, raceEndTime.getText().toString());
                 break;
             case R.id.confirm_create_race_btn:
+                if(raceName.getText().toString().equalsIgnoreCase("")){
+                    raceName.setError("This does not filled yet");
+                }else if(raceDistance.getText().toString().equalsIgnoreCase("")){
+                    raceDistance.setError("This does not filled yet");
+                }else if(raceRegulation.getText().toString().equalsIgnoreCase("")){
+                    raceRegulation.setError("This does not filled yet");
+                }else if(raceDescription.getText().toString().equalsIgnoreCase("")){
+                    raceDescription.setError("This does not filled yet");
+                }else if(pictureName.getText().toString().equalsIgnoreCase("")){
+                    Toast.makeText(this, "You need to choose the race's picture", Toast.LENGTH_LONG).show();
+                }else if(!checkPickedDate()){
+                    Toast.makeText(this, "You need to choose a legal date", Toast.LENGTH_LONG).show();
+                }else{
+                    Race race = new Race();
+                    race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+                    Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
+                    race.setStartTime(new Timestamp(date.getTime()));
+                    date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
+                    race.setEndTime(new Timestamp(date.getTime()));
+                    race.setName(raceName.getText().toString());
+                    race.setDistance(Double.valueOf(raceDistance.getText().toString()));
+                    race.setRegulation(raceRegulation.getText().toString());
+                    race.setDescription(raceDescription.getText().toString());
+                    //race.setRaceImage(raceImage);
 
+                    UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
+                    Gson gson = new Gson();
+                    UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+                    RaceServices.createRace(race, account.getUserId(), this, new OnReceiveResponse() {
+                        @Override
+                        public void onReceive(JSONObject response) {
+                            if(response != null){
+                                finish();
+                            }
+                        }
+                    });
+                }
                 break;
         }
     }

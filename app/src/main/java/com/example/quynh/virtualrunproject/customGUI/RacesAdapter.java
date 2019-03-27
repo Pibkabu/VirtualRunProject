@@ -14,7 +14,7 @@ import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
-import com.example.quynh.virtualrunproject.helper.PictureResizerHandler;
+import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.google.gson.Gson;
 
 import java.util.Date;
@@ -61,7 +61,7 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
         holder.startAndEndTime.setText(startTime + " to " + endTime);
 
         //Image setting will be dealt with later
-        holder.raceImage.setImageDrawable(PictureResizerHandler.resizeImage(R.drawable.dummy_picture, context));
+        holder.raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, context));
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
