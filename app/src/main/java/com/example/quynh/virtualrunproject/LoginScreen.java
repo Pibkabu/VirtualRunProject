@@ -10,12 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
-import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.facebooksdk.FacebookLogin;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.RegisterScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ResetPasswordScreen;
-import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
 import com.example.quynh.virtualrunproject.services.UserProfileServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
@@ -30,8 +29,6 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -149,31 +146,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         forgotPassword.setOnClickListener(this);
     }
 
-    //testing stava
-//    private void stravaApiCall(){
-//        String URL = "https://www.strava.com/api/v3/athlete";
-//        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d("LoginScreen", "onResponse: " + response);
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("LoginScreen", "onResponse: " + error);
-//            }
-//        }){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Authorization", "Bearer " + getBaseContext().getResources().getString(R.string.access_token));
-//                return headers;
-//            }
-//        };
-//        customRequest.setRetryPolicy(AppController.myRetryPolicy);
-//        AppController.getInstance().addToRequestQueue(customRequest);
-//    }
-
     @Override
     public void onClick(View view) {
         Intent intent = null;
@@ -182,7 +154,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
                 break;
             case R.id.normLoginBtn:
-                //Temporary
                 String email = emailtext.getText().toString();
                 String password = passwordtext.getText().toString();
                 if(email.equalsIgnoreCase("")){

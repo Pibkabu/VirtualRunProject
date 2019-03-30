@@ -10,20 +10,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
-import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
-import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

@@ -3,6 +3,9 @@
     package="com.example.quynh.virtualrunproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".connection.AppController"
@@ -65,6 +68,10 @@
             android:name=".functionscreen.hosting.CreateRaceScreen"
             android:windowSoftInputMode="adjustResize">
         </activity>
+
+        <activity
+            android:name="com.sweetzpot.stravazpot.authenticaton.ui.StravaLoginActivity"
+            android:label="@string/login_strava" />
     </application>
 
 </manifest>

@@ -66,7 +66,7 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, RaceDetailScreen.class);
-                //transfer race's infomation
+                //transfer race's information
                 intent.putExtra("race", races.get(position));
                 intent.putExtra("startTime", races.get(position).getStartTime().toString());
                 intent.putExtra("endTime", races.get(position).getEndTime().toString());

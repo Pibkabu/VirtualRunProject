@@ -12,169 +12,201 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/custom_header">
-        </include>
+        <include layout="@layout/custom_header"></include>
 
-        <ImageView
-            android:id="@+id/race_head_image"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="fitXY"/>
-
-        <TextView
-            android:id="@+id/race_detail_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:textColor="@color/red"
-            android:text="Test Title"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:paddingBottom="40dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/race_head_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/race_detail_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="Hurry! "/>
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="Test Title"
+                    android:textColor="@color/red"
+                    android:textSize="20dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="Registration close in"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hurry! "
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Registration close in"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/countdown_days"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/red"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Days " />
+
+                        <TextView
+                            android:id="@+id/countdown_hours"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/red"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Hours " />
+
+                        <TextView
+                            android:id="@+id/countdown_mins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/red"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Mins " />
+
+                        <TextView
+                            android:id="@+id/countdown_secs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/red"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" Secs " />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/number_of_players_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Test number of player"
+                        android:textSize="15dp" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/players_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Race Period"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/race_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Where"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="This is a virtual race you can join and run anywhere in the world. All you need is a GPS-tracking running app"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="About"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <com.borjabravo.readmoretextview.ReadMoreTextView
+                        android:id="@+id/race_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:showTrimExpandedText="false"
+                        app:trimCollapsedText="Read less"
+                        app:trimExpandedText="Read more"
+                        app:trimLines="2"
+                        app:trimMode="trimModeLine" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Regulation"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <com.borjabravo.readmoretextview.ReadMoreTextView
+                        android:id="@+id/race_regulation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        app:showTrimExpandedText="false"
+                        app:trimCollapsedText="Read less"
+                        app:trimExpandedText="Read more"
+                        app:trimLines="2"
+                        app:trimMode="trimModeLine" />
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/countdown_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/red"
-                    android:text="0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Days "/>
-
-                <TextView
-                    android:id="@+id/countdown_hours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/red"
-                    android:text="0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Hours "/>
-
-                <TextView
-                    android:id="@+id/countdown_mins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/red"
-                    android:text="0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Mins "/>
-
-                <TextView
-                    android:id="@+id/countdown_secs"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/red"
-                    android:text="0"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Secs "/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/number_of_players_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:text="Test number of player"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/players_icon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="Race Period"/>
-
-            <TextView
-                android:id="@+id/race_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"/>
-            
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="Where"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="This is a virtual race you can join and run anywhere in the world. All you need is a GPS-tracking running app"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="15dp"
-                android:text="About"/>
-
-            <com.borjabravo.readmoretextview.ReadMoreTextView
-                android:id="@+id/race_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                app:trimExpandedText="Read more"
-                app:trimCollapsedText="Read less"
-                app:showTrimExpandedText="false"
-                app:trimMode="trimModeLine"
-                app:trimLines="2"/>
-        </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
@@ -182,21 +214,21 @@
         android:id="@+id/race_cancel_btn"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:text="Cancel Register"
-        android:background="@drawable/round_corner_button_red"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
+        android:layout_margin="10dp"
+        android:background="@drawable/round_corner_button_red"
+        android:text="Cancel Register"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/race_join_btn"
         android:layout_width="match_parent"
         android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
-        android:textColor="@color/white"
-        android:text="Join this Race"
         android:background="@drawable/round_corner_button_red"
-        android:layout_alignParentBottom="true"/>
+        android:text="Join this Race"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

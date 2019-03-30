@@ -1,6 +1,7 @@
 <resources>
-    <string name="access_token">c7ee9c72eedacdf37ba22d62a89b994e1f19853e</string>
     <string name="user_id">31904</string>
+
+    <string name="login_strava">Login to Strava</string>
 
     <string name="facebook_app_id">840281492973121</string>
     <string name="fb_login_protocol_scheme">fb840281492973121</string>

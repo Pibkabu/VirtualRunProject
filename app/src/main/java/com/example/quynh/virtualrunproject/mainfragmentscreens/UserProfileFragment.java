@@ -1,6 +1,5 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +17,7 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ProfileChangeScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.userprofilecontainedfragments.ProfileAchievementFragment;
-import com.example.quynh.virtualrunproject.mainfragmentscreens.userprofilecontainedfragments.UserPostFragment;
+import com.example.quynh.virtualrunproject.mainfragmentscreens.userprofilecontainedfragments.AttendingRaceFragment;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.google.gson.Gson;
 
@@ -67,7 +66,7 @@ public class UserProfileFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragmentScreensAdapter(getChildFragmentManager());
         adapter.addFragment(new ProfileAchievementFragment(), "Information");
-        adapter.addFragment(new UserPostFragment(), "Post");
+        adapter.addFragment(new AttendingRaceFragment(), "Đang Tham Gia");
         //viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

@@ -6,15 +6,17 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-    public class CustomRequest extends Request<JSONObject> {
+public class CustomRequest extends Request<JSONObject> {
 
     private Response.Listener<JSONObject> listener;
+    private Response.Listener<JSONArray> arrayListener;
     private Map<String, String> params;
 
     public CustomRequest(String url, Map<String, String> params,
@@ -22,6 +24,11 @@ import java.util.Map;
         super(Method.GET, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
+    }
+
+    public CustomRequest(String url, Response.Listener<JSONArray> arrayListener, Response.ErrorListener errorListener) {
+        super(Method.GET, url, errorListener);
+        this.arrayListener = arrayListener;
     }
 
     public CustomRequest(int method, String url, Map<String, String> params,
@@ -34,7 +41,9 @@ import java.util.Map;
     protected Map<String, String> getParams()
             throws com.android.volley.AuthFailureError {
         return params;
-    };
+    }
+
+    ;
 
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {

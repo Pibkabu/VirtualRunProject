@@ -1,9 +1,6 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,16 +15,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.example.quynh.virtualrunproject.R;
-import com.example.quynh.virtualrunproject.connection.AppController;
-import com.example.quynh.virtualrunproject.connection.CustomRequest;
-import com.example.quynh.virtualrunproject.customGUI.MyLoadingDialog;
 import com.example.quynh.virtualrunproject.customGUI.RacesAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
-import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
 

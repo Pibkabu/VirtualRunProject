@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
@@ -20,7 +21,6 @@ import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserAndRaceMaped;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
-import com.example.quynh.virtualrunproject.services.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.services.PlayerServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
@@ -42,7 +42,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     private TextView numberOfPlayer;
     private TextView countDownDays, countDownHours, countDownMins, countDownSecs;
     private TextView raceTime ;
-    private ReadMoreTextView description;
+    private ReadMoreTextView description, regulation;
     private Button joinRaceBtn, cancelRaceBtn;
     private ImageView backBtn;
     private CountDownTimer countDownTimer = null;
@@ -80,6 +80,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
         raceTime.setText(startTime + " to " + endTime);
         description.setText(race.getDescription());
+        regulation.setText(race.getRegulation());
 
         Calendar calendar = Calendar.getInstance();
         long countDownTime = startDate.getTime() - calendar.getTimeInMillis();
@@ -128,6 +129,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         countDownSecs = (TextView) findViewById(R.id.countdown_secs);
         raceTime = (TextView) findViewById(R.id.race_time);
         description = (ReadMoreTextView) findViewById(R.id.race_description);
+        regulation = (ReadMoreTextView) findViewById(R.id.race_regulation);
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
         cancelRaceBtn = (Button) findViewById(R.id.race_cancel_btn);
 
