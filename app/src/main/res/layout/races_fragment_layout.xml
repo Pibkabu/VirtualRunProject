@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
     android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
-    
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="@drawable/round_corner_layout"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:background="@drawable/round_corner_layout"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <EditText
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_weight="1"
+            android:background="@null"
             android:inputType="text"
-            android:background="@null"/>
+            android:maxLines="1" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_search"/>
+            android:src="@drawable/icon_search" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,75 +40,82 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/black"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="From"/>
+            android:text="From"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/distance_from"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_weight="1"
+            android:gravity="center"
             android:inputType="number"
-            android:gravity="center"/>
+            android:maxLines="1" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/black"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Km"/>
+            android:text="Km"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/black"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="To"/>
+            android:text="To"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <EditText
             android:id="@+id/distance_to"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:layout_weight="1"
+            android:gravity="center"
             android:inputType="number"
-            android:gravity="center" />
+            android:maxLines="1" />
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/black"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="Km"/>
+            android:text="Km"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/filter_btn"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="30dp"
+            android:layout_weight="1"
             android:background="@drawable/round_corner_button_red"
-            android:textColor="@color/white"
-            android:text="OK"/>
+            android:text="OK"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/racesList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="80dp">
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/racesList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="80dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

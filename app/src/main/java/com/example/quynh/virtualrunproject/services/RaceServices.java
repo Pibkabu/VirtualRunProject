@@ -147,4 +147,31 @@ public class RaceServices {
         customRequest.setRetryPolicy(AppController.myRetryPolicy);
         AppController.getInstance().addToRequestQueue(customRequest);
     }
+
+    public static void editRaceInfo(Race race, final Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        //dialog.show();
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/races/edit";
+        Map<String, String> params = new HashMap<>();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        params.put("raceJson", gson.toJson(race));
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //dialog
+                loadingDialog.dismiss();
+                Log.e("RaceServices", "onResponse: ", error);
+                Toast.makeText(context, "Service Error, There's something wrong createRace", Toast.LENGTH_LONG).show();
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
 }

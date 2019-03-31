@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.RacesAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
@@ -32,7 +34,7 @@ import java.util.List;
  * Created by quynh on 12/26/2018.
  */
 
-public class RacesFragment extends Fragment {
+public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable
     @Override
@@ -44,11 +46,10 @@ public class RacesFragment extends Fragment {
 
     private EditText fromDistance, toDistance;
     private Button filterBtn;
-
     private RecyclerView recyclerView;
     private List<Race> races;
     private RacesAdapter adapter;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class RacesFragment extends Fragment {
     }
 
     private void setupView(View view){
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         fromDistance = (EditText) view.findViewById(R.id.distance_from);
         toDistance = (EditText) view.findViewById(R.id.distance_to);
         filterBtn = (Button) view.findViewById(R.id.filter_btn);
@@ -72,6 +74,7 @@ public class RacesFragment extends Fragment {
     }
 
     private void setupAction() {
+        swipeRefreshLayout.setOnRefreshListener(this);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +127,16 @@ public class RacesFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                 }
+                if(swipeRefreshLayout.isRefreshing()){
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        races = new ArrayList<>();
+        getOngoingRaces();
     }
 }

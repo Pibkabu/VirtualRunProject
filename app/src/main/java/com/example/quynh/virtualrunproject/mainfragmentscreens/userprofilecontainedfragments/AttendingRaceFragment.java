@@ -106,7 +106,6 @@ public class AttendingRaceFragment extends Fragment {
                     racesList.setAdapter(adapter);
                     racesList.setNestedScrollingEnabled(false);
                 }
-
             }
         });
     }

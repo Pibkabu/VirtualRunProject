@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.quynh.virtualrunproject.entity.Race;
+import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
+import com.example.quynh.virtualrunproject.custominterface.OnSwipeButtonClickAdapter;
+import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
@@ -21,34 +23,43 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by quynh on 2/7/2019.
+ * Created by quynh on 3/31/2019.
  */
 
-public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> {
-
+public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceHostingAdapter.ViewHolder> {
     private List<Race> races;
     private FragmentActivity context;
+    private OnSwipeButtonClickAdapter onSwipeButtonClickAdapter;
 
-    public RacesAdapter(List<Race> races) {
+    public OngoingRaceHostingAdapter(List<Race> races) {
         this.races = races;
     }
 
-    public RacesAdapter(List<Race> races, FragmentActivity context) {
+    public OngoingRaceHostingAdapter(List<Race> races, FragmentActivity context) {
         this.races = races;
         this.context = context;
     }
 
+    public OngoingRaceHostingAdapter(List<Race> races, OnSwipeButtonClickAdapter onSwipeButtonClickAdapter) {
+        this.races = races;
+        this.onSwipeButtonClickAdapter = onSwipeButtonClickAdapter;
+    }
+
+    public void setOnSwipeButtonClickAdapter(OnSwipeButtonClickAdapter onSwipeButtonClickAdapter) {
+        this.onSwipeButtonClickAdapter = onSwipeButtonClickAdapter;
+    }
+
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OngoingRaceHostingAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.races_list, parent, false);
+                .inflate(R.layout.races_list_for_hosting_ongoing, parent, false);
 
-        return new ViewHolder(itemView);
+        return new OngoingRaceHostingAdapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull OngoingRaceHostingAdapter.ViewHolder holder, final int position) {
         holder.raceTitle.setText(races.get(position).getName());
         holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Runners have joined the race");
 
@@ -76,6 +87,19 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
             }
         });
 
+        holder.editRaceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSwipeButtonClickAdapter.onEditClick(position);
+            }
+        });
+
+        holder.cancelRace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSwipeButtonClickAdapter.onCancelClick(position);
+            }
+        });
 
     }
 
@@ -89,6 +113,8 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
         private TextView numberOfPlayers;
         private TextView startAndEndTime;
         private ImageView raceImage;
+        private ImageView editRaceBtn;
+        private ImageView cancelRace;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +122,8 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
             this.numberOfPlayers = (TextView) itemView.findViewById(R.id.number_of_players);
             this.startAndEndTime = (TextView) itemView.findViewById(R.id.start_and_end_time);
             this.raceImage = (ImageView) itemView.findViewById(R.id.race_image);
+            this.editRaceBtn = (ImageView) itemView.findViewById(R.id.edit_race_btn);
+            this.cancelRace = (ImageView) itemView.findViewById(R.id.cancel_race);
         }
     }
 }
