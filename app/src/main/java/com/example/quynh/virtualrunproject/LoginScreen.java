@@ -25,6 +25,7 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -137,6 +138,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         passwordtext = (EditText) findViewById(R.id.password);
         txtSignUp = (TextView) findViewById(R.id.txtSignUp);
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+
+        PushDownAnim.setPushDownAnimTo(fbLoginBtn);
+        PushDownAnim.setPushDownAnimTo(normLoginBtn);
     }
 
     private void setupAction() {

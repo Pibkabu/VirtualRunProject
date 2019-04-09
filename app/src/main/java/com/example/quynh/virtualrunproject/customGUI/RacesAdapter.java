@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
@@ -52,6 +54,9 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
         holder.raceTitle.setText(races.get(position).getName());
         holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Runners have joined the race");
 
+        Log.d("TestImageAdapter", "setupRaceInfo: " + races.get(position).getRaceImage());
+        Glide.with(context).load(races.get(position).getRaceImage()).into(holder.raceImage);
+
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
         final String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
@@ -61,7 +66,7 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
         holder.startAndEndTime.setText(startTime + " to " + endTime);
 
         //Image setting will be dealt with later
-        holder.raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, context));
+//        holder.raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, context));
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

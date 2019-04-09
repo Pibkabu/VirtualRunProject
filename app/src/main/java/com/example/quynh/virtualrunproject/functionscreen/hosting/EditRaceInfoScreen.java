@@ -173,11 +173,7 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
                     race.setRegulation(raceRegulation.getText().toString());
                     race.setDescription(raceDescription.getText().toString());
                     //race.setRaceImage(raceImage);
-
-                    UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
-                    Gson gson = new Gson();
-                    UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-                    RaceServices.createRace(race, account.getUserId(), this, new OnReceiveResponse() {
+                    RaceServices.editRaceInfo(race, this, new OnReceiveResponse() {
                         @Override
                         public void onReceive(JSONObject response) {
                             if(response != null){

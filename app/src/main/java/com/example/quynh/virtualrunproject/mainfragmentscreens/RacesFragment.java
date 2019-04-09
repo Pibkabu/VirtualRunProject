@@ -24,6 +24,7 @@ import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -71,6 +72,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
+
+        PushDownAnim.setPushDownAnimTo(filterBtn);
     }
 
     private void setupAction() {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnSwipeButtonClickAdapter;
@@ -63,6 +64,8 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
         holder.raceTitle.setText(races.get(position).getName());
         holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Runners have joined the race");
 
+        Glide.with(context).load(races.get(position).getRaceImage()).into(holder.raceImage);
+
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
         final String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
@@ -72,7 +75,6 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
         holder.startAndEndTime.setText(startTime + " to " + endTime);
 
         //Image setting will be dealt with later
-        holder.raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, context));
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

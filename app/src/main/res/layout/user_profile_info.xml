@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:padding="16dp"
-    android:background="@color/white"
-    android:layout_margin="10dp"
     tools:context="com.example.quynh.virtualrunproject.RegisterScreen">
 
     <LinearLayout
@@ -16,189 +15,105 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TableLayout
+        <EditText
+            android:id="@+id/txtEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Email"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-            <TableRow>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+        <EditText
+            android:id="@+id/txtDisplayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Display Name"
+            android:imeOptions="actionDone"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/txtEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:enabled="false"
-                    android:singleLine="true"/>
-            </TableRow>
+        <EditText
+            android:id="@+id/txtFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-            <TableRow>
+        <EditText
+            android:id="@+id/txtLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Display Name"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+        <Spinner
+            android:id="@+id/bday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></Spinner>
 
-                <EditText
-                    android:id="@+id/txtDisplayName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:maxLength="15"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </TableRow>
+        <Spinner
+            android:id="@+id/bMonth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"></Spinner>
 
-            <TableRow>
+        <Spinner
+            android:id="@+id/bYear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"></Spinner>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="First Name"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+        <EditText
+            android:id="@+id/txtDateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date Of Birth"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-                <EditText
-                    android:id="@+id/txtFirstName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </TableRow>
 
-            <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Last Name"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+        <Spinner
+            android:id="@+id/gender"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"></Spinner>
 
-                <EditText
-                    android:id="@+id/txtLastName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </TableRow>
 
-            <TableRow>
+        <EditText
+            android:id="@+id/txtPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="DOB"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <Spinner
-                    android:id="@+id/bday"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"></Spinner>
-
-                <Spinner
-                    android:id="@+id/bMonth"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"></Spinner>
-
-                <Spinner
-                    android:id="@+id/bYear"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"></Spinner>
-            </TableRow>
-
-            <TableRow
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gender"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <Spinner
-                    android:id="@+id/gender"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content">
-                </Spinner>
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Phone"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <EditText
-                    android:id="@+id/txtPhone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <!--<EditText-->
-                    <!--android:id="@+id/txtAddress"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/edittext_border"-->
-                    <!--android:gravity="top|left"-->
-                    <!--android:inputType="textMultiLine"-->
-                    <!--android:lines="4"-->
-                    <!--android:overScrollMode="always"-->
-                    <!--android:paddingLeft="5dp"-->
-                    <!--android:scrollHorizontally="false"-->
-                    <!--android:scrollbars="vertical"-->
-                    <!--android:imeOptions="actionDone" />-->
-
-                <EditText
-                    android:id="@+id/txtAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"/>
-            </TableRow>
-
-        </TableLayout>
+        <EditText
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true" />
 
     </LinearLayout>
 

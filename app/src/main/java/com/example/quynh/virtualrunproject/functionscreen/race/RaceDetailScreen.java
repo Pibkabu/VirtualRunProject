@@ -1,4 +1,5 @@
 package com.example.quynh.virtualrunproject.functionscreen.race;
+import com.bumptech.glide.Glide;
 import com.example.quynh.virtualrunproject.R;
 
 import android.content.Intent;
@@ -6,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.PlayerServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -72,6 +75,9 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         title.setText(race.getName());
         numberOfPlayer.setText(race.getTotalPlayer() + " Runners have joined the race");
 
+        Log.d("TestImage", "setupRaceInfo: " + race.getRaceImage());
+        Glide.with(this).load(race.getRaceImage()).into(raceImage);
+
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
         String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
@@ -113,6 +119,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         }
 
         getRaceParticipants(race.getRaceId());
+
     }
 
     private void setupView() {
@@ -133,7 +140,11 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
         cancelRaceBtn = (Button) findViewById(R.id.race_cancel_btn);
 
-        raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
+        //raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
+
+
+        PushDownAnim.setPushDownAnimTo(joinRaceBtn);
+        PushDownAnim.setPushDownAnimTo(cancelRaceBtn);
     }
 
     private void setupAction() {

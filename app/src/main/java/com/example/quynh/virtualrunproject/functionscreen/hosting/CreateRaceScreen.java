@@ -3,13 +3,16 @@ package com.example.quynh.virtualrunproject.functionscreen.hosting;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -24,12 +27,14 @@ import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
+import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -117,10 +122,22 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
             cursor.close();
 
             try {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                //raceImage = Base64.encodeToString(b, Base64.DEFAULT);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+
+                Display display = this.getWindowManager().getDefaultDisplay();
+                double deviceWidth = display.getWidth();
+
+                double imageHeight = bitmap.getHeight();
+                double imageWidth = bitmap.getWidth();
+
+                double ratio = deviceWidth / imageWidth;
+                int newImageHeight = (int) (imageHeight * ratio);
+
+                Bitmap test = PictureResizeHandler.getResizedBitmap(bitmap, newImageHeight, (int) deviceWidth);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                test.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                raceImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
                 File f = new File(picturePath);
                 String imageName = f.getName();
                 pictureName.setText(imageName);
@@ -128,7 +145,6 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
             }catch (Exception e){
                 Log.e("CreateRaceScreen", "onActivityResult: ", e);
             }
-
         }
     }
 
@@ -194,7 +210,7 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                     race.setDistance(Double.valueOf(raceDistance.getText().toString()));
                     race.setRegulation(raceRegulation.getText().toString());
                     race.setDescription(raceDescription.getText().toString());
-                    //race.setRaceImage(raceImage);
+                    race.setRaceImage(raceImage);
 
                     UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
                     Gson gson = new Gson();
