@@ -56,14 +56,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Hurry! "
+                            android:text="Nhanh Tay Đăng Ký! "
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Registration close in"
+                            android:text="Đường đua sẽ mở sau"
                             android:textColor="@color/black" />
 
                     </LinearLayout>
@@ -84,7 +84,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Days " />
+                            android:text=" Ngày " />
 
                         <TextView
                             android:id="@+id/countdown_hours"
@@ -97,7 +97,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Hours " />
+                            android:text=" Giờ " />
 
                         <TextView
                             android:id="@+id/countdown_mins"
@@ -110,7 +110,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Mins " />
+                            android:text=" Phút " />
 
                         <TextView
                             android:id="@+id/countdown_secs"
@@ -123,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Secs " />
+                            android:text=" Giây " />
                     </LinearLayout>
 
                     <TextView
@@ -142,7 +142,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Race Period"
+                        android:text="Thời gian"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -156,7 +156,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Where"
+                        android:text="Địa điểm"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -170,7 +170,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="About"
+                        android:text="Thông tin"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -189,7 +189,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Regulation"
+                        android:text="Quy tắc"
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -217,7 +217,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:background="@drawable/round_corner_button_red"
-        android:text="Cancel Register"
+        android:text="Hủy tham gia"
         android:textColor="@color/white"
         android:visibility="gone" />
 
@@ -228,7 +228,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:background="@drawable/round_corner_button_red"
-        android:text="Join this Race"
+        android:text="Tham gia đường chạy"
         android:textColor="@color/white" />
 
 </RelativeLayout>

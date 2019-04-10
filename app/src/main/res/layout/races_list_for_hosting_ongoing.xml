@@ -23,7 +23,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:background="@color/gray"
-                android:src="@drawable/icon_pen"/>
+                android:src="@drawable/icon_pencil"/>
 
             <ImageView
                 android:id="@+id/cancel_race"
@@ -32,7 +32,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:background="@color/white"
-                android:src="@drawable/icon_xsympol"/>
+                android:src="@drawable/icon_delete"/>
 
         </LinearLayout>
 

@@ -140,6 +140,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
         races = new ArrayList<>();
+        adapter = new RacesAdapter(races, getActivity());
+        recyclerView.setAdapter(adapter);
         getOngoingRaces();
     }
 }

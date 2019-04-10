@@ -57,7 +57,7 @@
             android:background="@drawable/round_corner_button_red"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:text="Edit Profile"/>
+            android:text="Chỉnh sửa"/>
 
     </LinearLayout>
 

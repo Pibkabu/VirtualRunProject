@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="30dp"
-                android:text="@string/register_screen"
+                android:text="Đăng Ký"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -51,7 +51,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:singleLine="true"/>
                 </TableRow>
 
                 <TableRow>
@@ -59,7 +60,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Password"
+                        android:text="Mặt Khẩu"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -69,7 +70,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textPassword"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:singleLine="true"/>
                 </TableRow>
 
                 <TableRow>
@@ -77,7 +79,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Confirm"
+                        android:text="Nhập lại mật khẩu"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
 
@@ -87,7 +89,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:inputType="textPassword"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:singleLine="true"/>
                 </TableRow>
 
             </TableLayout>
@@ -98,7 +101,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="25dp"
                 android:background="@drawable/round_corner_button_red"
-                android:text="@string/normSignUp"
+                android:text="Đăng Ký"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 
@@ -113,7 +116,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/checkAccount2"
+                    android:text="Bạn đã có tài khoản rồi ? "
                     android:textSize="15dp" />
 
                 <TextView
@@ -121,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:text="@string/normSignIn"
+                    android:text="Đăng Nhập"
                     android:textColor="@color/red"
                     android:textSize="15dp" />
             </LinearLayout>

@@ -15,105 +15,156 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/txtEmail"
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="Email"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
 
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <EditText
-            android:id="@+id/txtDisplayName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Display Name"
-            android:imeOptions="actionDone"
-            android:maxLength="15"
-            android:maxLines="1"
-            android:singleLine="true" />
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
-        <EditText
-            android:id="@+id/txtFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="First Name"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên hiển thị"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <EditText
-            android:id="@+id/txtLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Last Name"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+                <EditText
+                    android:id="@+id/txtDisplayName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
-        <Spinner
-            android:id="@+id/bday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></Spinner>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Họ"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <Spinner
-            android:id="@+id/bMonth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"></Spinner>
+                <EditText
+                    android:id="@+id/txtFirstName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
-        <Spinner
-            android:id="@+id/bYear"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"></Spinner>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <EditText
-            android:id="@+id/txtDateOfBirth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date Of Birth"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+                <EditText
+                    android:id="@+id/txtLastName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Điện thoại"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gender"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
+                <EditText
+                    android:id="@+id/txtPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
-        <Spinner
-            android:id="@+id/gender"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"></Spinner>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Địa chỉ"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
+                <EditText
+                    android:id="@+id/txtAddress"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </TableRow>
 
-        <EditText
-            android:id="@+id/txtPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+            <TableRow android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
 
-        <EditText
-            android:id="@+id/txtAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:singleLine="true" />
+                <TextView
+                    android:id="@+id/txtDateOfBirth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:background="@drawable/edittext_border"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:singleLine="true" />
+            </TableRow>
+
+            <TableRow android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <Spinner
+                    android:id="@+id/gender"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"></Spinner>
+            </TableRow>
+        </TableLayout>
 
     </LinearLayout>
 

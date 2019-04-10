@@ -17,6 +17,7 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.CreateRaceScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments.OngoingRunFragment;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments.PastRunFragment;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 /**
  * Created by quynh on 3/21/2019.
@@ -47,6 +48,8 @@ public class HostingFragment extends Fragment{
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         tablayoutContent = (ViewPager) view.findViewById(R.id.tablayout_content);
         createRaceBtn = (ImageView) view.findViewById(R.id.create_race_btn);
+
+        PushDownAnim.setPushDownAnimTo(createRaceBtn);
     }
 
     private void setupAction() {

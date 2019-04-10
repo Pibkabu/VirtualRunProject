@@ -1,5 +1,6 @@
 package com.example.quynh.virtualrunproject.customGUI;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,11 +43,13 @@ import java.util.List;
 public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorActionListener{
 
     private EditText txtEmail, txtDisplayName, txtFirstName, txtLastName, txtPhone, txtAddress;
-    private Spinner bday, bMonth, bYear, gender;
+    private Spinner gender;
     private Button submitFormBtn;
     private UserAccountPrefs accountPrefs;
     private UserProfilePrefs profilePrefs;
+    private TextView txtDateOfBirth;
     private Context context;
+
 
     public ProfileRegisterDialog(Context context) {
         super(context);
@@ -70,11 +75,9 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         txtLastName = (EditText) findViewById(R.id.txtLastName);
         txtPhone = (EditText) findViewById(R.id.txtPhone);
         txtAddress = (EditText) findViewById(R.id.txtAddress);
-        bday = (Spinner) findViewById(R.id.bday);
-        bMonth = (Spinner) findViewById(R.id.bMonth);
-        bYear = (Spinner) findViewById(R.id.bYear);
         gender = (Spinner) findViewById(R.id.gender);
         submitFormBtn = (Button) findViewById(R.id.submit_form_btn);
+        txtDateOfBirth = (TextView) findViewById(R.id.txtDateOfBirth);
 
         Gson gson = new Gson();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
@@ -83,23 +86,23 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
     }
 
     private void setupSpinner() {
-        MySpinnerAdapter adapter = new MySpinnerAdapter(context, context.getResources().getStringArray(R.array.date), R.layout.spinner_items_normal);
-        bday.setAdapter(adapter);
-        adapter = new MySpinnerAdapter(context, context.getResources().getStringArray(R.array.month), R.layout.spinner_items_normal);
-        bMonth.setAdapter(adapter);
-        List<String> years = new ArrayList<>();
-        for(int i = 1900; i <= 2019; i++){
-            years.add(String.valueOf(i));
-        }
-        String[] yearsArray = new String[years.size()];
-        for(int i = 0; i < years.size(); i++){
-            yearsArray[i] = years.get(i);
-        }
-        adapter = new MySpinnerAdapter(context, yearsArray, R.layout.spinner_items_normal);
-        bYear.setAdapter(adapter);
-
-        adapter = new MySpinnerAdapter(context, context.getResources().getStringArray(R.array.gender), R.layout.spinner_items_normal);
+        MySpinnerAdapter adapter = new MySpinnerAdapter(context, context.getResources().getStringArray(R.array.gender), R.layout.spinner_items_normal);
         gender.setAdapter(adapter);
+    }
+
+    private void showDatePickerDialog(DatePickerDialog.OnDateSetListener dateSetListener){
+        //Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", time);
+        Calendar calendar = Calendar.getInstance();
+        //calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
+                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                dateSetListener,
+                year, month, day);
+        datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        datePickerDialog.show();
     }
 
     private void setupAction() {
@@ -107,6 +110,23 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         txtLastName.setOnEditorActionListener(this);
         txtPhone.setOnEditorActionListener(this);
         txtAddress.setOnEditorActionListener(this);
+
+        txtDateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        if((month + 1) >= 10){
+                            txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                        }else{
+                            txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + dayOfMonth);
+                        }
+                    }
+                });
+            }
+        });
+
         submitFormBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +149,8 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
                     profile.setFirstName(txtFirstName.getText().toString());
                     profile.setLastName(txtLastName.getText().toString());
                     profile.setPhone(txtPhone.getText().toString());
-                    String DOB = bYear.getSelectedItem().toString() + "-" + bMonth.getSelectedItem().toString() + "-" + bday.getSelectedItem().toString();
+                    //String DOB = bYear.getSelectedItem().toString() + "-" + bMonth.getSelectedItem().toString() + "-" + bday.getSelectedItem().toString();
+                    String DOB = txtDateOfBirth.getText().toString();
                     Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", DOB);
                     Timestamp timestamp = new Timestamp(date.getTime());
                     Log.d("ADDPROFILE", "onClick: " + timestamp.toString());

@@ -10,4 +10,3 @@
     android:indeterminateDrawable="@drawable/rotate_loading_icon">
 
 </ProgressBar>
-

@@ -26,17 +26,17 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:paddingBottom="30dp"
-            android:text="@string/login_screen"/>
+            android:text="Đăng Nhập"/>
 
         <Button
             android:id="@+id/fbLoginBtn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:textAllCaps="false"
             android:background="@drawable/round_corner_button_blue"
             android:textColor="@color/white"
-            android:text="@string/facebook_login" />
+            android:text="Đăng Nhập Bằng Facebook" />
 
         <EditText
             android:id="@+id/login_email"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="@string/login_hint_password" />
+            android:hint="Mật Khẩu" />
 
         <TextView
             android:id="@+id/forgotPassword"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="15dp"
-            android:text="@string/checkForgotPW"
+            android:text="Quên mật khẩu ?"
             android:textColor="@color/red"/>
 
         <Button
@@ -70,7 +70,7 @@
             android:textAllCaps="false"
             android:background="@drawable/round_corner_button_red"
             android:textColor="@color/white"
-            android:text="@string/normSignIn" />
+            android:text="Đăng Nhập" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-                android:text="@string/checkAccount1"/>
+                android:text="Bạn chưa có tài khoản ? "/>
 
             <TextView
                 android:id="@+id/txtSignUp"
@@ -93,7 +93,7 @@
                 android:textSize="15dp"
                 android:clickable="true"
                 android:textColor="@color/red"
-                android:text="@string/register"/>
+                android:text="Đăng ký ngay!"/>
         </LinearLayout>
 
         <ImageView

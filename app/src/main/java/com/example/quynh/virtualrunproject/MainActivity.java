@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         title = (TextView) findViewById(R.id.toolbar_title);
-        title.setText("Home");
+        title.setText("Trang Chủ");
 
         userDisplayName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_display_name);
         userId = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_id);
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity
 
     private void viewPagerTabChanged(int position){
         if(position == 0){
-            title.setText("Home");
+            title.setText("Trang Chủ");
             racesBtn.setImageResource(R.drawable.home_red);
             hosting.setImageResource(R.drawable.icon_hosting);
             profileBtn.setImageResource(R.drawable.user_black);
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity
             profileBtn.setEnabled(true);
         }
         else if(position == 1){
-            title.setText("Hosting");
+            title.setText("Quản Trị");
             racesBtn.setImageResource(R.drawable.home_black);
             hosting.setImageResource(R.drawable.icon_hosting_red);
             profileBtn.setImageResource(R.drawable.user_black);
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity
             hosting.setEnabled(false);
             profileBtn.setEnabled(true);
         }else if(position == 2){
-            title.setText("Profile");
+            title.setText("Thông Tin Cá Nhân");
             racesBtn.setImageResource(R.drawable.home_black);
             hosting.setImageResource(R.drawable.icon_hosting);
             profileBtn.setImageResource(R.drawable.user_red);

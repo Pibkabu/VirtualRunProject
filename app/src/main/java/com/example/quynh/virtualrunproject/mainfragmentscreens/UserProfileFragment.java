@@ -65,7 +65,7 @@ public class UserProfileFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new FragmentScreensAdapter(getChildFragmentManager());
-        adapter.addFragment(new ProfileAchievementFragment(), "Information");
+        adapter.addFragment(new ProfileAchievementFragment(), "Thông tin");
         adapter.addFragment(new AttendingRaceFragment(), "Đang Tham Gia");
         //viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);

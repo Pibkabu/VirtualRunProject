@@ -66,16 +66,14 @@
         <activity android:name=".functionscreen.hosting.RaceDonationScreen" />
         <activity
             android:name=".functionscreen.hosting.CreateRaceScreen"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".functionscreen.hosting.EditRaceInfoScreen"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name="com.sweetzpot.stravazpot.authenticaton.ui.StravaLoginActivity"
             android:label="@string/login_strava" />
+        <activity android:name=".functionscreen.useraccountandprofile.GetVerifyCodeScreen"></activity>
     </application>
 
 </manifest>

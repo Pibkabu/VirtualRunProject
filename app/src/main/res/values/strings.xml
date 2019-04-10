@@ -20,7 +20,7 @@
     <string name="register">Register Now!</string>
     <string name="checkForgotPW">Forgot password ?</string>
     <string name="checkCurrentRaces">View current races</string>
-    <string name="resetPasswordText">Enter the email address below and we will email you a link to reset your password</string>
+    <string name="resetPasswordText">Điền email bên dưới và chúng tôi sẽ gửi bạn đường dẫn để bạn tạo mới mật khẩu</string>
     <string name="sendResetEmail">Send reset email</string>
     <string name="login_hint_username">User Name</string>
     <string name="login_hint_password">Password</string>
@@ -29,6 +29,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+    <string name="verify_code">Điền code bạn nhận được qua email bên dưới để hoàn thành đăng ký, nếu bạn không nhận được email nào hãy kiểm tra lại thư mục spam</string>
 
     <string-array name="gender">
         <item>Male</item>

@@ -25,7 +25,7 @@ public class ResetPasswordScreen extends AppCompatActivity implements View.OnCli
 
     private void setupView() {
         TextView title = (TextView) findViewById(R.id.toolbar_title);
-        title.setText("Forgot Password");
+        title.setText("Quên Mật Khẩu");
         backBtn = (ImageView)findViewById(R.id.back_btn);
         backBtn.setVisibility(View.VISIBLE);
         sendResetEmailBtn = (Button) findViewById(R.id.sendResetEmailBtn);

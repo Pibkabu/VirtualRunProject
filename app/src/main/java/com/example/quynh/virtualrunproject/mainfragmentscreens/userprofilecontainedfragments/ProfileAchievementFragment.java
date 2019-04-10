@@ -74,7 +74,7 @@ public class ProfileAchievementFragment extends Fragment {
                             completedRecords.add(player);
                         }
                     }
-                    txtNumberOfRuns.setText("Number of Runs: " + completedRecords.size());
+                    txtNumberOfRuns.setText("Số đường chạy: " + completedRecords.size());
                     int numberOf1stMedals = 0;
                     int numberOf2ndMedals = 0;
                     int numberOf3rdMedals = 0;
@@ -92,7 +92,7 @@ public class ProfileAchievementFragment extends Fragment {
                     numberOf1st.setText(String.valueOf(numberOf1stMedals));
                     numberOf2nd.setText(String.valueOf(numberOf2ndMedals));
                     numberOf3rd.setText(String.valueOf(numberOf3rdMedals));
-                    txtDistance.setText("Distance: " + totalDistance + "(km)");
+                    txtDistance.setText("Khoảng cách: " + totalDistance + "(km)");
                 }
             }
         });

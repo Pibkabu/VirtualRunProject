@@ -7,9 +7,11 @@ import com.example.quynh.virtualrunproject.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
+import com.example.quynh.virtualrunproject.helper.EmailSender;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
@@ -46,7 +49,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     private void setupView() {
         TextView title = (TextView) findViewById(R.id.toolbar_title);
-        title.setText("Register");
+        title.setText("Đăng Ký");
         backBtn = (ImageView) findViewById(R.id.back_btn);
         backBtn.setVisibility(View.VISIBLE);
         normSignUpBtn = (Button) findViewById(R.id.normSignUpBtn);
@@ -64,67 +67,90 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         txtSignIn.setOnClickListener(this);
     }
 
+    private void registerAccount(final String email, final String password) {
+        UserAccountServices.getUserAccountWithEmail(email, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                final Gson gson = new Gson();
+                UserAccount account = gson.fromJson(response.toString(), UserAccount.class);
+                account.setEmail(email);
+                account.setPassword(password);
+                UserAccountServices.addUserAccount(account, RegisterScreen.this, new OnReceiveResponse() {
+                    @Override
+                    public void onReceive(JSONObject response) {
+                        accountPrefs.saveUserLogin(response.toString());
+                        profilePrefs.saveUserProfile(gson.toJson(new UserProfile()));
+                        Intent intent = new Intent(RegisterScreen.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+            }
+        });
+    }
+
+    private void checkEmail(final String email) {
+        UserAccountServices.getUserAccountWithEmail(email, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                final Gson gson = new Gson();
+                UserAccount account = gson.fromJson(response.toString(), UserAccount.class);
+                if (account.getUserId() != 0) {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(RegisterScreen.this, android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(RegisterScreen.this);
+                    }
+                    builder.setTitle("Register")
+                            .setMessage("The email already used")
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                } else {
+                    Intent intent1 = new Intent(RegisterScreen.this, GetVerifyCodeScreen.class);
+                    intent1.putExtra("email", email);
+                    startActivityForResult(intent1, 1);
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.back_btn:
                 finish();
                 break;
             case R.id.normSignUpBtn:
-                final String email = signUpEmail.getText().toString();
-                final String password = signUpPassword.getText().toString();
+                String email = signUpEmail.getText().toString();
+                String password = signUpPassword.getText().toString();
                 String confirmPassword = signUpConfirmPassword.getText().toString();
-                if(email.equalsIgnoreCase("")){
+                if (email.equalsIgnoreCase("")) {
                     signUpEmail.setError("This does not filled yet");
-                }else if(password.equalsIgnoreCase("")){
+                } else if (password.equalsIgnoreCase("")) {
                     signUpPassword.setError("This does not filled yet");
-                }else if(confirmPassword.equalsIgnoreCase("") || !confirmPassword.equals(password)){
+                } else if (confirmPassword.equalsIgnoreCase("") || !confirmPassword.equals(password)) {
                     signUpConfirmPassword.setError("This need to be the same as your password");
-                }else{
-                    UserAccountServices.getUserAccountWithEmail(email, this, new OnReceiveResponse() {
-                        @Override
-                        public void onReceive(JSONObject response) {
-                            final Gson gson = new Gson();
-                            UserAccount account = gson.fromJson(response.toString(), UserAccount.class);
-                            if(account.getUserId() != 0){
-                                AlertDialog.Builder builder;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    builder = new AlertDialog.Builder(RegisterScreen.this, android.R.style.Theme_Material_Dialog_Alert);
-                                } else {
-                                    builder = new AlertDialog.Builder(RegisterScreen.this);
-                                }
-                                builder.setTitle("Register")
-                                        .setMessage("The email already used")
-                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                            }
-                                        })
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .show();
-                            }else{
-                                account.setEmail(email);
-                                account.setPassword(password);
-                                UserAccountServices.addUserAccount(account, RegisterScreen.this, new OnReceiveResponse() {
-                                    @Override
-                                    public void onReceive(JSONObject response) {
-                                        accountPrefs.saveUserLogin(response.toString());
-                                        profilePrefs.saveUserProfile(gson.toJson(new UserProfile()));
-                                        Intent intent = new Intent(RegisterScreen.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                });
-
-                            }
-                        }
-                    });
+                } else {
+                    checkEmail(email);
                 }
                 break;
             case R.id.txtSignIn:
-                Intent intent = new Intent(this, LoginScreen.class);
-                startActivity(intent);
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Log.d("TestVerifyCode", "onActivityResult: " + "SUCCESS");
+            registerAccount(signUpEmail.getText().toString(), signUpPassword.getText().toString());
         }
     }
 }
