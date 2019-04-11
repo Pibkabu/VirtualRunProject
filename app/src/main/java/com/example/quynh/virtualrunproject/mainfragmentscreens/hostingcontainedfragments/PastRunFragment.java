@@ -1,5 +1,6 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.RacesAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
+import com.example.quynh.virtualrunproject.functionscreen.hosting.RaceResultScreen;
 import com.example.quynh.virtualrunproject.services.HostingServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
@@ -55,6 +58,16 @@ public class PastRunFragment extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
+
+        adapter.setOnButtonClickRecyclerViewAdapter(new OnButtonClickRecyclerViewAdapter() {
+            @Override
+            public void OnButtonClick(int position) {
+                Intent intent = new Intent(getActivity(), RaceResultScreen.class);
+                Gson gson = new Gson();
+                intent.putExtra("raceString", gson.toJson(races.get(position)));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private void setupRaceInfo(){

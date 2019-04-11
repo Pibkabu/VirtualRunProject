@@ -23,29 +23,80 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/racesBtn"
+        <LinearLayout
+            android:id="@+id/racesBtnLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/home_red" />
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/hosting"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/icon_hosting" />
+            <ImageView
+                android:id="@+id/racesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/home_red" />
 
-        <ImageView
-            android:id="@+id/profileBtn"
+            <TextView
+                android:id="@+id/txtHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/red"
+                android:text="Trang Chủ"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hostingLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/user_black" />
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/hosting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/icon_hosting" />
+
+            <TextView
+                android:id="@+id/txtHosting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/gray"
+                android:text="Quản Trị"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/profileBtnLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/profileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/user_black" />
+
+            <TextView
+                android:id="@+id/txtProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/gray"
+                android:text="Cá Nhân"/>
+        </LinearLayout>
 
     </LinearLayout>
 

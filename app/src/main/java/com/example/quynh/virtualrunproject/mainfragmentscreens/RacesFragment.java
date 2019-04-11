@@ -1,6 +1,7 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,9 +20,11 @@ import android.widget.EditText;
 import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.RacesAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -41,7 +44,6 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.races_fragment_layout, container, false);
-
         return view;
     }
 
@@ -67,12 +69,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         filterBtn = (Button) view.findViewById(R.id.filter_btn);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.racesList);
-        races = new ArrayList<>();
-        adapter = new RacesAdapter(races, getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(adapter);
-        recyclerView.setNestedScrollingEnabled(false);
-
+        settingAdapter();
         PushDownAnim.setPushDownAnimTo(filterBtn);
     }
 
@@ -114,7 +111,24 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             }
         });
+    }
 
+    private void settingAdapter(){
+        races = new ArrayList<>();
+        adapter = new RacesAdapter(races, getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setNestedScrollingEnabled(false);
+
+        adapter.setOnButtonClickRecyclerViewAdapter(new OnButtonClickRecyclerViewAdapter() {
+            @Override
+            public void OnButtonClick(int position) {
+                Intent intent = new Intent(getActivity(), RaceDetailScreen.class);
+                Gson gson = new Gson();
+                intent.putExtra("raceString", gson.toJson(races.get(position)));
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private void getOngoingRaces(){
@@ -139,9 +153,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onRefresh() {
-        races = new ArrayList<>();
-        adapter = new RacesAdapter(races, getActivity());
-        recyclerView.setAdapter(adapter);
+        settingAdapter();
         getOngoingRaces();
     }
 }

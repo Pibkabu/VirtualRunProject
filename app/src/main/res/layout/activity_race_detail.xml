@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context="com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +22,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="40dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="100dp">
 
                 <ImageView
                     android:id="@+id/race_head_image"
@@ -140,6 +141,19 @@
                         android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
 
                     <TextView
+                        android:id="@+id/txt_donation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/round_corner_layout"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Thông Tin Tài Khoản Quyên Góp"
+                        android:textColor="@color/red"
+                        android:textSize="18dp"
+                        android:visibility="gone" />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Thời gian"
@@ -209,6 +223,7 @@
         </ScrollView>
 
     </LinearLayout>
+
 
     <Button
         android:id="@+id/race_cancel_btn"

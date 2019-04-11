@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
@@ -30,6 +31,11 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
 
     private List<Race> races;
     private FragmentActivity context;
+    private OnButtonClickRecyclerViewAdapter listener;
+
+    public void setOnButtonClickRecyclerViewAdapter(OnButtonClickRecyclerViewAdapter listener) {
+        this.listener = listener;
+    }
 
     public RacesAdapter(List<Race> races) {
         this.races = races;
@@ -65,23 +71,12 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
                 + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
         holder.startAndEndTime.setText(startTime + " to " + endTime);
 
-        //Image setting will be dealt with later
-//        holder.raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, context));
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, RaceDetailScreen.class);
-                //transfer race's information
-                intent.putExtra("race", races.get(position));
-                intent.putExtra("startTime", races.get(position).getStartTime().toString());
-                intent.putExtra("endTime", races.get(position).getEndTime().toString());
-                Gson gson = new Gson();
-                intent.putExtra("raceString", gson.toJson(races.get(position)));
-                context.startActivity(intent);
+                listener.OnButtonClick(position);
             }
         });
-
-
     }
 
     @Override

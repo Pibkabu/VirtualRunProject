@@ -17,12 +17,15 @@ import android.widget.Toast;
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
+import com.example.quynh.virtualrunproject.entity.DonateAccount;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserAndRaceMaped;
+import com.example.quynh.virtualrunproject.functionscreen.hosting.RaceDonationScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
+import com.example.quynh.virtualrunproject.services.DonateAccountServices;
 import com.example.quynh.virtualrunproject.services.PlayerServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
@@ -44,13 +47,15 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     private TextView title;
     private TextView numberOfPlayer;
     private TextView countDownDays, countDownHours, countDownMins, countDownSecs;
-    private TextView raceTime ;
+    private TextView raceTime, txtDonation;
     private ReadMoreTextView description, regulation;
     private Button joinRaceBtn, cancelRaceBtn;
     private ImageView backBtn;
     private CountDownTimer countDownTimer = null;
     private List<Player> players;
     private Player individual;
+    private Race race;
+    private DonateAccount donateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +69,10 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
     private void setupRaceInfo() {
         Intent intent = getIntent();
-        //Race race = intent.getParcelableExtra("race");
         Gson gson = new Gson();
         UserAccountPrefs prefs = new UserAccountPrefs(this);
         UserAccount account = gson.fromJson(prefs.getUserAccount(), UserAccount.class);
-        Race race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
+        race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
         individual = new Player();
         individual.setUserAndRaceMaped(new UserAndRaceMaped(account.getUserId(), race.getRaceId()));
         toolbarTitle.setText(race.getName());
@@ -117,9 +121,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
             };
             countDownTimer.start();
         }
-
         getRaceParticipants(race.getRaceId());
-
+        getRaceDonateAccount();
     }
 
     private void setupView() {
@@ -135,6 +138,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         countDownMins = (TextView) findViewById(R.id.countdown_mins);
         countDownSecs = (TextView) findViewById(R.id.countdown_secs);
         raceTime = (TextView) findViewById(R.id.race_time);
+        txtDonation = (TextView) findViewById(R.id.txt_donation);
         description = (ReadMoreTextView) findViewById(R.id.race_description);
         regulation = (ReadMoreTextView) findViewById(R.id.race_regulation);
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
@@ -142,15 +146,16 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
         //raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
 
-
         PushDownAnim.setPushDownAnimTo(joinRaceBtn);
         PushDownAnim.setPushDownAnimTo(cancelRaceBtn);
+        PushDownAnim.setPushDownAnimTo(txtDonation);
     }
 
     private void setupAction() {
         backBtn.setOnClickListener(this);
         joinRaceBtn.setOnClickListener(this);
         cancelRaceBtn.setOnClickListener(this);
+        txtDonation.setOnClickListener(this);
     }
 
     private void getRaceParticipants(int raceId){
@@ -170,6 +175,19 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                             cancelRaceBtn.setVisibility(View.VISIBLE);
                         }
                     }
+                }
+            }
+        });
+    }
+
+    private void getRaceDonateAccount(){
+        DonateAccountServices.getRaceDonationRecord(race.getRaceId(), this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                donateAccount = gson.fromJson(response.toString(), DonateAccount.class);
+                if(donateAccount.getRaceId() != 0){
+                    txtDonation.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -209,6 +227,12 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 });
+                break;
+            case R.id.txt_donation:
+                Intent intent = new Intent(this, RaceDonationScreen.class);
+                Gson gson = new Gson();
+                intent.putExtra("donateAccount", gson.toJson(donateAccount));
+                startActivity(intent);
                 break;
             case R.id.back_btn:
                 finish();

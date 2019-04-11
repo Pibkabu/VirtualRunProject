@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,10 +43,10 @@ public class MainActivity extends AppCompatActivity
     private FragmentScreensAdapter adapter;
     private UserAccountPrefs accountPrefs;
     private UserProfilePrefs profilePrefs;
-    private UserAccount account;
     private UserProfile profile;
     private ProfileRegisterDialog registerDialog;
-    private TextView title;
+    private TextView title, txtProfile, txtHosting, txtHome;
+    private LinearLayout racesBtnLayout, hostingLayout, profileBtnLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,12 @@ public class MainActivity extends AppCompatActivity
         racesBtn = (ImageView) findViewById(R.id.racesBtn);
         profileBtn = (ImageView) findViewById(R.id.profileBtn);
         hosting = (ImageView) findViewById(R.id.hosting);
+        txtProfile = (TextView) findViewById(R.id.txtProfile);
+        txtHosting = (TextView) findViewById(R.id.txtHosting);
+        txtHome = (TextView) findViewById(R.id.txtHome);
+        racesBtnLayout = (LinearLayout) findViewById(R.id.racesBtnLayout);
+        hostingLayout = (LinearLayout) findViewById(R.id.hostingLayout);
+        profileBtnLayout = (LinearLayout) findViewById(R.id.profileBtnLayout);
 
         Gson gson = new Gson();
         profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
@@ -115,9 +122,9 @@ public class MainActivity extends AppCompatActivity
         message.setOnClickListener(this);
         adapter = new FragmentScreensAdapter(getSupportFragmentManager());
         setupViewPager(mainContents);
-        hosting.setOnClickListener(this);
-        racesBtn.setOnClickListener(this);
-        profileBtn.setOnClickListener(this);
+        racesBtnLayout.setOnClickListener(this);
+        hostingLayout.setOnClickListener(this);
+        profileBtnLayout.setOnClickListener(this);
 
         mainContents.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -210,10 +217,14 @@ public class MainActivity extends AppCompatActivity
             hosting.setImageResource(R.drawable.icon_hosting);
             profileBtn.setImageResource(R.drawable.user_black);
 
+            txtHome.setTextColor(getResources().getColor(R.color.red));
+            txtHosting.setTextColor(getResources().getColor(R.color.gray));
+            txtProfile.setTextColor(getResources().getColor(R.color.gray));
+
             //set enable
-            racesBtn.setEnabled(false);
-            hosting.setEnabled(true);
-            profileBtn.setEnabled(true);
+            racesBtnLayout.setEnabled(false);
+            hostingLayout.setEnabled(true);
+            profileBtnLayout.setEnabled(true);
         }
         else if(position == 1){
             title.setText("Quản Trị");
@@ -221,20 +232,28 @@ public class MainActivity extends AppCompatActivity
             hosting.setImageResource(R.drawable.icon_hosting_red);
             profileBtn.setImageResource(R.drawable.user_black);
 
+            txtHome.setTextColor(getResources().getColor(R.color.gray));
+            txtHosting.setTextColor(getResources().getColor(R.color.red));
+            txtProfile.setTextColor(getResources().getColor(R.color.gray));
+
             //set enable
-            racesBtn.setEnabled(true);
-            hosting.setEnabled(false);
-            profileBtn.setEnabled(true);
+            racesBtnLayout.setEnabled(true);
+            hostingLayout.setEnabled(false);
+            profileBtnLayout.setEnabled(true);
         }else if(position == 2){
             title.setText("Thông Tin Cá Nhân");
             racesBtn.setImageResource(R.drawable.home_black);
             hosting.setImageResource(R.drawable.icon_hosting);
             profileBtn.setImageResource(R.drawable.user_red);
 
+            txtHome.setTextColor(getResources().getColor(R.color.gray));
+            txtHosting.setTextColor(getResources().getColor(R.color.gray));
+            txtProfile.setTextColor(getResources().getColor(R.color.red));
+
             //set enable
-            racesBtn.setEnabled(true);
-            hosting.setEnabled(true);
-            profileBtn.setEnabled(false);
+            racesBtnLayout.setEnabled(true);
+            hostingLayout.setEnabled(true);
+            profileBtnLayout.setEnabled(false);
         }
     }
 
@@ -247,15 +266,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.message_icon:
                 //message screen and its business
                 break;
-            case R.id.racesBtn:
+            case R.id.racesBtnLayout:
                 mainContents.setCurrentItem(0);
                 viewPagerTabChanged(0);
                 break;
-            case R.id.hosting:
+            case R.id.hostingLayout:
                 mainContents.setCurrentItem(1);
                 viewPagerTabChanged(1);
                 break;
-            case R.id.profileBtn:
+            case R.id.profileBtnLayout:
                 mainContents.setCurrentItem(2);
                 viewPagerTabChanged(2);
                 break;
