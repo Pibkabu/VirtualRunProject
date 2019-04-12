@@ -19,6 +19,7 @@ import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Date;
 import java.util.List;
@@ -102,6 +103,9 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
                 onSwipeButtonClickAdapter.onCancelClick(position);
             }
         });
+
+        PushDownAnim.setPushDownAnimTo(holder.editRaceBtn);
+        PushDownAnim.setPushDownAnimTo(holder.cancelRace);
 
     }
 

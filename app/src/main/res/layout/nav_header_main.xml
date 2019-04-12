@@ -34,13 +34,6 @@
             android:textStyle="bold"
             android:text="Pibkabu" />
 
-        <TextView
-            android:id="@+id/user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="ID: 311015" />
-
     </LinearLayout>
 
 </LinearLayout>

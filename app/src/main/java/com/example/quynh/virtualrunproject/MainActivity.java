@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawer;
     private ImageView racesBtn, profileBtn, hosting;
-    private ImageView menu, message;
+    private ImageView menu;
     private ImageView userProfilePic;
-    private TextView userDisplayName, userId;
+    private TextView userDisplayName;
     private ViewPager mainContents;
     private FragmentScreensAdapter adapter;
     private UserAccountPrefs accountPrefs;
@@ -93,12 +93,9 @@ public class MainActivity extends AppCompatActivity
         title.setText("Trang Chủ");
 
         userDisplayName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_display_name);
-        userId = (TextView) navigationView.getHeaderView(0).findViewById(R.id.user_id);
         userProfilePic = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.user_profile_pic);
         menu = (ImageView) findViewById(R.id.menu_btn);
         menu.setVisibility(View.VISIBLE);
-        message = (ImageView) findViewById(R.id.message_icon);
-        message.setVisibility(View.VISIBLE);
         mainContents = (ViewPager) findViewById(R.id.mainContents);
         racesBtn = (ImageView) findViewById(R.id.racesBtn);
         profileBtn = (ImageView) findViewById(R.id.profileBtn);
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity
 
     private void setupAction() {
         menu.setOnClickListener(this);
-        message.setOnClickListener(this);
         adapter = new FragmentScreensAdapter(getSupportFragmentManager());
         setupViewPager(mainContents);
         racesBtnLayout.setOnClickListener(this);
@@ -181,7 +177,6 @@ public class MainActivity extends AppCompatActivity
                             }
                             userProfilePic.setImageResource(0);
                             userDisplayName.setText("");
-                            userId.setText("");
                             accountPrefs.saveUserLogin("");
                             profilePrefs.saveUserProfile("");
                             Intent intent = new Intent(MainActivity.this, LoginScreen.class);
@@ -262,9 +257,6 @@ public class MainActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.menu_btn:
                 drawer.openDrawer(GravityCompat.START);
-                break;
-            case R.id.message_icon:
-                //message screen and its business
                 break;
             case R.id.racesBtnLayout:
                 mainContents.setCurrentItem(0);

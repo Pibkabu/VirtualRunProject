@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.facebooksdk.FacebookLogin;
+import com.example.quynh.virtualrunproject.functionscreen.adminscreens.AdminMainScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.RegisterScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ResetPasswordScreen;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
@@ -57,8 +58,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private void checkUserLogin() {
         UserAccountPrefs prefs = new UserAccountPrefs(this);
         String userAccount = prefs.getUserAccount();
-        if(!userAccount.equalsIgnoreCase("")){
-            Intent intent = new Intent(this, MainActivity.class);
+        if (!userAccount.equalsIgnoreCase("")) {
+
+            Gson gson = new Gson();
+            UserAccount account = gson.fromJson(userAccount, UserAccount.class);
+            Intent intent;
+            if (account.isAccountRole()) {
+                intent = new Intent(this, AdminMainScreen.class);
+            } else {
+                intent = new Intent(this, MainActivity.class);
+            }
             startActivity(intent);
             finish();
         }
@@ -85,7 +94,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                         @Override
                                         public void onReceive(JSONObject response) {
                                             account = gson.fromJson(response.toString(), UserAccount.class);
-                                            if(account.getUserId() != 0){
+                                            if (account.getUserId() != 0) {
                                                 //if there are account with the same email
                                                 accountPrefs.saveUserLogin(gson.toJson(account));
                                                 UserProfileServices.getUserProfileWithId(account.getUserId(), LoginScreen.this, new OnReceiveResponse() {
@@ -96,7 +105,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                                         finish();
                                                     }
                                                 });
-                                            }else{
+                                            } else {
                                                 //if there are no account with the same email
                                                 //add account to database
                                                 account.setEmail(email);
@@ -112,7 +121,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                             }
                                         }
                                     });
-                                }catch (Exception ex){
+                                } catch (Exception ex) {
                                     Log.e("LoginScreen", "responeResult: ", ex);
                                 }
                             }
@@ -153,18 +162,18 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         Intent intent = null;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.fbLoginBtn:
                 LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"));
                 break;
             case R.id.normLoginBtn:
                 String email = emailtext.getText().toString();
                 String password = passwordtext.getText().toString();
-                if(email.equalsIgnoreCase("")){
+                if (email.equalsIgnoreCase("")) {
                     emailtext.setError("This does not filled yet");
-                }else if(password.equalsIgnoreCase("")){
+                } else if (password.equalsIgnoreCase("")) {
                     passwordtext.setError("This does not filled yet");
-                }else{
+                } else {
                     UserAccount account = new UserAccount();
                     account.setEmail(email);
                     account.setPassword(password);
@@ -173,19 +182,26 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         public void onReceive(JSONObject response) {
                             final Gson gson = new Gson();
                             UserAccount responeAcc = gson.fromJson(response.toString(), UserAccount.class);
-                            if(responeAcc.getUserId() != 0){
+                            if (responeAcc.getUserId() != 0) {
+                                if (responeAcc.isAccountRole()) {
+                                    Intent intent1 = new Intent(LoginScreen.this, AdminMainScreen.class);
+                                    startActivity(intent1);
+                                    finish();
+                                } else {
+                                    UserProfileServices.getUserProfileWithId(responeAcc.getUserId(), LoginScreen.this, new OnReceiveResponse() {
+                                        @Override
+                                        public void onReceive(JSONObject response) {
+                                            profilePrefs.saveUserProfile(response.toString());
+                                            Log.d("CHECKRESULT", "onReceive: " + response);
+                                            Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
+                                            startActivity(intent1);
+                                            finish();
+                                        }
+                                    });
+                                }
                                 accountPrefs.saveUserLogin(response.toString());
-                                UserProfileServices.getUserProfileWithId(responeAcc.getUserId(), LoginScreen.this, new OnReceiveResponse() {
-                                    @Override
-                                    public void onReceive(JSONObject response) {
-                                        profilePrefs.saveUserProfile(response.toString());
-                                        Log.d("CHECKRESULT", "onReceive: " + response);
-                                        Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
-                                        startActivity(intent1);
-                                        finish();
-                                    }
-                                });
-                            }else{
+
+                            } else {
                                 Toast.makeText(LoginScreen.this, "Your email or password is incorrect", Toast.LENGTH_LONG).show();
                             }
                         }

@@ -73,7 +73,11 @@
             android:name="com.sweetzpot.stravazpot.authenticaton.ui.StravaLoginActivity"
             android:label="@string/login_strava" />
         <activity android:name=".functionscreen.useraccountandprofile.GetVerifyCodeScreen" />
-        <activity android:name=".functionscreen.hosting.RaceResultScreen"></activity>
+        <activity android:name=".functionscreen.hosting.RaceResultScreen" />
+        <activity
+            android:name=".functionscreen.adminscreens.AdminMainScreen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".functionscreen.adminscreens.EndedRacesScreen"></activity>
     </application>
 
 </manifest>

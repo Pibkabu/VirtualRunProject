@@ -132,7 +132,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="16dp"
-                android:text="Quãng đường" />
+                android:text="Quãng đường (km)" />
 
             <EditText
                 android:id="@+id/race_distance"
@@ -176,16 +176,68 @@
                 android:background="@drawable/edittext_border"
                 android:inputType="text|textMultiLine" />
 
+            <CheckBox
+                android:id="@+id/checkbox_donation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mở Quên Góp"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="Tên Tài Khoản: " />
+
+                    <EditText
+                        android:id="@+id/account_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:enabled="false"/>
+
+                </TableRow>
+
+                <TableRow android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/black"
+                        android:text="Số Tài Khoản: " />
+
+                    <EditText
+                        android:id="@+id/account_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:enabled="false"/>
+
+                </TableRow>
+
+            </TableLayout>
+
             <Button
                 android:id="@+id/save_btn"
                 android:background="@drawable/round_corner_button_red"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:text="Lưu" />
+                android:text="Lưu"/>
 
         </LinearLayout>
     </ScrollView>
