@@ -120,6 +120,29 @@ public class RaceServices {
         AppController.getInstance().addToRequestQueue(customRequest);
     }
 
+    public static void getALlEndedRaces(final Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/races/ended/all";
+        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+                Log.d("RaceServices", "onResponse: " + error);
+                Toast.makeText(context, "Service Error, There's something wrong getOngoingRaces", Toast.LENGTH_LONG).show();
+                //dialog
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
+
     public static void createRace(Race race, int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();

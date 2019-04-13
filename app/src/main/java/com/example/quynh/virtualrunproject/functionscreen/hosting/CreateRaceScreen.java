@@ -219,6 +219,9 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onReceive(JSONObject response) {
                             if(response != null){
+                                Gson gson1 = new Gson();
+                                Race race1 = gson1.fromJson(response.toString(), Race.class);
+                                Log.d("CheckPath", "onReceive: " + race1.getDescription() + race1.getRaceId());
                                 setResult(RESULT_OK);
                                 finish();
                             }

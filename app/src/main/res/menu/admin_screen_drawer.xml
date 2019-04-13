@@ -6,7 +6,7 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/create_race"
-            android:title="Tạp đường chạy" />
+            android:title="Tạo đường chạy" />
         <item
             android:id="@+id/view_races_result"
             android:title="Xem kết quả đường chạy" />

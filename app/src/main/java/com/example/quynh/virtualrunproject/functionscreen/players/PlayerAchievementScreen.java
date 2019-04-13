@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.PlayerAchievementAdapter;
@@ -31,6 +32,8 @@ public class PlayerAchievementScreen extends AppCompatActivity {
     }
 
     private void setupView() {
+        TextView title = (TextView) findViewById(R.id.toolbar_title);
+        title.setText("Thành Tích");
         achievementsList = (RecyclerView) findViewById(R.id.achievements_list);
         records = new ArrayList<>();
         Intent intent = getIntent();

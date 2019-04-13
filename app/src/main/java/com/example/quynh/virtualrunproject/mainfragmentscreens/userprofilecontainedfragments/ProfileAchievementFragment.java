@@ -92,7 +92,7 @@ public class ProfileAchievementFragment extends Fragment {
                     numberOf1st.setText(String.valueOf(numberOf1stMedals));
                     numberOf2nd.setText(String.valueOf(numberOf2ndMedals));
                     numberOf3rd.setText(String.valueOf(numberOf3rdMedals));
-                    txtDistance.setText("Khoảng cách: " + totalDistance + "(km)");
+                    txtDistance.setText("Khoảng cách: " + totalDistance + " (km)");
                 }
             }
         });

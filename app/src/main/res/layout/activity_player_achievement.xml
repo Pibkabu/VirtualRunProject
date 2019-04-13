@@ -28,18 +28,6 @@
                 android:textSize="18dp"
                 android:text="Achievements"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:gravity="center"
-                android:textColor="@color/gray"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:text="Featured"/>
-
         </LinearLayout>
 
         <LinearLayout

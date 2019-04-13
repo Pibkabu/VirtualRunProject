@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:gravity="center"
             android:textSize="14dp"
             android:text="Xếp hạng"/>
@@ -49,6 +50,7 @@
             android:layout_weight="3"
             android:textColor="@color/black"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="Người tham gia"/>
 
         <TextView
@@ -56,9 +58,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:gravity="center"
             android:textSize="14dp"
-            android:text="Kết quả"/>
+            android:text="Kết quả (km)"/>
 
         <TextView
             android:layout_width="0dp"
@@ -66,8 +69,9 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:gravity="center"
+            android:textStyle="bold"
             android:textSize="14dp"
-            android:text="Thời gian"/>
+            android:text="Thời gian (phút)"/>
 
     </LinearLayout>
 
