@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.helper.EmailSender;
@@ -51,6 +52,8 @@ public class GetVerifyCodeScreen extends AppCompatActivity {
                 if(code.equalsIgnoreCase(verifyCode.getText().toString())){
                     setResult(RESULT_OK);
                     finish();
+                }else{
+                    Toast.makeText(GetVerifyCodeScreen.this, "Mã xác nhận không chính xác", Toast.LENGTH_LONG).show();
                 }
             }
         });

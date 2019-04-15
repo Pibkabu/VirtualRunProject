@@ -78,16 +78,6 @@ public class OngoingRunFragment extends Fragment{
             @Override
             public void onCancelClick(int position) {
                 cancelRace(races.get(position));
-//                HostingServices.cancelHosting(races.get(position).getRaceId(), getActivity(), new OnReceiveResponse() {
-//                    @Override
-//                    public void onReceive(JSONObject response) {
-//                        Gson gson = new Gson();
-//                        UserHost host = gson.fromJson(response.toString(), UserHost.class);
-//                        if(host.getUserAndRaceMaped().getRaceId() == 0){
-//                            resetFragment();
-//                        }
-//                    }
-//                });
             }
         });
     }

@@ -13,6 +13,7 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -55,12 +56,12 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
         holder.raceTitle.setText(races.get(position).getName());
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
-        String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Vietnam time";
-        String endTime = DateFormatHandler.dateToString("dd MMM", endDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
+        String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
+        String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
 
-        holder.startTime.setText(startTime + " TO");
+        holder.startTime.setText(startTime + " Đến");
         holder.endTime.setText(endTime);
 
         Calendar calendar = Calendar.getInstance();
@@ -75,6 +76,8 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
                 listener.OnButtonClick(position);
             }
         });
+
+        PushDownAnim.setPushDownAnimTo(holder.sendResultBtn);
     }
 
     @Override

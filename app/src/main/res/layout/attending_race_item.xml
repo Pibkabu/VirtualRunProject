@@ -41,19 +41,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/red"
-            android:text="You can send result when the race begin"
+            android:text="Bạn chỉ có thể gửi kết quả khi đường chạy bắt đầu"
             android:visibility="gone"/>
 
         <Button
             android:id="@+id/send_result_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:background="@drawable/round_corner_button_red"
-            android:text="Send Result with Strava"/>
+            android:text="Gửi Kết Quả"/>
 
     </RelativeLayout>
 

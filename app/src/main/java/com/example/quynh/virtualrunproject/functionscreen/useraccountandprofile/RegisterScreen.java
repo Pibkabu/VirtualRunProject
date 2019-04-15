@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
@@ -96,20 +97,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 final Gson gson = new Gson();
                 UserAccount account = gson.fromJson(response.toString(), UserAccount.class);
                 if (account.getUserId() != 0) {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(RegisterScreen.this, android.R.style.Theme_Material_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(RegisterScreen.this);
-                    }
-                    builder.setTitle("Register")
-                            .setMessage("The email already used")
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                    Toast.makeText(RegisterScreen.this, "Email đã có người sử dụng", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent1 = new Intent(RegisterScreen.this, GetVerifyCodeScreen.class);
                     intent1.putExtra("email", email);
@@ -130,11 +118,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 String password = signUpPassword.getText().toString();
                 String confirmPassword = signUpConfirmPassword.getText().toString();
                 if (email.equalsIgnoreCase("")) {
-                    signUpEmail.setError("This does not filled yet");
+                    signUpEmail.setError("Thông tin bắt buộc");
                 } else if (password.equalsIgnoreCase("")) {
-                    signUpPassword.setError("This does not filled yet");
+                    signUpPassword.setError("Thông tin bắt buộc");
                 } else if (confirmPassword.equalsIgnoreCase("") || !confirmPassword.equals(password)) {
-                    signUpConfirmPassword.setError("This need to be the same as your password");
+                    signUpConfirmPassword.setError("Xác nhận mật khẩu phải trùng với mật khẩu của bạn");
                 } else {
                     checkEmail(email);
                 }

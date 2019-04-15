@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,6 +24,7 @@ import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -59,6 +61,10 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
         title.setText("Chỉnh sửa thông tin đường chạy");
         backBtn = (ImageView) findViewById(R.id.back_btn);
         backBtn.setVisibility(View.VISIBLE);
+        choosePictureBtn = (LinearLayout) findViewById(R.id.choose_picture_btn);
+        choosePictureBtn.setVisibility(View.GONE);
+        TextView choosePicture = (TextView) findViewById(R.id.choose_picture);
+        choosePicture.setVisibility(View.GONE);
 
         raceName = (EditText) findViewById(R.id.race_name);
         raceDistance = (EditText) findViewById(R.id.race_distance);
@@ -69,6 +75,8 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
         pictureName = (TextView) findViewById(R.id.picture_name);
         choosePictureBtn = (LinearLayout) findViewById(R.id.choose_picture_btn);
         confirmEditRaceBtn = (Button) findViewById(R.id.save_btn);
+
+        PushDownAnim.setPushDownAnimTo(confirmEditRaceBtn);
     }
 
     private void setupRaceInfo(){
@@ -121,8 +129,9 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
     }
 
     private void editRace(){
-        Race race = new Race();
-        race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+        Gson gson = new Gson();
+        Intent intent = getIntent();
+        Race race = gson.fromJson(intent.getStringExtra("race"), Race.class);
         Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
         race.setStartTime(new Timestamp(date.getTime()));
         date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
@@ -173,17 +182,15 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.save_btn:
                 if(raceName.getText().toString().equalsIgnoreCase("")){
-                    raceName.setError("This does not filled yet");
+                    raceName.setError("Thông tin bắt buộc");
                 }else if(raceDistance.getText().toString().equalsIgnoreCase("")){
-                    raceDistance.setError("This does not filled yet");
+                    raceDistance.setError("Thông tin bắt buộc");
                 }else if(raceRegulation.getText().toString().equalsIgnoreCase("")){
-                    raceRegulation.setError("This does not filled yet");
+                    raceRegulation.setError("Thông tin bắt buộc");
                 }else if(raceDescription.getText().toString().equalsIgnoreCase("")){
-                    raceDescription.setError("This does not filled yet");
-                }else if(pictureName.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(this, "You need to choose the race's picture", Toast.LENGTH_LONG).show();
+                    raceDescription.setError("Thông tin bắt buộc");
                 }else if(!checkPickedDate()){
-                    Toast.makeText(this, "You need to choose a legal date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Bạn cần chọn lại thời gian phù hợp", Toast.LENGTH_LONG).show();
                 }else{
                     editRace();
                 }

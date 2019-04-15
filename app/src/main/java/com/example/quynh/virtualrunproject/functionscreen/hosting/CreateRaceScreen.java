@@ -35,6 +35,7 @@ import com.example.quynh.virtualrunproject.services.DonateAccountServices;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -96,6 +97,9 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
         accountNumber = (EditText) findViewById(R.id.account_number);
         racePassword = (EditText) findViewById(R.id.race_password);
         confirmCreateRaceBtn = (Button) findViewById(R.id.save_btn);
+
+        PushDownAnim.setPushDownAnimTo(choosePictureBtn);
+        PushDownAnim.setPushDownAnimTo(confirmCreateRaceBtn);
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -281,13 +285,13 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.save_btn:
                 if(raceName.getText().toString().equalsIgnoreCase("")){
-                    raceName.setError("This does not filled yet");
+                    raceName.setError("Thông tin bắt buộc");
                 }else if(raceDistance.getText().toString().equalsIgnoreCase("")){
-                    raceDistance.setError("This does not filled yet");
+                    raceDistance.setError("Thông tin bắt buộc");
                 }else if(raceRegulation.getText().toString().equalsIgnoreCase("")){
-                    raceRegulation.setError("This does not filled yet");
+                    raceRegulation.setError("Thông tin bắt buộc");
                 }else if(raceDescription.getText().toString().equalsIgnoreCase("")){
-                    raceDescription.setError("This does not filled yet");
+                    raceDescription.setError("Thông tin bắt buộc");
                 }else if(pictureName.getText().toString().equalsIgnoreCase("")){
                     Toast.makeText(this, "Bận cần chọn ảnh cho đường chạy", Toast.LENGTH_LONG).show();
                 }else if(!checkPickedDate()){

@@ -58,18 +58,23 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.raceTitle.setText(races.get(position).getName());
-        holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Runners have joined the race");
+        String password  = races.get(position).getRacePassword().trim();
+        if(!password.equalsIgnoreCase("")){
+            holder.raceLock.setVisibility(View.VISIBLE);
+        }
+
+        holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Người tham gia cuộc đua");
 
         Log.d("TestImageAdapter", "setupRaceInfo: " + races.get(position).getRaceImage());
         Glide.with(context).load(races.get(position).getRaceImage()).into(holder.raceImage);
 
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
-        final String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Vietnam time";
-        final String endTime = DateFormatHandler.dateToString("dd MMM", endDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
-        holder.startAndEndTime.setText(startTime + " to " + endTime);
+        final String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
+        final String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
+        holder.startAndEndTime.setText(startTime + " đến " + endTime);
 
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +94,7 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
         private TextView numberOfPlayers;
         private TextView startAndEndTime;
         private ImageView raceImage;
+        private ImageView raceLock;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -96,6 +102,7 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
             this.numberOfPlayers = (TextView) itemView.findViewById(R.id.number_of_players);
             this.startAndEndTime = (TextView) itemView.findViewById(R.id.start_and_end_time);
             this.raceImage = (ImageView) itemView.findViewById(R.id.race_image);
+            this.raceLock = (ImageView) itemView.findViewById(R.id.race_lock);
         }
     }
 }

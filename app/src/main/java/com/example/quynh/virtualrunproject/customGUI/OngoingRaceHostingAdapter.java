@@ -63,17 +63,20 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
     @Override
     public void onBindViewHolder(@NonNull OngoingRaceHostingAdapter.ViewHolder holder, final int position) {
         holder.raceTitle.setText(races.get(position).getName());
-        holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Runners have joined the race");
-
+        holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Người tham gia cuộc đua");
+        String password  = races.get(position).getRacePassword().trim();
+        if(!password.equalsIgnoreCase("")){
+            holder.raceLock.setVisibility(View.VISIBLE);
+        }
         Glide.with(context).load(races.get(position).getRaceImage()).into(holder.raceImage);
 
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
-        final String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Vietnam time";
-        final String endTime = DateFormatHandler.dateToString("dd MMM", endDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
-        holder.startAndEndTime.setText(startTime + " to " + endTime);
+        final String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
+        final String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
+        holder.startAndEndTime.setText(startTime + " đến " + endTime);
 
         //Image setting will be dealt with later
         holder.raceImage.setOnClickListener(new View.OnClickListener() {
@@ -81,9 +84,6 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
             public void onClick(View v) {
                 Intent intent = new Intent(context, RaceDetailScreen.class);
                 //transfer race's information
-                intent.putExtra("race", races.get(position));
-                intent.putExtra("startTime", races.get(position).getStartTime().toString());
-                intent.putExtra("endTime", races.get(position).getEndTime().toString());
                 Gson gson = new Gson();
                 intent.putExtra("raceString", gson.toJson(races.get(position)));
                 context.startActivity(intent);
@@ -121,6 +121,7 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
         private ImageView raceImage;
         private ImageView editRaceBtn;
         private ImageView cancelRace;
+        private ImageView raceLock;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -130,6 +131,7 @@ public class OngoingRaceHostingAdapter extends RecyclerView.Adapter<OngoingRaceH
             this.raceImage = (ImageView) itemView.findViewById(R.id.race_image);
             this.editRaceBtn = (ImageView) itemView.findViewById(R.id.edit_race_btn);
             this.cancelRace = (ImageView) itemView.findViewById(R.id.cancel_race);
+            this.raceLock = (ImageView) itemView.findViewById(R.id.race_lock);
         }
     }
 }

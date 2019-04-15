@@ -2,14 +2,18 @@ package com.example.quynh.virtualrunproject.functionscreen.race;
 import com.bumptech.glide.Glide;
 import com.example.quynh.virtualrunproject.R;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,18 +81,18 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         individual.setUserAndRaceMaped(new UserAndRaceMaped(account.getUserId(), race.getRaceId()));
         toolbarTitle.setText(race.getName());
         title.setText(race.getName());
-        numberOfPlayer.setText(race.getTotalPlayer() + " Runners have joined the race");
+        numberOfPlayer.setText(race.getTotalPlayer() + " Người tham gia cuộc đua");
 
         Log.d("TestImage", "setupRaceInfo: " + race.getRaceImage());
         Glide.with(this).load(race.getRaceImage()).into(raceImage);
 
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
-        String startTime = DateFormatHandler.dateToString("dd MMM", startDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Vietnam time";
-        String endTime = DateFormatHandler.dateToString("dd MMM", endDate) + " ("
-                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Vietnam time";
-        raceTime.setText(startTime + " to " + endTime);
+        String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
+        String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+                + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
+        raceTime.setText(startTime + " đến " + endTime);
         description.setText(race.getDescription());
         regulation.setText(race.getRegulation());
 
@@ -180,6 +184,48 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private void inputPassword(){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.input_dialog, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+
+        TextView labelText = (TextView) promptsView.findViewById(R.id.label_text);
+        labelText.setText("Mật Khẩu: ");
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input
+                                if(userInput.getText().toString().equals(race.getRacePassword())){
+                                    registerForRace();
+                                }else{
+                                    Toast.makeText(RaceDetailScreen.this, "Mật khẩu không chính xác", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        })
+                .setNegativeButton("Hủy",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
     private void getRaceDonateAccount(){
         DonateAccountServices.getRaceDonationRecord(race.getRaceId(), this, new OnReceiveResponse() {
             @Override
@@ -202,7 +248,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 if(player != null){
                     joinRaceBtn.setVisibility(View.GONE);
                     cancelRaceBtn.setVisibility(View.VISIBLE);
-                    Toast.makeText(RaceDetailScreen.this, "You just successfully register to this race", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RaceDetailScreen.this, "Bạn đã tham gia cuộc đua", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
                 }
@@ -219,7 +265,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 if(player != null){
                     joinRaceBtn.setVisibility(View.VISIBLE);
                     cancelRaceBtn.setVisibility(View.GONE);
-                    Toast.makeText(RaceDetailScreen.this, "Participation Canceled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RaceDetailScreen.this, "Bạn đã hủy đăng ký tham gia cuộc đua", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
                 }
@@ -231,7 +277,11 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.race_join_btn:
-                registerForRace();
+                if(!race.getRacePassword().trim().equalsIgnoreCase("")){
+                    inputPassword();
+                }else{
+                    registerForRace();
+                }
                 break;
             case R.id.race_cancel_btn:
                 cancelRegister();

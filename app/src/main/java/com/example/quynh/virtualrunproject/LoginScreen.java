@@ -205,9 +205,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 String email = emailtext.getText().toString();
                 String password = passwordtext.getText().toString();
                 if (email.equalsIgnoreCase("")) {
-                    emailtext.setError("This does not filled yet");
+                    emailtext.setError("Thông tin bắt buộc");
                 } else if (password.equalsIgnoreCase("")) {
-                    passwordtext.setError("This does not filled yet");
+                    passwordtext.setError("Thông tin bắt buộc");
                 } else {
                     login(email, password);
                 }

@@ -127,9 +127,9 @@ public class AttendingRaceFragment extends Fragment {
                 Gson gson = new Gson();
                 Player player = gson.fromJson(response.toString(), Player.class);
                 if(player.getRankInRace() == 0){
-                    Toast.makeText(getActivity(), "Your Travel Distance does not meet the race's requirement, please submit again with a better result", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Khoảng cách đường chạy bạn đã chạy phải lớn hơn hoặc bằng khoảng cách quy định của cuộc đua", Toast.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(getActivity(), "Your result has been sent", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Kết quả chạy của bạn đã được gửi thành công", Toast.LENGTH_LONG).show();
                     races.remove(race);
                     adapter.notifyDataSetChanged();
                 }

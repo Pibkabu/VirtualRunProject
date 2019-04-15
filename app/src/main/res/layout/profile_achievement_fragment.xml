@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:src="@drawable/icon_location" />
+                android:src="@drawable/icon_distance" />
 
             <TextView
                 android:id="@+id/txt_distance"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
-                android:src="@drawable/icon_signal" />
+                android:src="@drawable/icon_runs" />
 
             <TextView
                 android:id="@+id/txt_number_of_runs"
