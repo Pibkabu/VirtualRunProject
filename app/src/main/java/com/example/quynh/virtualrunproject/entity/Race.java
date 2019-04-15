@@ -21,6 +21,7 @@ public class Race implements Parcelable{
     private String description;
     private int totalPlayer;
     private String raceImage;
+    private String racePassword;
 
     public Race() {
     }
@@ -136,6 +137,14 @@ public class Race implements Parcelable{
 
     public void setRaceImage(String raceImage) {
         this.raceImage = raceImage;
+    }
+
+    public String getRacePassword() {
+        return racePassword;
+    }
+
+    public void setRacePassword(String racePassword) {
+        this.racePassword = racePassword;
     }
 
     @Override

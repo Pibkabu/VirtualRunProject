@@ -51,6 +51,28 @@ public class ProfileAchievementFragment extends Fragment {
         setupAction();
     }
 
+    private void setupUserInfo(List<Player> completedRecords){
+        txtNumberOfRuns.setText("Số đường chạy: " + completedRecords.size());
+        int numberOf1stMedals = 0;
+        int numberOf2ndMedals = 0;
+        int numberOf3rdMedals = 0;
+        int totalDistance = 0;
+        for (int i = 0; i < completedRecords.size(); i++){
+            totalDistance += completedRecords.get(i).getTravelDistance();
+            if(completedRecords.get(i).getRankInRace() == 1){
+                numberOf1stMedals++;
+            }else if(completedRecords.get(i).getRankInRace() == 2){
+                numberOf2ndMedals++;
+            }else if(completedRecords.get(i).getRankInRace() == 3){
+                numberOf3rdMedals++;
+            }
+        }
+        numberOf1st.setText(String.valueOf(numberOf1stMedals));
+        numberOf2nd.setText(String.valueOf(numberOf2ndMedals));
+        numberOf3rd.setText(String.valueOf(numberOf3rdMedals));
+        txtDistance.setText("Khoảng cách: " + totalDistance + " (km)");
+    }
+
     private void setupView(View view) {
         txtDistance = (TextView) view.findViewById(R.id.txt_distance);
         txtNumberOfRuns = (TextView) view.findViewById(R.id.txt_number_of_runs);
@@ -74,25 +96,7 @@ public class ProfileAchievementFragment extends Fragment {
                             completedRecords.add(player);
                         }
                     }
-                    txtNumberOfRuns.setText("Số đường chạy: " + completedRecords.size());
-                    int numberOf1stMedals = 0;
-                    int numberOf2ndMedals = 0;
-                    int numberOf3rdMedals = 0;
-                    int totalDistance = 0;
-                    for (int i = 0; i < completedRecords.size(); i++){
-                        totalDistance += completedRecords.get(i).getTravelDistance();
-                        if(completedRecords.get(i).getRankInRace() == 1){
-                            numberOf1stMedals++;
-                        }else if(completedRecords.get(i).getRankInRace() == 2){
-                            numberOf2ndMedals++;
-                        }else if(completedRecords.get(i).getRankInRace() == 3){
-                            numberOf3rdMedals++;
-                        }
-                    }
-                    numberOf1st.setText(String.valueOf(numberOf1stMedals));
-                    numberOf2nd.setText(String.valueOf(numberOf2ndMedals));
-                    numberOf3rd.setText(String.valueOf(numberOf3rdMedals));
-                    txtDistance.setText("Khoảng cách: " + totalDistance + " (km)");
+                    setupUserInfo(completedRecords);
                 }
             }
         });

@@ -193,40 +193,48 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private void registerForRace(){
+        PlayerServices.playerRegister(individual, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                Player player = gson.fromJson(response.toString(), Player.class);
+                if(player != null){
+                    joinRaceBtn.setVisibility(View.GONE);
+                    cancelRaceBtn.setVisibility(View.VISIBLE);
+                    Toast.makeText(RaceDetailScreen.this, "You just successfully register to this race", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void cancelRegister(){
+        PlayerServices.cancelRegister(individual, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                Player player = gson.fromJson(response.toString(), Player.class);
+                if(player != null){
+                    joinRaceBtn.setVisibility(View.VISIBLE);
+                    cancelRaceBtn.setVisibility(View.GONE);
+                    Toast.makeText(RaceDetailScreen.this, "Participation Canceled", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.race_join_btn:
-                PlayerServices.playerRegister(individual, this, new OnReceiveResponse() {
-                    @Override
-                    public void onReceive(JSONObject response) {
-                        Gson gson = new Gson();
-                        Player player = gson.fromJson(response.toString(), Player.class);
-                        if(player != null){
-                            joinRaceBtn.setVisibility(View.GONE);
-                            cancelRaceBtn.setVisibility(View.VISIBLE);
-                            Toast.makeText(RaceDetailScreen.this, "You just successfully register to this race", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                registerForRace();
                 break;
             case R.id.race_cancel_btn:
-                PlayerServices.cancelRegister(individual, this, new OnReceiveResponse() {
-                    @Override
-                    public void onReceive(JSONObject response) {
-                        Gson gson = new Gson();
-                        Player player = gson.fromJson(response.toString(), Player.class);
-                        if(player != null){
-                            joinRaceBtn.setVisibility(View.VISIBLE);
-                            cancelRaceBtn.setVisibility(View.GONE);
-                            Toast.makeText(RaceDetailScreen.this, "Participation Canceled", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                cancelRegister();
                 break;
             case R.id.txt_donation:
                 Intent intent = new Intent(this, RaceDonationScreen.class);

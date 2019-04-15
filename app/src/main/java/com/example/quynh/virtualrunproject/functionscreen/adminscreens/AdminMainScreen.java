@@ -27,6 +27,7 @@ import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -40,6 +41,9 @@ public class AdminMainScreen extends AppCompatActivity
     private UserProfilePrefs profilePrefs;
     private TextView numbersOfUsers;
     private TextView numbersOfRaces;
+    private ImageView adminPlus;
+    private ImageView adminRanking;
+    private ImageView adminManage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,9 @@ public class AdminMainScreen extends AppCompatActivity
 
     private void setupAction() {
         menu.setOnClickListener(this);
+        adminPlus.setOnClickListener(this);
+        adminRanking.setOnClickListener(this);
+        adminManage.setOnClickListener(this);
     }
 
     private void setupView() {
@@ -88,6 +95,13 @@ public class AdminMainScreen extends AppCompatActivity
 
         numbersOfUsers = (TextView) findViewById(R.id.numbers_of_users);
         numbersOfRaces = (TextView) findViewById(R.id.numbers_of_races);
+        adminPlus = (ImageView) findViewById(R.id.admin_plus);
+        adminRanking = (ImageView) findViewById(R.id.admin_ranking);
+        adminManage = (ImageView) findViewById(R.id.admin_manage);
+
+        PushDownAnim.setPushDownAnimTo(adminPlus);
+        PushDownAnim.setPushDownAnimTo(adminRanking);
+        PushDownAnim.setPushDownAnimTo(adminManage);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -148,9 +162,22 @@ public class AdminMainScreen extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.menu_btn:
                 drawer.openDrawer(GravityCompat.START);
+                break;
+            case R.id.admin_plus:
+                intent = new Intent(AdminMainScreen.this, CreateRaceScreen.class);
+                startActivityForResult(intent, 1);
+                break;
+            case R.id.admin_ranking:
+                intent = new Intent(AdminMainScreen.this, EndedRacesScreen.class);
+                startActivity(intent);
+                break;
+            case R.id.admin_manage:
+                intent = new Intent(AdminMainScreen.this, AdminCreatedRacesScreen.class);
+                startActivity(intent);
                 break;
         }
     }

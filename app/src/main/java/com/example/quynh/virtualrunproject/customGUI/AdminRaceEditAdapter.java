@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
 
@@ -46,7 +47,8 @@ public class AdminRaceEditAdapter extends RecyclerView.Adapter<AdminRaceEditAdap
         holder.raceName.setText(races.get(position).getName());
         holder.players.setText(races.get(position).getTotalPlayer() + " Người dùng đang tham gia");
         holder.createdTime.setText(races.get(position).getCreateTime().toString());
-
+        PushDownAnim.setPushDownAnimTo(holder.editRaceBtn);
+        PushDownAnim.setPushDownAnimTo(holder.cancelRace);
         holder.editRaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

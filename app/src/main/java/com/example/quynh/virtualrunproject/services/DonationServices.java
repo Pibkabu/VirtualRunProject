@@ -34,7 +34,7 @@ public class DonationServices {
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismiss();
                 Log.d("DonationService", "onResponse: " + error);
-                Toast.makeText(context, "Service Error, There's something wrong getRaceById", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong getRaceDonationRecord", Toast.LENGTH_LONG).show();
                 //dialog
             }
         });

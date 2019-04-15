@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,10 +26,12 @@ import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
+import com.example.quynh.virtualrunproject.entity.DonateAccount;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
+import com.example.quynh.virtualrunproject.services.DonateAccountServices;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
@@ -40,7 +44,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CreateRaceScreen extends AppCompatActivity implements View.OnClickListener{
+public class CreateRaceScreen extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
     private EditText raceName, raceDistance, raceDescription, raceRegulation;
     private TextView pictureName, raceStartTime, raceEndTime;
@@ -49,6 +53,9 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
     private ImageView backBtn;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     private String raceImage;
+
+    private CheckBox checkboxDonation, checkboxPassword;
+    private EditText accountName, accountNumber, racePassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,8 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
         choosePictureBtn.setOnClickListener(this);
         raceStartTime.setOnClickListener(this);
         raceEndTime.setOnClickListener(this);
+        checkboxPassword.setOnCheckedChangeListener(this);
+        checkboxDonation.setOnCheckedChangeListener(this);
     }
 
     private void setupView() {
@@ -81,6 +90,11 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
         raceEndTime = (TextView) findViewById(R.id.race_end_time);
         pictureName = (TextView) findViewById(R.id.picture_name);
         choosePictureBtn = (LinearLayout) findViewById(R.id.choose_picture_btn);
+        checkboxDonation = (CheckBox) findViewById(R.id.checkbox_donation);
+        checkboxPassword = (CheckBox) findViewById(R.id.checkbox_password);
+        accountName = (EditText) findViewById(R.id.account_name);
+        accountNumber = (EditText) findViewById(R.id.account_number);
+        racePassword = (EditText) findViewById(R.id.race_password);
         confirmCreateRaceBtn = (Button) findViewById(R.id.save_btn);
 
         Calendar calendar = Calendar.getInstance();
@@ -152,10 +166,89 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
         Date startTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
         Date endTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
         Calendar calendar = Calendar.getInstance();
-        if(startTime.getTime() < calendar.getTimeInMillis() || endTime.getTime() < startTime.getTime()){
+        if(startTime.getTime() < calendar.getTimeInMillis() || endTime.getTime() < startTime.getTime() || endTime.getTime() == startTime.getTime()){
             return false;
         }
         return true;
+    }
+
+    private boolean checkDonate(){
+        if(checkboxDonation.isChecked()){
+            if(accountName.getText().toString().equalsIgnoreCase("")){
+                accountName.setError("This does not filled yet");
+                return false;
+            }else if(accountNumber.getText().toString().equalsIgnoreCase("")){
+                accountNumber.setError("This does not filled yet");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkPassword(){
+        if(checkboxPassword.isChecked()){
+            if(racePassword.getText().toString().equalsIgnoreCase("")){
+                racePassword.setError("This does not filled yet");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void addDonateAccount(int raceId){
+        DonateAccount account = new DonateAccount();
+        account.setRaceId(raceId);
+        account.setAccountName(accountName.getText().toString());
+        account.setAccountNumber(accountNumber.getText().toString());
+
+        DonateAccountServices.addDonateAccount(account, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                if(gson.fromJson(response.toString(), DonateAccount.class).getRaceId() != 0){
+                    Toast.makeText(CreateRaceScreen.this, "Tài khoản quyên góp đã thêm thành công", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void createHostingRace(){
+        Race race = new Race();
+        race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+        Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
+        race.setStartTime(new Timestamp(date.getTime()));
+        date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
+        race.setEndTime(new Timestamp(date.getTime()));
+        race.setName(raceName.getText().toString());
+        race.setDistance(Double.valueOf(raceDistance.getText().toString()));
+        race.setRegulation(raceRegulation.getText().toString());
+        race.setDescription(raceDescription.getText().toString());
+        race.setRaceImage(raceImage);
+
+        if(checkboxPassword.isChecked()){
+            race.setRacePassword(racePassword.getText().toString());
+        }else{
+            race.setRacePassword("");
+        }
+
+        UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
+        final Gson gson = new Gson();
+        UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+        RaceServices.createRace(race, account.getUserId(), this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                if(response != null){
+                    Race race1 = gson.fromJson(response.toString(), Race.class);
+                    if(race1.getRaceId() != 0){
+                        if(checkboxDonation.isChecked()){
+                            addDonateAccount(race1.getRaceId());
+                        }
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -196,37 +289,37 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                 }else if(raceDescription.getText().toString().equalsIgnoreCase("")){
                     raceDescription.setError("This does not filled yet");
                 }else if(pictureName.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(this, "You need to choose the race's picture", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Bận cần chọn ảnh cho đường chạy", Toast.LENGTH_LONG).show();
                 }else if(!checkPickedDate()){
-                    Toast.makeText(this, "You need to choose a legal date", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Bạn cần chọn lại thời gian phù hợp", Toast.LENGTH_LONG).show();
+                }else if(!checkDonate()){
+                    Toast.makeText(this, "Bạn cần điền đầy đủ thông tin số tài khoản", Toast.LENGTH_LONG).show();
+                }else if(!checkPassword()){
+                    Toast.makeText(this, "Bạn cần bổ sung mật khẩu", Toast.LENGTH_LONG).show();
                 }else{
-                    Race race = new Race();
-                    race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                    Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
-                    race.setStartTime(new Timestamp(date.getTime()));
-                    date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
-                    race.setEndTime(new Timestamp(date.getTime()));
-                    race.setName(raceName.getText().toString());
-                    race.setDistance(Double.valueOf(raceDistance.getText().toString()));
-                    race.setRegulation(raceRegulation.getText().toString());
-                    race.setDescription(raceDescription.getText().toString());
-                    race.setRaceImage(raceImage);
+                    createHostingRace();
+                }
+                break;
+        }
+    }
 
-                    UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
-                    Gson gson = new Gson();
-                    UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-                    RaceServices.createRace(race, account.getUserId(), this, new OnReceiveResponse() {
-                        @Override
-                        public void onReceive(JSONObject response) {
-                            if(response != null){
-                                Gson gson1 = new Gson();
-                                Race race1 = gson1.fromJson(response.toString(), Race.class);
-                                Log.d("CheckPath", "onReceive: " + race1.getDescription() + race1.getRaceId());
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        }
-                    });
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()){
+            case R.id.checkbox_donation:
+                if(isChecked){
+                    accountName.setEnabled(true);
+                    accountNumber.setEnabled(true);
+                }else{
+                    accountName.setEnabled(false);
+                    accountNumber.setEnabled(false);
+                }
+                break;
+            case R.id.checkbox_password:
+                if(isChecked){
+                    racePassword.setEnabled(true);
+                }else{
+                    racePassword.setEnabled(false);
                 }
                 break;
         }

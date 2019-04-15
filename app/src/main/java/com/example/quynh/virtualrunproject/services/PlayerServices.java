@@ -107,7 +107,7 @@ public class PlayerServices {
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismiss();
                 Log.d("PlayerService", "onResponse: " + error);
-                Toast.makeText(context, "Service Error, There's something wrong getRaceParticipants", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong getFinishResult", Toast.LENGTH_LONG).show();
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);
@@ -188,7 +188,7 @@ public class PlayerServices {
                 //dialog
                 loadingDialog.dismiss();
                 Log.e("PlayerService", "onResponse: ", error);
-                Toast.makeText(context, "Service Error, There's something wrong cancelRegister", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong sendResult", Toast.LENGTH_LONG).show();
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);

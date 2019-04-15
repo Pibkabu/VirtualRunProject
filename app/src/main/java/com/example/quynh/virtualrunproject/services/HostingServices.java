@@ -89,7 +89,7 @@ public class HostingServices {
                 //dialog
                 loadingDialog.dismiss();
                 Log.e("PlayerService", "onResponse: ", error);
-                Toast.makeText(context, "Service Error, There's something wrong cancelRegister", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong cancelHosting", Toast.LENGTH_LONG).show();
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);

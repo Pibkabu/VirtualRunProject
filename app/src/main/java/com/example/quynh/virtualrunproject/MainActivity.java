@@ -172,16 +172,7 @@ public class MainActivity extends AppCompatActivity
                     .setMessage("Are you sure you want to log out ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if(LoginManager.getInstance() != null){
-                                LoginManager.getInstance().logOut();
-                            }
-                            userProfilePic.setImageResource(0);
-                            userDisplayName.setText("");
-                            accountPrefs.saveUserLogin("");
-                            profilePrefs.saveUserProfile("");
-                            Intent intent = new Intent(MainActivity.this, LoginScreen.class);
-                            startActivity(intent);
-                            finish();
+                        logout();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -195,6 +186,18 @@ public class MainActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout(){
+        if(LoginManager.getInstance() != null){
+            LoginManager.getInstance().logOut();
+        }
+        userDisplayName.setText("");
+        accountPrefs.saveUserLogin("");
+        profilePrefs.saveUserProfile("");
+        Intent intent = new Intent(MainActivity.this, LoginScreen.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setupViewPager(ViewPager viewPager) {

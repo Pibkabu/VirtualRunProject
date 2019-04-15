@@ -180,7 +180,7 @@
                 android:id="@+id/checkbox_donation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mở Quên Góp"/>
+                android:text="Mở Quyên Góp"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -227,6 +227,20 @@
                 </TableRow>
 
             </TableLayout>
+
+            <CheckBox
+                android:id="@+id/checkbox_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mật Khẩu"/>
+
+            <EditText
+                android:id="@+id/race_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:enabled="false"/>
 
             <Button
                 android:id="@+id/save_btn"

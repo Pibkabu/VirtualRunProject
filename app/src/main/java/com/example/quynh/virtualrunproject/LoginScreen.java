@@ -159,6 +159,41 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         forgotPassword.setOnClickListener(this);
     }
 
+    private void login(String email, String password){
+        UserAccount account = new UserAccount();
+        account.setEmail(email);
+        account.setPassword(password);
+        UserAccountServices.accountLogin(account, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                final Gson gson = new Gson();
+                UserAccount responeAcc = gson.fromJson(response.toString(), UserAccount.class);
+                if (responeAcc.getUserId() != 0) {
+                    if (responeAcc.isAccountRole()) {
+                        Intent intent1 = new Intent(LoginScreen.this, AdminMainScreen.class);
+                        startActivity(intent1);
+                        finish();
+                    } else {
+                        UserProfileServices.getUserProfileWithId(responeAcc.getUserId(), LoginScreen.this, new OnReceiveResponse() {
+                            @Override
+                            public void onReceive(JSONObject response) {
+                                profilePrefs.saveUserProfile(response.toString());
+                                Log.d("CHECKRESULT", "onReceive: " + response);
+                                Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
+                                startActivity(intent1);
+                                finish();
+                            }
+                        });
+                    }
+                    accountPrefs.saveUserLogin(response.toString());
+
+                } else {
+                    Toast.makeText(LoginScreen.this, "Your email or password is incorrect", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View view) {
         Intent intent = null;
@@ -174,38 +209,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 } else if (password.equalsIgnoreCase("")) {
                     passwordtext.setError("This does not filled yet");
                 } else {
-                    UserAccount account = new UserAccount();
-                    account.setEmail(email);
-                    account.setPassword(password);
-                    UserAccountServices.accountLogin(account, this, new OnReceiveResponse() {
-                        @Override
-                        public void onReceive(JSONObject response) {
-                            final Gson gson = new Gson();
-                            UserAccount responeAcc = gson.fromJson(response.toString(), UserAccount.class);
-                            if (responeAcc.getUserId() != 0) {
-                                if (responeAcc.isAccountRole()) {
-                                    Intent intent1 = new Intent(LoginScreen.this, AdminMainScreen.class);
-                                    startActivity(intent1);
-                                    finish();
-                                } else {
-                                    UserProfileServices.getUserProfileWithId(responeAcc.getUserId(), LoginScreen.this, new OnReceiveResponse() {
-                                        @Override
-                                        public void onReceive(JSONObject response) {
-                                            profilePrefs.saveUserProfile(response.toString());
-                                            Log.d("CHECKRESULT", "onReceive: " + response);
-                                            Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
-                                            startActivity(intent1);
-                                            finish();
-                                        }
-                                    });
-                                }
-                                accountPrefs.saveUserLogin(response.toString());
-
-                            } else {
-                                Toast.makeText(LoginScreen.this, "Your email or password is incorrect", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    login(email, password);
                 }
                 break;
             case R.id.txtSignUp:

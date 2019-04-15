@@ -135,7 +135,7 @@ public class RaceServices {
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.dismiss();
                 Log.d("RaceServices", "onResponse: " + error);
-                Toast.makeText(context, "Service Error, There's something wrong getOngoingRaces", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong getALlEndedRaces", Toast.LENGTH_LONG).show();
                 //dialog
             }
         });
@@ -191,7 +191,7 @@ public class RaceServices {
                 //dialog
                 loadingDialog.dismiss();
                 Log.e("RaceServices", "onResponse: ", error);
-                Toast.makeText(context, "Service Error, There's something wrong createRace", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Service Error, There's something wrong editRaceInfo", Toast.LENGTH_LONG).show();
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);

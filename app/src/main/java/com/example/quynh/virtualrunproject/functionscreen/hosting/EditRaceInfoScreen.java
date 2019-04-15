@@ -120,6 +120,29 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
         return true;
     }
 
+    private void editRace(){
+        Race race = new Race();
+        race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+        Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
+        race.setStartTime(new Timestamp(date.getTime()));
+        date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
+        race.setEndTime(new Timestamp(date.getTime()));
+        race.setName(raceName.getText().toString());
+        race.setDistance(Double.valueOf(raceDistance.getText().toString()));
+        race.setRegulation(raceRegulation.getText().toString());
+        race.setDescription(raceDescription.getText().toString());
+        //race.setRaceImage(raceImage);
+        RaceServices.editRaceInfo(race, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                if(response != null){
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -162,26 +185,7 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
                 }else if(!checkPickedDate()){
                     Toast.makeText(this, "You need to choose a legal date", Toast.LENGTH_LONG).show();
                 }else{
-                    Race race = new Race();
-                    race.setCreateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-                    Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
-                    race.setStartTime(new Timestamp(date.getTime()));
-                    date = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
-                    race.setEndTime(new Timestamp(date.getTime()));
-                    race.setName(raceName.getText().toString());
-                    race.setDistance(Double.valueOf(raceDistance.getText().toString()));
-                    race.setRegulation(raceRegulation.getText().toString());
-                    race.setDescription(raceDescription.getText().toString());
-                    //race.setRaceImage(raceImage);
-                    RaceServices.editRaceInfo(race, this, new OnReceiveResponse() {
-                        @Override
-                        public void onReceive(JSONObject response) {
-                            if(response != null){
-                                setResult(RESULT_OK);
-                                finish();
-                            }
-                        }
-                    });
+                    editRace();
                 }
                 break;
         }

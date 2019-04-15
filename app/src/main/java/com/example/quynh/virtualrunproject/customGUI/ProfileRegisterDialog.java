@@ -105,6 +105,38 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         datePickerDialog.show();
     }
 
+    private void addUserProfile(){
+        final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+        final UserProfile profile = new UserProfile();
+        profile.setUserId(account.getUserId());
+        profile.setDisplayName(txtDisplayName.getText().toString());
+        profile.setFirstName(txtFirstName.getText().toString());
+        profile.setLastName(txtLastName.getText().toString());
+        profile.setPhone(txtPhone.getText().toString());
+        //String DOB = bYear.getSelectedItem().toString() + "-" + bMonth.getSelectedItem().toString() + "-" + bday.getSelectedItem().toString();
+        String DOB = txtDateOfBirth.getText().toString();
+        Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", DOB);
+        Timestamp timestamp = new Timestamp(date.getTime());
+        Log.d("ADDPROFILE", "onClick: " + timestamp.toString());
+        profile.setDOB(timestamp);
+        if(gender.getSelectedItem().toString().equalsIgnoreCase("female")){
+            profile.setGender(false);
+        }else{
+            profile.setGender(true);
+        }
+        profile.setAddress(txtAddress.getText().toString());
+        UserProfileServices.addUserProfile(profile, context, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                if(gson.fromJson(response.toString(), UserProfile.class).getUserId() != 0){
+                    profilePrefs.saveUserProfile(gson.toJson(profile));
+                    dismiss();
+                }
+            }
+        });
+    }
+
     private void setupAction() {
         txtFirstName.setOnEditorActionListener(this);
         txtLastName.setOnEditorActionListener(this);
@@ -141,35 +173,7 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
                 }else if(txtAddress.getText().toString().equalsIgnoreCase("")){
                     txtAddress.setError("This does not filled yet");
                 }else{
-                    final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                    UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-                    final UserProfile profile = new UserProfile();
-                    profile.setUserId(account.getUserId());
-                    profile.setDisplayName(txtDisplayName.getText().toString());
-                    profile.setFirstName(txtFirstName.getText().toString());
-                    profile.setLastName(txtLastName.getText().toString());
-                    profile.setPhone(txtPhone.getText().toString());
-                    //String DOB = bYear.getSelectedItem().toString() + "-" + bMonth.getSelectedItem().toString() + "-" + bday.getSelectedItem().toString();
-                    String DOB = txtDateOfBirth.getText().toString();
-                    Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", DOB);
-                    Timestamp timestamp = new Timestamp(date.getTime());
-                    Log.d("ADDPROFILE", "onClick: " + timestamp.toString());
-                    profile.setDOB(timestamp);
-                    if(gender.getSelectedItem().toString().equalsIgnoreCase("female")){
-                        profile.setGender(false);
-                    }else{
-                        profile.setGender(true);
-                    }
-                    profile.setAddress(txtAddress.getText().toString());
-                    UserProfileServices.addUserProfile(profile, context, new OnReceiveResponse() {
-                        @Override
-                        public void onReceive(JSONObject response) {
-                            if(gson.fromJson(response.toString(), UserProfile.class).getUserId() != 0){
-                                profilePrefs.saveUserProfile(gson.toJson(profile));
-                                dismiss();
-                            }
-                        }
-                    });
+                    addUserProfile();
                 }
             }
         });

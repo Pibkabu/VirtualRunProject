@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="From"
+            android:text="Từ"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="To"
+            android:text="Đến"
             android:textColor="@color/black"
             android:textSize="18dp" />
 
@@ -98,7 +98,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/round_corner_button_red"
-            android:text="OK"
+            android:text="Lọc"
             android:textColor="@color/white" />
 
     </LinearLayout>

@@ -144,6 +144,37 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         datePickerDialog.show();
     }
 
+    private void update(){
+        final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+        final UserProfile profile = new UserProfile();
+        profile.setUserId(account.getUserId());
+        profile.setDisplayName(txtDisplayName.getText().toString());
+        profile.setFirstName(txtFirstName.getText().toString());
+        profile.setLastName(txtLastName.getText().toString());
+        profile.setPhone(txtPhone.getText().toString());
+        String DOB = txtDateOfBirth.getText().toString();
+        Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", DOB);
+        Timestamp timestamp = new Timestamp(date.getTime());
+        profile.setDOB(timestamp);
+        if(gender.getSelectedItem().toString().equalsIgnoreCase("female")){
+            profile.setGender(false);
+        }else{
+            profile.setGender(true);
+        }
+        profile.setAddress(txtAddress.getText().toString());
+        UserProfileServices.updateUserProfile(profile, ProfileChangeScreen.this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                if(gson.fromJson(response.toString(), UserProfile.class).getUserId() != 0){
+                    profilePrefs.saveUserProfile(gson.toJson(profile));
+                    setResult(RESULT_OK);
+                    finish();
+                }
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -165,34 +196,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
                 });
                 break;
             case R.id.update:
-                final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-                final UserProfile profile = new UserProfile();
-                profile.setUserId(account.getUserId());
-                profile.setDisplayName(txtDisplayName.getText().toString());
-                profile.setFirstName(txtFirstName.getText().toString());
-                profile.setLastName(txtLastName.getText().toString());
-                profile.setPhone(txtPhone.getText().toString());
-                String DOB = txtDateOfBirth.getText().toString();
-                Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", DOB);
-                Timestamp timestamp = new Timestamp(date.getTime());
-                profile.setDOB(timestamp);
-                if(gender.getSelectedItem().toString().equalsIgnoreCase("female")){
-                    profile.setGender(false);
-                }else{
-                    profile.setGender(true);
-                }
-                profile.setAddress(txtAddress.getText().toString());
-                UserProfileServices.updateUserProfile(profile, ProfileChangeScreen.this, new OnReceiveResponse() {
-                    @Override
-                    public void onReceive(JSONObject response) {
-                        if(gson.fromJson(response.toString(), UserProfile.class).getUserId() != 0){
-                            profilePrefs.saveUserProfile(gson.toJson(profile));
-                            setResult(RESULT_OK);
-                            finish();
-                        }
-                    }
-                });
+                update();
                 break;
             case R.id.update_cancel:
                 finish();
