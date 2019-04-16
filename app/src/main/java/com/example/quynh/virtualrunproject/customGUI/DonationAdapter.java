@@ -39,7 +39,7 @@ public class DonationAdapter extends RecyclerView.Adapter<DonationAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.donatorName.setText(infos.get(position).getProfile().getDisplayName());
         holder.donateDescription.setText(infos.get(position).getDonation().getDescription());
-        holder.money.setText("" + infos.get(position).getDonation().getMoney());
+        holder.money.setText("" + infos.get(position).getDonation().getMoney() + " VNĐ");
     }
 
     @Override

@@ -163,15 +163,15 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
             @Override
             public void onClick(View v) {
                 if(txtDisplayName.getText().toString().equalsIgnoreCase("")){
-                    txtDisplayName.setError("This does not filled yet");
+                    txtDisplayName.setError("Thông tin bắt buộc");
                 }else if(txtFirstName.getText().toString().equalsIgnoreCase("")){
-                    txtFirstName.setError("This does not filled yet");
+                    txtFirstName.setError("Thông tin bắt buộc");
                 }else if(txtLastName.getText().toString().equalsIgnoreCase("")){
-                    txtLastName.setError("This does not filled yet");
+                    txtLastName.setError("Thông tin bắt buộc");
                 }else if(txtPhone.getText().toString().equalsIgnoreCase("")){
-                    txtPhone.setError("This does not filled yet");
+                    txtPhone.setError("Thông tin bắt buộc");
                 }else if(txtAddress.getText().toString().equalsIgnoreCase("")){
-                    txtAddress.setError("This does not filled yet");
+                    txtAddress.setError("Thông tin bắt buộc");
                 }else{
                     addUserProfile();
                 }
