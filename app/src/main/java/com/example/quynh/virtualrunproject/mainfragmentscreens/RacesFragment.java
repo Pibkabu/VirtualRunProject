@@ -10,13 +10,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
@@ -39,7 +42,7 @@ import java.util.List;
  * Created by quynh on 12/26/2018.
  */
 
-public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, TextView.OnEditorActionListener {
 
     @Nullable
     @Override
@@ -54,6 +57,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private List<Race> races;
     private RacesAdapter adapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private EditText nameSearched;
+    private ImageView imgSearch;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -63,11 +68,13 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         getOngoingRaces();
     }
 
-    private void setupView(View view){
+    private void setupView(View view) {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         fromDistance = (EditText) view.findViewById(R.id.distance_from);
         toDistance = (EditText) view.findViewById(R.id.distance_to);
         filterBtn = (Button) view.findViewById(R.id.filter_btn);
+        nameSearched = (EditText) view.findViewById(R.id.name_searched);
+        imgSearch = (ImageView) view.findViewById(R.id.img_search);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.racesList);
         settingAdapter();
@@ -76,6 +83,14 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void setupAction() {
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchRaces(nameSearched.getText().toString());
+            }
+        });
+
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,11 +98,11 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
-                if(fromDistance.getText().toString().equalsIgnoreCase("")){
+                if (fromDistance.getText().toString().equalsIgnoreCase("")) {
                     fromDistance.setError("This does not filled yet");
-                }else if(toDistance.getText().toString().equalsIgnoreCase("")){
+                } else if (toDistance.getText().toString().equalsIgnoreCase("")) {
                     toDistance.setError("This does not filled yet");
-                }else{
+                } else {
                     double from = Double.valueOf(fromDistance.getText().toString());
                     double to = Double.valueOf(toDistance.getText().toString());
                     getRacesWithDistanceRange(from, to);
@@ -96,7 +111,26 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         });
     }
 
-    private void getRacesWithDistanceRange(double from, double to){
+    private void searchRaces(String name) {
+        if (!name.equalsIgnoreCase("")) {
+            RaceServices.searchRacesWithName(name, getActivity(), new OnReceiveResponse() {
+                @Override
+                public void onReceive(JSONObject response) {
+                    Gson gson = new Gson();
+                    races.clear();
+                    RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
+                    if (response != null || !response.toString().equals("")) {
+                        for (Race race : racesListDAO.getRaces()) {
+                            races.add(race);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+    }
+
+    private void getRacesWithDistanceRange(double from, double to) {
         RaceServices.getRacesWithDistanceRange(from, to, getActivity(), new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
@@ -104,8 +138,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 Log.d("RacesFragment", "onResponse: " + response);
                 races.clear();
                 RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
-                if(response != null || !response.toString().equals("")){
-                    for(Race race : racesListDAO.getRaces()){
+                if (response != null || !response.toString().equals("")) {
+                    for (Race race : racesListDAO.getRaces()) {
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
@@ -114,7 +148,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         });
     }
 
-    private void settingAdapter(){
+    private void settingAdapter() {
         races = new ArrayList<>();
         adapter = new RacesAdapter(races, getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -132,7 +166,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         });
     }
 
-    private void getOngoingRaces(){
+    private void getOngoingRaces() {
         RaceServices.getOngoingRaces(getActivity(), new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
@@ -145,7 +179,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     }
                     adapter.notifyDataSetChanged();
                 }
-                if(swipeRefreshLayout.isRefreshing()){
+                if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -156,5 +190,14 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onRefresh() {
         settingAdapter();
         getOngoingRaces();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            searchRaces(nameSearched.getText().toString());
+            return true;
+        }
+        return false;
     }
 }

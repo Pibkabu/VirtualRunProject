@@ -28,6 +28,7 @@ import com.example.quynh.virtualrunproject.services.DonationServices;
 import com.example.quynh.virtualrunproject.services.HostingServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -44,6 +45,7 @@ public class RaceDonationScreen extends AppCompatActivity {
     private List<DonationDAO.DonationInfo> infos;
     private Button addDonation;
     private DonateAccount donateAccount;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +66,9 @@ public class RaceDonationScreen extends AppCompatActivity {
             @Override
             public void onReceive(JSONObject response) {
                 RacesListDAO dao = gson.fromJson(response.toString(), RacesListDAO.class);
-                if(!dao.getRaces().isEmpty()){
-                    for (Race ongoingRace: dao.getRaces()){
-                        if(ongoingRace.getRaceId() == donateAccount.getRaceId()){
+                if (!dao.getRaces().isEmpty()) {
+                    for (Race ongoingRace : dao.getRaces()) {
+                        if (ongoingRace.getRaceId() == donateAccount.getRaceId()) {
                             addDonation.setVisibility(View.VISIBLE);
                             break;
                         }
@@ -103,7 +105,7 @@ public class RaceDonationScreen extends AppCompatActivity {
             public void onReceive(JSONObject response) {
                 DonationDAO dao = gson.fromJson(response.toString(), DonationDAO.class);
                 infos = dao.getInfos();
-                if(infos != null && !infos.isEmpty()){
+                if (infos != null && !infos.isEmpty()) {
                     adapter = new DonationAdapter(infos);
                     recyclerView.setLayoutManager(new LinearLayoutManager(RaceDonationScreen.this));
                     recyclerView.setAdapter(adapter);
@@ -113,11 +115,18 @@ public class RaceDonationScreen extends AppCompatActivity {
         });
     }
 
-    private void inputDonation(){
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.input_dialog, null);
+    private boolean checkFillData(String inputData) {
+        if (inputData.equalsIgnoreCase("")) {
+            return false;
+        }
+        return true;
+    }
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+    private void inputDonation() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.input_donation, null);
+
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
 
         alertDialogBuilder.setView(promptsView);
@@ -129,49 +138,50 @@ public class RaceDonationScreen extends AppCompatActivity {
         final EditText money = (EditText) promptsView
                 .findViewById(R.id.input_money);
 
+        final TextView cancel = (TextView) promptsView.findViewById(R.id.cancel);
+        final TextView okBtn = (TextView) promptsView.findViewById(R.id.ok_btn);
+
         TextView labelText = (TextView) promptsView.findViewById(R.id.label_text);
-        labelText.setText("Mật Khẩu: ");
+        labelText.setText("Điền thông tin quyên góp: ");
 
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                if(email.getText().toString().equalsIgnoreCase("")){
-                                    email.setError("Thông tin bắt buộc");
-                                }else if(description.getText().toString().equalsIgnoreCase("")){
-                                    description.setError("Thông tin bắt buộc");
-                                }else if(money.getText().toString().equalsIgnoreCase("")){
-                                    money.setError("Thông tin bắt buộc");
-                                }else{
-                                    Intent intent = getIntent();
-                                    final Gson gson = new Gson();
-                                    DonationServices.addDonateAccount
-                                            (donateAccount.getRaceId(), email.getText().toString(), description.getText().toString(), Double.valueOf(money.getText().toString()),
-                                                    RaceDonationScreen.this, new OnReceiveResponse() {
-                                                        @Override
-                                                        public void onReceive(JSONObject response) {
-                                                            DonationDAO.DonationInfo info = gson.fromJson(response.toString(), DonationDAO.DonationInfo.class);
-                                                            if(info.getProfile().getUserId() != 0){
-                                                                infos.add(info);
-                                                                adapter.notifyDataSetChanged();
-                                                            }
-                                                        }
-                                                    });
-                                }
-                            }
-                        })
-                .setNegativeButton("Hủy",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dialog.cancel();
-                            }
-                        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
 
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!checkFillData(email.getText().toString())) {
+                    email.setError("Thông tin bắt buộc");
+                } else if (!checkFillData(description.getText().toString())) {
+                    description.setError("Thông tin bắt buộc");
+                } else if (!checkFillData(money.getText().toString())) {
+                    money.setError("Thông tin bắt buộc");
+                } else {
+                    final Gson gson = new Gson();
+                    DonationServices.addDonateAccount
+                            (donateAccount.getRaceId(), email.getText().toString(), description.getText().toString(), Double.valueOf(money.getText().toString()),
+                                    RaceDonationScreen.this, new OnReceiveResponse() {
+                                        @Override
+                                        public void onReceive(JSONObject response) {
+                                            DonationDAO.DonationInfo info = gson.fromJson(response.toString(), DonationDAO.DonationInfo.class);
+                                            if (info.getProfile().getUserId() != 0) {
+                                                infos.add(info);
+                                                adapter.notifyDataSetChanged();
+                                            } else {
+                                                Toast.makeText(RaceDonationScreen.this, "Tài khoản người dùng không tồn tại", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+                }
+            }
+        });
 
-        // show it
+        alertDialog = alertDialogBuilder.create();
+
         alertDialog.show();
     }
 
@@ -184,5 +194,6 @@ public class RaceDonationScreen extends AppCompatActivity {
         accountNumber = (TextView) findViewById(R.id.account_number);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         addDonation = (Button) findViewById(R.id.add_donation);
+        PushDownAnim.setPushDownAnimTo(addDonation);
     }
 }

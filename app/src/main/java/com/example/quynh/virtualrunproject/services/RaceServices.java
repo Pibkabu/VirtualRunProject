@@ -51,6 +51,30 @@ public class RaceServices {
         AppController.getInstance().addToRequestQueue(customRequest);
     }
 
+    public static void searchRacesWithName(String name, final Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        //dialog.show();
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/races/search?name=" + name;
+        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //dialog
+                loadingDialog.dismiss();
+                Log.d("RaceServices", "onResponse: " + error);
+                Toast.makeText(context, "Service Error, There's something wrong searchRacesWithName", Toast.LENGTH_LONG).show();
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
+
     public static void getAllRaces(final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         loadingDialog.show();
