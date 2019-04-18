@@ -4,6 +4,7 @@ import com.example.quynh.virtualrunproject.R;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -284,7 +285,27 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.race_cancel_btn:
-                cancelRegister();
+
+                android.app.AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new android.app.AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new android.app.AlertDialog.Builder(this);
+                }
+                builder.setTitle("Hủy đăng ký")
+                        .setMessage("Bạn có chắc chắn muốn hủy đăng ký tham gia đường chạy này không ?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                cancelRegister();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 break;
             case R.id.txt_donation:
                 Intent intent = new Intent(this, RaceDonationScreen.class);

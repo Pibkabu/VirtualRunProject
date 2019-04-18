@@ -80,6 +80,7 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         submitFormBtn = (Button) findViewById(R.id.submit_form_btn);
         txtDateOfBirth = (TextView) findViewById(R.id.txtDateOfBirth);
         PushDownAnim.setPushDownAnimTo(txtDateOfBirth);
+        PushDownAnim.setPushDownAnimTo(submitFormBtn);
 
         Gson gson = new Gson();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);

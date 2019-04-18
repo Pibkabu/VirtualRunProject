@@ -83,7 +83,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void setupAction() {
         swipeRefreshLayout.setOnRefreshListener(this);
-
+        nameSearched.setOnEditorActionListener(this);
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

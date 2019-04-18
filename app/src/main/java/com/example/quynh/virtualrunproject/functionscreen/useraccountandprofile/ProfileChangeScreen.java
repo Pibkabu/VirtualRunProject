@@ -33,6 +33,7 @@ import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -79,6 +80,9 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         update = (Button) findViewById(R.id.update);
         updateCancel = (Button) findViewById(R.id.update_cancel);
         txtDateOfBirth = (TextView) findViewById(R.id.txtDateOfBirth);
+        PushDownAnim.setPushDownAnimTo(txtDateOfBirth);
+        PushDownAnim.setPushDownAnimTo(update);
+        PushDownAnim.setPushDownAnimTo(txtDateOfBirth);
         setupSpinner();
         setupInfo();
     }

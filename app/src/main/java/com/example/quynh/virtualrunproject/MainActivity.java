@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
         userDisplayName.setText(profile.getDisplayName());
-        Glide.with(this).load(getIntent().getStringExtra("userProfilePic")).into(userProfilePic);
+        //Glide.with(this).load(getIntent().getStringExtra("userProfilePic")).into(userProfilePic);
     }
 
 
@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity
             } else {
                 builder = new AlertDialog.Builder(this);
             }
-            builder.setTitle("Log out")
-                    .setMessage("Are you sure you want to log out ?")
+            builder.setTitle("Đăng xuất")
+                    .setMessage("Bạn có chắc chắn muốn đăng xuất không ?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                         logout();

@@ -100,6 +100,8 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
 
         PushDownAnim.setPushDownAnimTo(choosePictureBtn);
         PushDownAnim.setPushDownAnimTo(confirmCreateRaceBtn);
+        PushDownAnim.setPushDownAnimTo(raceStartTime);
+        PushDownAnim.setPushDownAnimTo(raceEndTime);
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);

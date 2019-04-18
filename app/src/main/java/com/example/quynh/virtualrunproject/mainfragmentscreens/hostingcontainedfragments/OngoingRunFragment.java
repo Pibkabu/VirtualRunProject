@@ -1,6 +1,9 @@
 package com.example.quynh.virtualrunproject.mainfragmentscreens.hostingcontainedfragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,17 +85,39 @@ public class OngoingRunFragment extends Fragment{
         });
     }
 
-    private void cancelRace(Race race){
-        HostingServices.cancelHosting(race.getRaceId(), getActivity(), new OnReceiveResponse() {
-            @Override
-            public void onReceive(JSONObject response) {
-                Gson gson = new Gson();
-                UserHost host = gson.fromJson(response.toString(), UserHost.class);
-                if(host.getUserAndRaceMaped().getRaceId() == 0){
-                    resetFragment();
-                }
-            }
-        });
+    private void cancelRace(final Race race){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(getActivity());
+        }
+        builder.setTitle("Hủy đường chạy")
+                .setMessage("Bạn có chắc chắn muốn hủy đường chạy này không ?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        HostingServices.cancelHosting(race.getRaceId(), getActivity(), new OnReceiveResponse() {
+                            @Override
+                            public void onReceive(JSONObject response) {
+                                Gson gson = new Gson();
+                                UserHost host = gson.fromJson(response.toString(), UserHost.class);
+                                if(host.getUserAndRaceMaped().getRaceId() == 0){
+                                    resetFragment();
+                                }
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+
     }
 
     private void setupRaceInfo(){

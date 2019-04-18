@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.helper.EmailSender;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Random;
 
@@ -62,6 +63,7 @@ public class GetVerifyCodeScreen extends AppCompatActivity {
     private void setupView() {
         verifyCode = (EditText) findViewById(R.id.verify_code);
         confirmButton = (Button) findViewById(R.id.confirm_btn);
+        PushDownAnim.setPushDownAnimTo(confirmButton);
     }
 
     private void sendEmail(){

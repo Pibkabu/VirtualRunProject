@@ -27,6 +27,7 @@ import com.example.quynh.virtualrunproject.services.UserAccountServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -58,6 +59,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         signUpPassword = (EditText) findViewById(R.id.signUpPassword);
         signUpConfirmPassword = (EditText) findViewById(R.id.signUpConfirmPassword);
         txtSignIn = (TextView) findViewById(R.id.txtSignIn);
+        PushDownAnim.setPushDownAnimTo(normSignUpBtn);
     }
 
     private void setupAction() {
