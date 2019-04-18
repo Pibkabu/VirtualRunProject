@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:imeOptions="actionDone"
-                    android:padding="10dp"
+                    android:padding="5dp"
                     android:background="@drawable/edittext_border"
                     android:maxLines="1"
                     android:gravity="center"

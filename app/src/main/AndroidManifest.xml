@@ -29,7 +29,7 @@
         <activity
             android:name=".functionscreen.useraccountandprofile.ProfileChangeScreen"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />
+        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />x
         <activity android:name=".functionscreen.useraccountandprofile.RegisterScreen" />
         <activity
             android:name=".MainActivity"

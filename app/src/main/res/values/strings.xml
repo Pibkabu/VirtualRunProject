@@ -6,7 +6,7 @@
     <string name="facebook_app_id">840281492973121</string>
     <string name="fb_login_protocol_scheme">fb840281492973121</string>
 
-    <string name="app_name">Virtual Run Project</string>
+    <string name="app_name">Virtual Run</string>
     <string name="login_screen">Login</string>
     <string name="register_screen">Register</string>
     <string name="facebook_login">Login with Facebook</string>

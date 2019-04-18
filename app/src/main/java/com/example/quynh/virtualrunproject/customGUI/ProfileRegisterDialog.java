@@ -27,6 +27,7 @@ import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
@@ -78,6 +79,7 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         gender = (Spinner) findViewById(R.id.gender);
         submitFormBtn = (Button) findViewById(R.id.submit_form_btn);
         txtDateOfBirth = (TextView) findViewById(R.id.txtDateOfBirth);
+        PushDownAnim.setPushDownAnimTo(txtDateOfBirth);
 
         Gson gson = new Gson();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
