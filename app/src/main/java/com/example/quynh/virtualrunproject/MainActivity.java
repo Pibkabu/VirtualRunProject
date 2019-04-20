@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.quynh.virtualrunproject.customGUI.ProfileRegisterDialog;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
@@ -110,7 +113,18 @@ public class MainActivity extends AppCompatActivity
         Gson gson = new Gson();
         profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
         userDisplayName.setText(profile.getDisplayName());
-        //Glide.with(this).load(getIntent().getStringExtra("userProfilePic")).into(userProfilePic);
+        Log.d("TestImage", "setupView: " + profile.getUserImage());
+        if(!profile.getUserImage().equalsIgnoreCase("")){
+            Log.d("TestImageProfileScreen", "setupInfo: " + profile.getUserImage());
+            try{
+                Glide.with(this).load(profile.getUserImage())
+                        .apply(RequestOptions.skipMemoryCacheOf(true))
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                        .into(userProfilePic);
+            }catch (Exception e){
+                Log.e("GildeError", "setupView: ", e);
+            }
+        }
     }
 
 
@@ -285,6 +299,18 @@ public class MainActivity extends AppCompatActivity
             userDisplayName.setText(profile.getDisplayName());
             if(UserProfileFragment.displayName != null){
                 UserProfileFragment.displayName.setText(profile.getDisplayName());
+            }
+            try{
+                Glide.with(this).load(profile.getUserImage())
+                        .apply(RequestOptions.skipMemoryCacheOf(true))
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                        .into(userProfilePic);
+                Glide.with(this).load(profile.getUserImage())
+                        .apply(RequestOptions.skipMemoryCacheOf(true))
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                        .into(UserProfileFragment.profilePic);
+            }catch (Exception e){
+                Log.e("GildeError", "setupView: ", e);
             }
             mainContents.setCurrentItem(2);
             viewPagerTabChanged(2);

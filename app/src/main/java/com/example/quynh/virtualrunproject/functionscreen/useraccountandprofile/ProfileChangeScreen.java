@@ -6,11 +6,18 @@ package com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,12 +29,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.MySpinnerAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
+import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.UserProfileServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
@@ -37,6 +48,8 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,11 +60,12 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
 
     private EditText txtEmail, txtDisplayName, txtFirstName, txtLastName, txtPhone, txtAddress;
     private Spinner gender;
-    private ImageView backBtn, pictureChangeBtn;
+    private ImageView backBtn, pictureChangeBtn, userProfilePic;
     private Button update, updateCancel;
     private UserAccountPrefs accountPrefs;
     private UserProfilePrefs profilePrefs;
     private TextView txtDateOfBirth;
+    private String userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +84,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         backBtn = (ImageView) findViewById(R.id.back_btn);
         backBtn.setVisibility(View.VISIBLE);
         pictureChangeBtn = (ImageView) findViewById(R.id.picture_change_btn);
+        userProfilePic = (ImageView) findViewById(R.id.user_profile_pic);
         txtEmail = (EditText) findViewById(R.id.txtEmail);
         txtDisplayName = (EditText) findViewById(R.id.txtDisplayName);
         txtFirstName = (EditText) findViewById(R.id.txtFirstName);
@@ -98,6 +113,18 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         txtLastName.setText(profile.getLastName());
         txtPhone.setText(profile.getPhone());
         txtAddress.setText(profile.getAddress());
+        userImage = profile.getUserImage();
+        if(!userImage.equalsIgnoreCase("")){
+            Log.d("TestImageProfileScreen", "setupInfo: " + profile.getUserImage());
+            try{
+                Glide.with(this).load(profile.getUserImage())
+                        .apply(RequestOptions.skipMemoryCacheOf(true))
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                        .into(userProfilePic);
+            }catch (Exception e){
+                Log.e("GildeError", "setupView: ", e);
+            }
+        }
 
         Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", profile.getDOB().toString());
         txtDateOfBirth.setText(DateFormatHandler.dateToString("yyyy-MM-dd", date));
@@ -167,16 +194,65 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
             profile.setGender(true);
         }
         profile.setAddress(txtAddress.getText().toString());
+
+        if(userImage != null){
+            profile.setUserImage(userImage);
+        }else{
+            profile.setUserImage("");
+        }
+
         UserProfileServices.updateUserProfile(profile, ProfileChangeScreen.this, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
-                if(gson.fromJson(response.toString(), UserProfile.class).getUserId() != 0){
-                    profilePrefs.saveUserProfile(gson.toJson(profile));
+                UserProfile returnedProfile = gson.fromJson(response.toString(), UserProfile.class);
+                if(returnedProfile.getUserId() != 0){
+                    profilePrefs.saveUserProfile(gson.toJson(returnedProfile));
                     setResult(RESULT_OK);
                     finish();
                 }
             }
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
+
+                Display display = this.getWindowManager().getDefaultDisplay();
+                double deviceWidth = display.getWidth();
+
+                double imageHeight = bitmap.getHeight();
+                double imageWidth = bitmap.getWidth();
+
+                double ratio = deviceWidth / imageWidth;
+                int newImageHeight = (int) (imageHeight * ratio);
+
+                Bitmap test = PictureResizeHandler.getResizedBitmap(bitmap, newImageHeight, (int) deviceWidth);
+                userProfilePic.setImageBitmap(test);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                test.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                userImage = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+                Log.d("TestPicturePath", "pictureParh: " + picturePath);
+            }catch (Exception e){
+                Log.e("CreateRaceScreen", "onActivityResult: ", e);
+            }
+        }
     }
 
     @Override
@@ -186,6 +262,8 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
                 finish();
                 break;
             case R.id.picture_change_btn:
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.txtDateOfBirth:
                 showDatePickerDialog(new DatePickerDialog.OnDateSetListener() {

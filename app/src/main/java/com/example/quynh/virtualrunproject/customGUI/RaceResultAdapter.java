@@ -4,12 +4,16 @@ import android.content.Context;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.Player;
@@ -69,6 +73,16 @@ public class RaceResultAdapter extends RecyclerView.Adapter<RaceResultAdapter.Vi
             public void onReceive(JSONObject response) {
                 UserProfile profile = gson.fromJson(response.toString(), UserProfile.class);
                 holder.displayName.setText(profile.getDisplayName());
+                if(!profile.getUserImage().equalsIgnoreCase("")){
+                    try{
+                        Glide.with(context).load(profile.getUserImage())
+                                .apply(RequestOptions.skipMemoryCacheOf(true))
+                                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                                .into(holder.userImage);
+                    }catch (Exception e){
+                        Log.e("GildeError", "setupView: ", e);
+                    }
+                }
             }
         });
     }
@@ -87,6 +101,7 @@ public class RaceResultAdapter extends RecyclerView.Adapter<RaceResultAdapter.Vi
         private ImageView medal1st;
         private ImageView medal2nd;
         private ImageView medal3rd;
+        private ImageView userImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -97,6 +112,7 @@ public class RaceResultAdapter extends RecyclerView.Adapter<RaceResultAdapter.Vi
             medal1st = (ImageView) itemView.findViewById(R.id.medal_1st);
             medal2nd = (ImageView) itemView.findViewById(R.id.medal_2nd);
             medal3rd = (ImageView) itemView.findViewById(R.id.medal_3rd);
+            userImage = (ImageView) itemView.findViewById(R.id.user_image);
         }
     }
 }

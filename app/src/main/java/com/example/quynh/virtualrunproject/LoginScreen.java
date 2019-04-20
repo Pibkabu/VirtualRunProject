@@ -188,7 +188,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     accountPrefs.saveUserLogin(response.toString());
 
                 } else {
-                    Toast.makeText(LoginScreen.this, "Your email or password is incorrect", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginScreen.this, "Email hoặc mật khẩu của bạn không đúng", Toast.LENGTH_LONG).show();
                 }
             }
         });

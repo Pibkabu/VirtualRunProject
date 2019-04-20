@@ -51,12 +51,15 @@ public class RaceServices {
         AppController.getInstance().addToRequestQueue(customRequest);
     }
 
-    public static void searchRacesWithName(String name, final Context context, final OnReceiveResponse receiveResponse){
+    public static void searchRacesWithName(Race race, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
         loadingDialog.show();
-        String URL = ConnectionAddress.connection + "/races/search?name=" + name;
-        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
+        String URL = ConnectionAddress.connection + "/races/search";
+        Map<String, String> params = new HashMap<>();
+        Gson gson = new Gson();
+        params.put("name", gson.toJson(race));
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 loadingDialog.dismiss();
@@ -67,7 +70,7 @@ public class RaceServices {
             public void onErrorResponse(VolleyError error) {
                 //dialog
                 loadingDialog.dismiss();
-                Log.d("RaceServices", "onResponse: " + error);
+                Log.e("RaceServices", "onResponse: ", error);
                 Toast.makeText(context, "Service Error, There's something wrong searchRacesWithName", Toast.LENGTH_LONG).show();
             }
         });

@@ -29,14 +29,17 @@ import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
+import com.example.quynh.virtualrunproject.helper.RemoveAccentHandler;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by quynh on 12/26/2018.
@@ -87,7 +90,10 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchRaces(nameSearched.getText().toString());
+                //searchRaces(RemoveAccentHandler.removeAccent(nameSearched.getText().toString()));
+                Race race1 = new Race();
+                race1.setName((nameSearched.getText().toString()));
+                searchRaces(race1);
             }
         });
 
@@ -111,8 +117,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         });
     }
 
-    private void searchRaces(String name) {
-        if (!name.equalsIgnoreCase("")) {
+    private void searchRaces(Race name) {
+        if (!name.getName().equalsIgnoreCase("")) {
             RaceServices.searchRacesWithName(name, getActivity(), new OnReceiveResponse() {
                 @Override
                 public void onReceive(JSONObject response) {
@@ -195,7 +201,9 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            searchRaces(nameSearched.getText().toString());
+            Race race1 = new Race();
+            race1.setName((nameSearched.getText().toString()));
+            searchRaces(race1);
             return true;
         }
         return false;

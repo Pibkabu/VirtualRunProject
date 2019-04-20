@@ -15,6 +15,7 @@ public class UserProfile {
     private boolean gender;
     private String phone;
     private String address;
+    private String userImage;
 
     public UserProfile() {
     }
@@ -92,6 +93,14 @@ public class UserProfile {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
     }
 }
 

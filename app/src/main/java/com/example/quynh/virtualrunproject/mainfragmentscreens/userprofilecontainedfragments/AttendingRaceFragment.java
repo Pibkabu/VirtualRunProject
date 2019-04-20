@@ -137,32 +137,40 @@ public class AttendingRaceFragment extends Fragment {
         });
     }
 
-    AsyncTask<String, String, String> getStravaInfo = new AsyncTask<String, String, String>() {
-        @Override
-        protected String doInBackground(String... strings) {
-            Log.d("stravaDOINBACKGROUND", "doInBackground: " + strings[0]);
-            AuthenticationConfig config = AuthenticationConfig.create()
-                    .debug()
-                    .build();
-            AuthenticationAPI api = new AuthenticationAPI(config);
-            LoginResult result = api.getTokenForApp(AppCredentials.with(31904, "e62a25113fce4ed3cad56af48401500a48778242"))
-                    .withCode(strings[0])
-                    .execute();
-            Gson gson = new Gson();
-            Log.d("CHECKRESULT", "onActivityResult: " + gson.toJson(result));
-            return gson.toJson(result);
-        }
 
-        @Override
-        protected void onPostExecute(String stravaResult) {
-            //super.onPostExecute(s);
-            Gson gson = new Gson();
-            StravaDAO dao = gson.fromJson(stravaResult, StravaDAO.class);
-            String accessToken = dao.getAccess_token().getValue();
-            Log.d("CheckReturnResult", "onPostExecute: " + dao.getAccess_token().getValue());
-            getStravaRecord(accessToken);
-        }
-    };
+    private void getStravaInfo(Intent data){
+
+        AsyncTask<String, String, String> getStravaInfoTask = new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                Log.d("stravaDOINBACKGROUND", "doInBackground: " + strings[0]);
+                AuthenticationConfig config = AuthenticationConfig.create()
+                        .debug()
+                        .build();
+                AuthenticationAPI api = new AuthenticationAPI(config);
+                LoginResult result = api.getTokenForApp(AppCredentials.with(31904, "e62a25113fce4ed3cad56af48401500a48778242"))
+                        .withCode(strings[0])
+                        .execute();
+                Gson gson = new Gson();
+                Log.d("CHECKRESULT", "onActivityResult: " + gson.toJson(result));
+                return gson.toJson(result);
+            }
+
+            @Override
+            protected void onPostExecute(String stravaResult) {
+                //super.onPostExecute(s);
+                Gson gson = new Gson();
+                StravaDAO dao = gson.fromJson(stravaResult, StravaDAO.class);
+                String accessToken = dao.getAccess_token().getValue();
+                Log.d("CheckReturnResult", "onPostExecute: " + dao.getAccess_token().getValue());
+                getStravaRecord(accessToken);
+            }
+        };
+
+        getStravaInfoTask.execute(data.getStringExtra(StravaLoginActivity.RESULT_CODE));
+    }
+
+
 
     private void getStravaRecord(final String accessToken){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(getActivity());
@@ -182,7 +190,7 @@ public class AttendingRaceFragment extends Fragment {
                     record.setTravelTime((response.getJSONObject(0).getDouble("moving_time")) / 60);
                     sendResult();
                 }catch (Exception ex){
-                    Toast.makeText(getActivity(), "JsonArray Exception", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Tài khoản Strava của bạn chưa có hoạt động nào", Toast.LENGTH_LONG).show();
                     Log.e("GetStravaRecordJsonException", "onResponse: ", ex);
                 }
             }
@@ -209,7 +217,7 @@ public class AttendingRaceFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RQ_LOGIN && resultCode == Activity.RESULT_OK && data != null) {
             Log.d("StravaCode", data.getStringExtra(StravaLoginActivity.RESULT_CODE));
-            getStravaInfo.execute(data.getStringExtra(StravaLoginActivity.RESULT_CODE));
+            getStravaInfo(data);
         }
     }
 }

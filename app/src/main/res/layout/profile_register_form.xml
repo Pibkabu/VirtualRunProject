@@ -17,7 +17,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/round_corner_button_red"
-        android:text="Save"
+        android:text="Lưu"
         android:textAllCaps="false"
         android:textColor="@color/white" />
 

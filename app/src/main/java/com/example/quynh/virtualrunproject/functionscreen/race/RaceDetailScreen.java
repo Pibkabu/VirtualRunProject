@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
+import com.example.quynh.virtualrunproject.customGUI.PlayerIconAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
 import com.example.quynh.virtualrunproject.entity.DonateAccount;
@@ -61,6 +63,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
     private Player individual;
     private Race race;
     private DonateAccount donateAccount;
+    private PlayerIconAdapter adapter;
+    private TextView raceDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +100,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         raceTime.setText(startTime + " đến " + endTime);
         description.setText(race.getDescription());
         regulation.setText(race.getRegulation());
+        raceDistance.setText("Quãng Đường: " + race.getDistance() + " (km)");
 
         Calendar calendar = Calendar.getInstance();
         long countDownTime = startDate.getTime() - calendar.getTimeInMillis();
@@ -144,10 +149,12 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         countDownSecs = (TextView) findViewById(R.id.countdown_secs);
         raceTime = (TextView) findViewById(R.id.race_time);
         txtDonation = (TextView) findViewById(R.id.txt_donation);
+        raceDistance = (TextView) findViewById(R.id.race_distance);
         description = (ReadMoreTextView) findViewById(R.id.race_description);
         regulation = (ReadMoreTextView) findViewById(R.id.race_regulation);
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
         cancelRaceBtn = (Button) findViewById(R.id.race_cancel_btn);
+
 
         //raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
 
@@ -173,6 +180,10 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 UserAccountPrefs prefs = new UserAccountPrefs(RaceDetailScreen.this);
                 UserAccount account = gson.fromJson(prefs.getUserAccount(), UserAccount.class);
                 players = dao.getPlayers();
+                adapter = new PlayerIconAdapter(players, RaceDetailScreen.this);
+                playerIcons.setLayoutManager(new LinearLayoutManager(RaceDetailScreen.this, LinearLayoutManager.HORIZONTAL, false));
+                playerIcons.setAdapter(adapter);
+                playerIcons.setNestedScrollingEnabled(false);
                 if(!players.isEmpty()){
                     for (Player player : players){
                         if(player.getUserAndRaceMaped().getUserId() == account.getUserId()){
