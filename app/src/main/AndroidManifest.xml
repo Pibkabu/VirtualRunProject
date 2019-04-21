@@ -29,7 +29,8 @@
         <activity
             android:name=".functionscreen.useraccountandprofile.ProfileChangeScreen"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />x
+        <activity android:name=".functionscreen.useraccountandprofile.ResetPasswordScreen" />
+        x
         <activity android:name=".functionscreen.useraccountandprofile.RegisterScreen" />
         <activity
             android:name=".MainActivity"
@@ -78,7 +79,10 @@
             android:name=".functionscreen.adminscreens.AdminMainScreen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".functionscreen.adminscreens.EndedRacesScreen" />
-        <activity android:name=".functionscreen.adminscreens.AdminCreatedRacesScreen"></activity>
+        <activity android:name=".functionscreen.adminscreens.AdminCreatedRacesScreen" />
+        <activity android:name=".functionscreen.adminscreens.GenderChartScreen" />
+        <activity android:name=".functionscreen.adminscreens.AgeChartScreen" />
+        <activity android:name=".functionscreen.adminscreens.AllRaceScreen"></activity>
     </application>
 
 </manifest>

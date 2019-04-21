@@ -51,5 +51,6 @@ dependencies {
     implementation files('E:/Capstone Project/VirtualRunProject/libs/activation.jar')
     implementation files('E:/Capstone Project/VirtualRunProject/libs/additionnal.jar')
     implementation files('E:/Capstone Project/VirtualRunProject/libs/mail.jar')
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

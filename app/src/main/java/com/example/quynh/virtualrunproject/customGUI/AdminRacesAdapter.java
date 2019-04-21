@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
@@ -21,12 +19,12 @@ import java.util.List;
  * Created by quynh on 4/14/2019.
  */
 
-public class AdminRaceEndedAdapter extends RecyclerView.Adapter<AdminRaceEndedAdapter.ViewHolder> {
+public class AdminRacesAdapter extends RecyclerView.Adapter<AdminRacesAdapter.ViewHolder> {
 
     private List<Race> races;
     private OnButtonClickRecyclerViewAdapter listener;
 
-    public AdminRaceEndedAdapter(List<Race> races) {
+    public AdminRacesAdapter(List<Race> races) {
         this.races = races;
     }
 

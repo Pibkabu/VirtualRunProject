@@ -30,7 +30,7 @@ public class UserProfileServices {
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
         loadingDialog.show();
-        String URL = "";
+        String URL = ConnectionAddress.connection + "/profile";
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

@@ -10,4 +10,12 @@
     <color name="transparent">#00000000</color>
     <color name="gray">#D6D6D6</color>
     <color name="green">#68AE00</color>
+    <color name="pink_red">#E81F64</color>
+    <color name="pink_red_bold">#CF1856</color>
+    <color name="light_blue">#01BDD8</color>
+    <color name="light_blue_bold">#00A5B9</color>
+    <color name="light_green">#8CC248</color>
+    <color name="light_green_bold">#7BAC41</color>
+    <color name="orange">#FF9702</color>
+    <color name="orange_bold">#E18601</color>
 </resources>

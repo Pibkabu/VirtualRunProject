@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
-import com.example.quynh.virtualrunproject.customGUI.AdminRaceEndedAdapter;
+import com.example.quynh.virtualrunproject.customGUI.AdminRacesAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
@@ -28,7 +28,7 @@ public class EndedRacesScreen extends AppCompatActivity {
     private ImageView backBtn;
     private RecyclerView recyclerView;
     private List<Race> races;
-    private AdminRaceEndedAdapter adapter;
+    private AdminRacesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class EndedRacesScreen extends AppCompatActivity {
                 final Gson gson = new Gson();
                 RacesListDAO dao = gson.fromJson(response.toString(), RacesListDAO.class);
                 races = dao.getRaces();
-                adapter = new AdminRaceEndedAdapter(races);
+                adapter = new AdminRacesAdapter(races);
                 adapter.setOnButtonClickRecyclerViewAdapter(new OnButtonClickRecyclerViewAdapter() {
                     @Override
                     public void OnButtonClick(int position) {

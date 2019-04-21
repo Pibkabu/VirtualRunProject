@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,9 +42,7 @@ public class AdminMainScreen extends AppCompatActivity
     private UserProfilePrefs profilePrefs;
     private TextView numbersOfUsers;
     private TextView numbersOfRaces;
-    private ImageView adminPlus;
-    private ImageView adminRanking;
-    private ImageView adminManage;
+    private CardView users, races, gender, age;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +76,10 @@ public class AdminMainScreen extends AppCompatActivity
 
     private void setupAction() {
         menu.setOnClickListener(this);
-        adminPlus.setOnClickListener(this);
-        adminRanking.setOnClickListener(this);
-        adminManage.setOnClickListener(this);
+        users.setOnClickListener(this);
+        races.setOnClickListener(this);
+        gender.setOnClickListener(this);
+        age.setOnClickListener(this);
     }
 
     private void setupView() {
@@ -95,13 +95,15 @@ public class AdminMainScreen extends AppCompatActivity
 
         numbersOfUsers = (TextView) findViewById(R.id.numbers_of_users);
         numbersOfRaces = (TextView) findViewById(R.id.numbers_of_races);
-        adminPlus = (ImageView) findViewById(R.id.admin_plus);
-        adminRanking = (ImageView) findViewById(R.id.admin_ranking);
-        adminManage = (ImageView) findViewById(R.id.admin_manage);
+        users = (CardView) findViewById(R.id.users);
+        races = (CardView) findViewById(R.id.races);
+        gender = (CardView) findViewById(R.id.gender);
+        age = (CardView) findViewById(R.id.age);
 
-        PushDownAnim.setPushDownAnimTo(adminPlus);
-        PushDownAnim.setPushDownAnimTo(adminRanking);
-        PushDownAnim.setPushDownAnimTo(adminManage);
+        PushDownAnim.setPushDownAnimTo(users);
+        PushDownAnim.setPushDownAnimTo(races);
+        PushDownAnim.setPushDownAnimTo(gender);
+        PushDownAnim.setPushDownAnimTo(age);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -167,16 +169,18 @@ public class AdminMainScreen extends AppCompatActivity
             case R.id.menu_btn:
                 drawer.openDrawer(GravityCompat.START);
                 break;
-            case R.id.admin_plus:
-                intent = new Intent(AdminMainScreen.this, CreateRaceScreen.class);
-                startActivityForResult(intent, 1);
+            case R.id.users:
+
                 break;
-            case R.id.admin_ranking:
-                intent = new Intent(AdminMainScreen.this, EndedRacesScreen.class);
+            case R.id.races:
+
+                break;
+            case R.id.gender:
+                intent = new Intent(AdminMainScreen.this, GenderChartScreen.class);
                 startActivity(intent);
                 break;
-            case R.id.admin_manage:
-                intent = new Intent(AdminMainScreen.this, AdminCreatedRacesScreen.class);
+            case R.id.age:
+                intent = new Intent(AdminMainScreen.this, AgeChartScreen.class);
                 startActivity(intent);
                 break;
         }

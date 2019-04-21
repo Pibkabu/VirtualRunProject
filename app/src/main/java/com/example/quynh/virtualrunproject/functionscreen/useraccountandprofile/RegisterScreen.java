@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
+import com.example.quynh.virtualrunproject.helper.DataValidationHelper;
 import com.example.quynh.virtualrunproject.helper.EmailSender;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
@@ -125,6 +126,10 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                     signUpPassword.setError("Thông tin bắt buộc");
                 } else if (confirmPassword.equalsIgnoreCase("") || !confirmPassword.equals(password)) {
                     signUpConfirmPassword.setError("Xác nhận mật khẩu phải trùng với mật khẩu của bạn");
+                } else if (!DataValidationHelper.validateEmail(email)) {
+                    signUpEmail.setError("Email của bạn không đúng cú pháp");
+                } else if (!DataValidationHelper.validatePassword(password)) {
+                    signUpPassword.setError("Mật khẩu cần ít nhất 6 ký tự, 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt");
                 } else {
                     checkEmail(email);
                 }
