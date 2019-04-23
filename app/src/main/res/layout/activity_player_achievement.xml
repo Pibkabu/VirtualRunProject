@@ -4,31 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.example.quynh.virtualrunproject.functionscreen.players.PlayerAchievementScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:padding="16dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:text="Achievements"/>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +26,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Ranking"/>
+                android:text="Xếp hạng"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -51,7 +35,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Race Name"/>
+                android:text="Tên đường chạy"/>
 
             <TextView
                 android:layout_width="90dp"
@@ -59,7 +43,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Time"/>
+                android:text="Thời gian"/>
 
         </LinearLayout>
 

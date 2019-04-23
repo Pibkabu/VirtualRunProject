@@ -210,8 +210,9 @@ public class MainActivity extends AppCompatActivity
         accountPrefs.saveUserLogin("");
         profilePrefs.saveUserProfile("");
         Intent intent = new Intent(MainActivity.this, LoginScreen.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finish();
+        //finish();
     }
 
     private void setupViewPager(ViewPager viewPager) {

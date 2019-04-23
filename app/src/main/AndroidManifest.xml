@@ -82,7 +82,8 @@
         <activity android:name=".functionscreen.adminscreens.AdminCreatedRacesScreen" />
         <activity android:name=".functionscreen.adminscreens.GenderChartScreen" />
         <activity android:name=".functionscreen.adminscreens.AgeChartScreen" />
-        <activity android:name=".functionscreen.adminscreens.AllRaceScreen"></activity>
+        <activity android:name=".functionscreen.adminscreens.AllRaceScreen" />
+        <activity android:name=".functionscreen.useraccountandprofile.UserProfileListScreen"></activity>
     </application>
 
 </manifest>

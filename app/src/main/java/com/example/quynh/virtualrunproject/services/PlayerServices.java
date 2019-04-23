@@ -48,6 +48,28 @@ public class PlayerServices {
         AppController.getInstance().addToRequestQueue(customRequest);
     }
 
+    public static void getParticipateProfile(int raceId, final Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/players/profile?raceId=" + raceId;
+        CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
+                Log.d("PlayerService", "onResponse: " + error);
+                Toast.makeText(context, "Service Error, There's something wrong getParticipateProfile", Toast.LENGTH_LONG).show();
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
+
     public static void getAttendingRaces(int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         loadingDialog.show();

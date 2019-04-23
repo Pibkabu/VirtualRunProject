@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnSwipeButtonClickAdapter;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -24,6 +25,7 @@ public class AdminRaceEditAdapter extends RecyclerView.Adapter<AdminRaceEditAdap
 
     private List<Race> races;
     private OnButtonClickRecyclerViewAdapter listener;
+    private OnSwipeButtonClickAdapter onSwipeButtonClickAdapter;
 
     public AdminRaceEditAdapter(List<Race> races) {
         this.races = races;
@@ -31,6 +33,10 @@ public class AdminRaceEditAdapter extends RecyclerView.Adapter<AdminRaceEditAdap
 
     public void setOnButtonClickRecyclerViewAdapter(OnButtonClickRecyclerViewAdapter listener) {
         this.listener = listener;
+    }
+
+    public void setOnSwipeButtonClickAdapter(OnSwipeButtonClickAdapter onSwipeButtonClickAdapter) {
+        this.onSwipeButtonClickAdapter = onSwipeButtonClickAdapter;
     }
 
     @NonNull
@@ -43,7 +49,7 @@ public class AdminRaceEditAdapter extends RecyclerView.Adapter<AdminRaceEditAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.raceName.setText(races.get(position).getName());
         holder.players.setText(races.get(position).getTotalPlayer() + " Người dùng đang tham gia");
         holder.createdTime.setText(races.get(position).getCreateTime().toString());
@@ -52,14 +58,14 @@ public class AdminRaceEditAdapter extends RecyclerView.Adapter<AdminRaceEditAdap
         holder.editRaceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onSwipeButtonClickAdapter.onEditClick(position);
             }
         });
 
         holder.cancelRace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onSwipeButtonClickAdapter.onCancelClick(position);
             }
         });
     }

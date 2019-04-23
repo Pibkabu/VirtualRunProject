@@ -8,14 +8,40 @@
             android:id="@+id/edit_profile"
             android:icon="@drawable/icon_pen"
             android:title="Chỉnh sửa trang cá nhân" />
+
         <item
-            android:id="@+id/introduction"
-            android:icon="@drawable/icon_info"
-            android:title="Giới thiệu" />
+            android:id="@+id/edit_password"
+            android:icon="@drawable/icon_password"
+            android:title="Đổi mật khẩu" />
+
+        <item
+            android:id="@+id/host_create"
+            android:icon="@drawable/icon_races"
+            android:title="Tạo đường chạy" />
+
         <item
             android:id="@+id/logout"
             android:icon="@drawable/icon_logout"
             android:title="Đăng xuất" />
     </group>
+
+    <item android:title="Hỗ Trợ">
+        <menu>
+            <item
+                android:id="@+id/introduction"
+                android:icon="@drawable/icon_info"
+                android:title="Giới thiệu" />
+
+            <item
+                android:id="@+id/tutorial"
+                android:icon="@drawable/icon_question_mark"
+                android:title="Hướng dẫn" />
+
+            <item
+                android:id="@+id/contact_us"
+                android:icon="@drawable/icon_contact"
+                android:title="Liên lạc với chúng tôi" />
+        </menu>
+    </item>
 
 </menu>

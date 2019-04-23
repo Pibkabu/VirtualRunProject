@@ -123,6 +123,7 @@ public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorAc
         Timestamp timestamp = new Timestamp(date.getTime());
         Log.d("ADDPROFILE", "onClick: " + timestamp.toString());
         profile.setDOB(timestamp);
+        profile.setUserImage("");
         if(gender.getSelectedItem().toString().equalsIgnoreCase("female")){
             profile.setGender(false);
         }else{

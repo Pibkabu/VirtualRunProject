@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context="com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -138,6 +137,7 @@
                         android:id="@+id/players_icon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
                         android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
 
                     <TextView

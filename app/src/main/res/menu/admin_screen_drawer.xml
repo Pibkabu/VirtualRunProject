@@ -6,17 +6,21 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/create_race"
+            android:icon="@drawable/icon_races"
             android:title="Tạo đường chạy" />
         <item
             android:id="@+id/view_races_result"
+            android:icon="@drawable/icon_ranking"
             android:title="Xem kết quả đường chạy" />
 
         <item
             android:id="@+id/edit_race"
+            android:icon="@drawable/icon_pen"
             android:title="Sửa đổi thông tin đường chạy" />
 
         <item
             android:id="@+id/logout"
+            android:icon="@drawable/icon_logout"
             android:title="Đăng xuất" />
     </group>
 

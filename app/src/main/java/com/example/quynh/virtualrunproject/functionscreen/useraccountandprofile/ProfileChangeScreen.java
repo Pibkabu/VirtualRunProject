@@ -66,6 +66,8 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
     private UserProfilePrefs profilePrefs;
     private TextView txtDateOfBirth;
     private String userImage;
+    private UserProfile profile;
+    private boolean choosePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
     private void setupInfo() {
         Gson gson = new Gson();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-        UserProfile profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
+        profile = gson.fromJson(profilePrefs.getProfile(), UserProfile.class);
 
         txtEmail.setText(account.getEmail());
         txtDisplayName.setText(profile.getDisplayName());
@@ -178,7 +180,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
     private void update(){
         final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
-        final UserProfile profile = new UserProfile();
+        //final UserProfile profile = new UserProfile();
         profile.setUserId(account.getUserId());
         profile.setDisplayName(txtDisplayName.getText().toString());
         profile.setFirstName(txtFirstName.getText().toString());
@@ -197,8 +199,6 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
 
         if(userImage != null){
             profile.setUserImage(userImage);
-        }else{
-            profile.setUserImage("");
         }
 
         UserProfileServices.updateUserProfile(profile, ProfileChangeScreen.this, new OnReceiveResponse() {

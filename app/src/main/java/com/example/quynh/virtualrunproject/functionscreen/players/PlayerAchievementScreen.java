@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
@@ -22,6 +24,7 @@ public class PlayerAchievementScreen extends AppCompatActivity {
     private RecyclerView achievementsList;
     private PlayerAchievementAdapter adapter;
     private List<Player> records;
+    private ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,8 @@ public class PlayerAchievementScreen extends AppCompatActivity {
     private void setupView() {
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         title.setText("Thành Tích");
+        backBtn = (ImageView) findViewById(R.id.back_btn);
+        backBtn.setVisibility(View.VISIBLE);
         achievementsList = (RecyclerView) findViewById(R.id.achievements_list);
         records = new ArrayList<>();
         Intent intent = getIntent();
@@ -52,6 +57,11 @@ public class PlayerAchievementScreen extends AppCompatActivity {
     }
 
     private void setupAction() {
-
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

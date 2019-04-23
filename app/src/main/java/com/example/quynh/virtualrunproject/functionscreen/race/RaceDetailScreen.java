@@ -24,12 +24,14 @@ import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.example.quynh.virtualrunproject.customGUI.PlayerIconAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
+import com.example.quynh.virtualrunproject.dao.UserProfileDAO;
 import com.example.quynh.virtualrunproject.entity.DonateAccount;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserAndRaceMaped;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.RaceDonationScreen;
+import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.UserProfileListScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.DonateAccountServices;
@@ -168,6 +170,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn.setOnClickListener(this);
         cancelRaceBtn.setOnClickListener(this);
         txtDonation.setOnClickListener(this);
+        playerIcons.setOnClickListener(this);
     }
 
     private void getRaceParticipants(int raceId){
@@ -192,6 +195,17 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 }
+            }
+        });
+    }
+
+    private void getUsersProfile(){
+        PlayerServices.getParticipateProfile(race.getRaceId(), this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Intent intent = new Intent(RaceDetailScreen.this, UserProfileListScreen.class);
+                intent.putExtra("profiles", response.toString());
+                startActivity(intent);
             }
         });
     }
@@ -323,6 +337,9 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 Gson gson = new Gson();
                 intent.putExtra("donateAccount", gson.toJson(donateAccount));
                 startActivity(intent);
+                break;
+            case R.id.players_icon:
+                getUsersProfile();
                 break;
             case R.id.back_btn:
                 finish();

@@ -121,8 +121,7 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
     private boolean checkPickedDate(){
         Date startTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceStartTime.getText().toString());
         Date endTime = DateFormatHandler.stringToDate("dd/MM/yyyy", raceEndTime.getText().toString());
-        Calendar calendar = Calendar.getInstance();
-        if(startTime.getTime() < calendar.getTimeInMillis() || endTime.getTime() < startTime.getTime()){
+        if(endTime.getTime() < startTime.getTime()){
             return false;
         }
         return true;

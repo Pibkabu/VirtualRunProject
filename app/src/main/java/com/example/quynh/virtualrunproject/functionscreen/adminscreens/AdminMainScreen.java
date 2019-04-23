@@ -21,9 +21,12 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.dao.UserAccountDAO;
+import com.example.quynh.virtualrunproject.dao.UserProfileDAO;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.CreateRaceScreen;
+import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.UserProfileListScreen;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.example.quynh.virtualrunproject.services.UserAccountServices;
+import com.example.quynh.virtualrunproject.services.UserProfileServices;
 import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.facebook.login.LoginManager;
@@ -31,6 +34,8 @@ import com.google.gson.Gson;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class AdminMainScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -42,6 +47,7 @@ public class AdminMainScreen extends AppCompatActivity
     private UserProfilePrefs profilePrefs;
     private TextView numbersOfUsers;
     private TextView numbersOfRaces;
+    private RacesListDAO dao;
     private CardView users, races, gender, age;
 
     @Override
@@ -68,7 +74,7 @@ public class AdminMainScreen extends AppCompatActivity
         RaceServices.getAllRaces(this, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
-                RacesListDAO dao = gson.fromJson(response.toString(), RacesListDAO.class);
+                dao = gson.fromJson(response.toString(), RacesListDAO.class);
                 numbersOfRaces.setText(String.valueOf(dao.getRaces().size()));
             }
         });
@@ -137,8 +143,9 @@ public class AdminMainScreen extends AppCompatActivity
                             accountPrefs.saveUserLogin("");
                             profilePrefs.saveUserProfile("");
                             Intent intent = new Intent(AdminMainScreen.this, LoginScreen.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
-                            finish();
+                            //finish();
                         }
                     })
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -162,6 +169,19 @@ public class AdminMainScreen extends AppCompatActivity
         }
     }
 
+    public void getProfileData() {
+        UserProfileServices.getAllUserProfile(this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                UserProfileDAO dao = gson.fromJson(response.toString(), UserProfileDAO.class);
+                Intent intent = new Intent(AdminMainScreen.this, UserProfileListScreen.class);
+                intent.putExtra("profiles", gson.toJson(dao));
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -170,10 +190,13 @@ public class AdminMainScreen extends AppCompatActivity
                 drawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.users:
-
+                getProfileData();
                 break;
             case R.id.races:
-
+                Gson gson = new Gson();
+                intent = new Intent(AdminMainScreen.this, AllRaceScreen.class);
+                intent.putExtra("races", gson.toJson(dao));
+                startActivity(intent);
                 break;
             case R.id.gender:
                 intent = new Intent(AdminMainScreen.this, GenderChartScreen.class);
