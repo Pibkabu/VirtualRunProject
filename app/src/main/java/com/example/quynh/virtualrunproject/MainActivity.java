@@ -24,6 +24,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.quynh.virtualrunproject.customGUI.ProfileRegisterDialog;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
+import com.example.quynh.virtualrunproject.functionscreen.hosting.CreateRaceScreen;
+import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ChangePasswordScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ProfileChangeScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.FragmentScreensAdapter;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.HostingFragment;
@@ -168,13 +170,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent intent;
         if (id == R.id.edit_profile) {
             //temporary
-            Intent intent = new Intent(this, ProfileChangeScreen.class);
+            intent = new Intent(this, ProfileChangeScreen.class);
             startActivityForResult(intent, 1);
-        } else if (id == R.id.introduction) {
-
+        } else if (id == R.id.edit_password) {
+            intent = new Intent(this, ChangePasswordScreen.class);
+            startActivity(intent);
+        } else if (id == R.id.host_create) {
+            intent = new Intent(this, CreateRaceScreen.class);
+            startActivityForResult(intent, 2);
         } else if (id == R.id.logout) {
             AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -196,6 +202,12 @@ public class MainActivity extends AppCompatActivity
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
+        }else if (id == R.id.introduction) {
+
+        }else if (id == R.id.tutorial) {
+
+        }else if (id == R.id.contact_us) {
+
         }
 
         drawer.closeDrawer(GravityCompat.START);

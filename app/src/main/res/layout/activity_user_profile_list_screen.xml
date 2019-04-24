@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="0 người tham gia"
-        android:visibility="gone"/>
+        android:text="0 người tham gia" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"

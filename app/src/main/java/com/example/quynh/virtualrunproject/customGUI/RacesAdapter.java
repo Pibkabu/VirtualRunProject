@@ -58,9 +58,11 @@ public class RacesAdapter extends RecyclerView.Adapter<RacesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.raceTitle.setText(races.get(position).getName());
-        String password  = races.get(position).getRacePassword().trim();
+        String password  = races.get(position).getRacePassword();
         if(!password.equalsIgnoreCase("")){
             holder.raceLock.setVisibility(View.VISIBLE);
+        }else{
+            holder.raceLock.setVisibility(View.GONE);
         }
 
         holder.numberOfPlayers.setText(races.get(position).getTotalPlayer() + " Người tham gia cuộc đua");

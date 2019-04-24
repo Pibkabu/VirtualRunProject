@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
+import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.facebooksdk.FacebookLogin;
 import com.example.quynh.virtualrunproject.functionscreen.adminscreens.AdminMainScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.RegisterScreen;
@@ -114,6 +115,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                                     @Override
                                                     public void onReceive(JSONObject response) {
                                                         accountPrefs.saveUserLogin(response.toString());
+                                                        UserProfile profile = new UserProfile();
+                                                        profilePrefs.saveUserProfile(gson.toJson(profile));
                                                         startActivity(intent);
                                                         finish();
                                                     }

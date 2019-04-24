@@ -20,6 +20,7 @@ import com.example.quynh.virtualrunproject.customGUI.MyLoadingDialog;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.facebook.login.LoginManager;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -124,6 +125,33 @@ public class UserAccountServices {
                 loadingDialog.dismiss();
                 Log.e("UserAccountServices", "onResponse: ", error);
                 Toast.makeText(context, "Service Error, There's something wrong accountLogin", Toast.LENGTH_LONG).show();
+            }
+        });
+        customRequest.setRetryPolicy(AppController.myRetryPolicy);
+        AppController.getInstance().addToRequestQueue(customRequest);
+    }
+
+    public static void changePassword(UserAccount account, final Context context, final OnReceiveResponse receiveResponse){
+        final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        //dialog.show();
+        loadingDialog.show();
+        String URL = ConnectionAddress.connection + "/user/changepassword";
+        Map<String, String> params = new HashMap<>();
+        Gson gson = new Gson();
+        params.put("accountString", gson.toJson(account));
+        CustomRequest customRequest = new CustomRequest(Request.Method.POST, URL, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingDialog.dismiss();
+                receiveResponse.onReceive(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //dialog
+                loadingDialog.dismiss();
+                Log.e("UserAccountServices", "onResponse: ", error);
+                Toast.makeText(context, "Service Error, There's something wrong changePassword", Toast.LENGTH_LONG).show();
             }
         });
         customRequest.setRetryPolicy(AppController.myRetryPolicy);

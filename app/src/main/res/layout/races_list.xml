@@ -20,23 +20,28 @@
             android:textColor="@color/red"
             android:textSize="20dp" />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/race_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY" />
+
         <ImageView
             android:id="@+id/race_lock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_lock"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:visibility="gone"/>
-    </LinearLayout>
-
-
-
-    <ImageView
-        android:id="@+id/race_image"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="fitXY" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/number_of_players"

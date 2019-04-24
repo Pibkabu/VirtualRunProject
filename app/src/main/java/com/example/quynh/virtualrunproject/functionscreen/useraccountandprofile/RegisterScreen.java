@@ -135,7 +135,9 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.txtSignIn:
-                finish();
+                Intent intent = new Intent(RegisterScreen.this, LoginScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
     }

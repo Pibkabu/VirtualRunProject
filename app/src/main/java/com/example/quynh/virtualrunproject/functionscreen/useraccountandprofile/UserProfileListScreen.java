@@ -13,7 +13,6 @@ import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.ProfileListAdapter;
 import com.example.quynh.virtualrunproject.dao.UserProfileDAO;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
-import com.example.quynh.virtualrunproject.functionscreen.adminscreens.AdminCreatedRacesScreen;
 import com.google.gson.Gson;
 
 import java.util.List;

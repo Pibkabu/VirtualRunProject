@@ -29,6 +29,7 @@ import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.DonateAccount;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
+import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.GetVerifyCodeScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
 import com.example.quynh.virtualrunproject.helper.PictureResizeHandler;
 import com.example.quynh.virtualrunproject.services.DonateAccountServices;
@@ -249,6 +250,7 @@ public class CreateRaceScreen extends AppCompatActivity implements View.OnClickL
                         if(checkboxDonation.isChecked()){
                             addDonateAccount(race1.getRaceId());
                         }
+                        Toast.makeText(CreateRaceScreen.this, "Đường chạy đã được tạo", Toast.LENGTH_LONG).show();
                         setResult(RESULT_OK);
                         finish();
                     }

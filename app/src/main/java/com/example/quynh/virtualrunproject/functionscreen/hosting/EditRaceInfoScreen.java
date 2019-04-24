@@ -101,6 +101,9 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
         choosePictureBtn.setOnClickListener(this);
         raceStartTime.setOnClickListener(this);
         raceEndTime.setOnClickListener(this);
+
+        PushDownAnim.setPushDownAnimTo(raceStartTime);
+        PushDownAnim.setPushDownAnimTo(raceEndTime);
     }
 
     private void showDatePickerDialog(DatePickerDialog.OnDateSetListener dateSetListener, String time){
@@ -144,6 +147,7 @@ public class EditRaceInfoScreen extends AppCompatActivity implements View.OnClic
             @Override
             public void onReceive(JSONObject response) {
                 if(response != null){
+                    Toast.makeText(EditRaceInfoScreen.this, "Thông tin đã được cập nhật", Toast.LENGTH_LONG).show();
                     setResult(RESULT_OK);
                     finish();
                 }

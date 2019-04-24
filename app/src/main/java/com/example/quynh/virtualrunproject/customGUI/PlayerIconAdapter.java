@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.quynh.virtualrunproject.R;
+import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
@@ -33,6 +34,7 @@ public class PlayerIconAdapter extends RecyclerView.Adapter<PlayerIconAdapter.Vi
 
     private List<Player> players;
     private Context context;
+    private OnButtonClickRecyclerViewAdapter listener;
 
     public PlayerIconAdapter(List<Player> players) {
         this.players = players;
@@ -41,6 +43,10 @@ public class PlayerIconAdapter extends RecyclerView.Adapter<PlayerIconAdapter.Vi
     public PlayerIconAdapter(List<Player> players, Context context) {
         this.players = players;
         this.context = context;
+    }
+
+    public void setOnButtonClickRecyclerViewAdapter(OnButtonClickRecyclerViewAdapter listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -53,7 +59,14 @@ public class PlayerIconAdapter extends RecyclerView.Adapter<PlayerIconAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        holder.userProfileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.OnButtonClick(position);
+            }
+        });
+
         UserProfileServices.getUserProfileWithId(players.get(position).getUserAndRaceMaped().getUserId(), context, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {

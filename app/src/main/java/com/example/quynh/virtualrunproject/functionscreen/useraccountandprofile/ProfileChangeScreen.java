@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -178,7 +179,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
     }
 
     private void update(){
-        final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        final Gson gson = new Gson();
         UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
         //final UserProfile profile = new UserProfile();
         profile.setUserId(account.getUserId());
@@ -205,6 +206,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
             @Override
             public void onReceive(JSONObject response) {
                 UserProfile returnedProfile = gson.fromJson(response.toString(), UserProfile.class);
+                Log.d("TestDOB", "onReceive: " + returnedProfile.getDOB().toString());
                 if(returnedProfile.getUserId() != 0){
                     profilePrefs.saveUserProfile(gson.toJson(returnedProfile));
                     setResult(RESULT_OK);

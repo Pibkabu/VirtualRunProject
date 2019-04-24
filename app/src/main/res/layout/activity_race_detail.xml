@@ -123,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" Giây " />
+                            android:text=" Giây "/>
                     </LinearLayout>
 
                     <TextView
@@ -133,12 +133,15 @@
                         android:text="Test number of player"
                         android:textSize="15dp" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/players_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:orientation="horizontal"></android.support.v7.widget.RecyclerView>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/players_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        </android.support.v7.widget.RecyclerView>
+
 
                     <TextView
                         android:id="@+id/txt_donation"

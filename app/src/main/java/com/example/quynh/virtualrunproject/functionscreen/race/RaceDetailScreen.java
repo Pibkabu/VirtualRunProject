@@ -17,11 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.borjabravo.readmoretextview.ReadMoreTextView;
 import com.example.quynh.virtualrunproject.customGUI.PlayerIconAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
 import com.example.quynh.virtualrunproject.dao.UserProfileDAO;
@@ -75,7 +77,17 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
         setupView();
         setupRaceInfo();
+        checkDate();
         setupAction();
+    }
+
+    private void checkDate() {
+        Date endTime = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
+        Calendar calendar = Calendar.getInstance();
+        if(endTime.getTime() < calendar.getTimeInMillis()){
+            joinRaceBtn.setVisibility(View.GONE);
+            cancelRaceBtn.setVisibility(View.GONE);
+        }
     }
 
     private void setupRaceInfo() {
@@ -157,9 +169,6 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn = (Button) findViewById(R.id.race_join_btn);
         cancelRaceBtn = (Button) findViewById(R.id.race_cancel_btn);
 
-
-        //raceImage.setImageDrawable(PictureResizeHandler.resizeImage(R.drawable.dummy_picture, this));
-
         PushDownAnim.setPushDownAnimTo(joinRaceBtn);
         PushDownAnim.setPushDownAnimTo(cancelRaceBtn);
         PushDownAnim.setPushDownAnimTo(txtDonation);
@@ -170,7 +179,6 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
         joinRaceBtn.setOnClickListener(this);
         cancelRaceBtn.setOnClickListener(this);
         txtDonation.setOnClickListener(this);
-        playerIcons.setOnClickListener(this);
     }
 
     private void getRaceParticipants(int raceId){
@@ -184,6 +192,14 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 UserAccount account = gson.fromJson(prefs.getUserAccount(), UserAccount.class);
                 players = dao.getPlayers();
                 adapter = new PlayerIconAdapter(players, RaceDetailScreen.this);
+
+                adapter.setOnButtonClickRecyclerViewAdapter(new OnButtonClickRecyclerViewAdapter() {
+                    @Override
+                    public void OnButtonClick(int position) {
+                        getUsersProfile();
+                    }
+                });
+
                 playerIcons.setLayoutManager(new LinearLayoutManager(RaceDetailScreen.this, LinearLayoutManager.HORIZONTAL, false));
                 playerIcons.setAdapter(adapter);
                 playerIcons.setNestedScrollingEnabled(false);
@@ -337,9 +353,6 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 Gson gson = new Gson();
                 intent.putExtra("donateAccount", gson.toJson(donateAccount));
                 startActivity(intent);
-                break;
-            case R.id.players_icon:
-                getUsersProfile();
                 break;
             case R.id.back_btn:
                 finish();
