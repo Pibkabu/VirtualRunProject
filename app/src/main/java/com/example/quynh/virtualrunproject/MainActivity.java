@@ -328,6 +328,8 @@ public class MainActivity extends AppCompatActivity
             }
             mainContents.setCurrentItem(2);
             viewPagerTabChanged(2);
+        }else if(requestCode == 2 && resultCode == RESULT_OK){
+            adapter.notifyDataSetChanged();
         }
     }
 }

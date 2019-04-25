@@ -187,7 +187,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 Intent intent = new Intent(getActivity(), RaceDetailScreen.class);
                 Gson gson = new Gson();
                 intent.putExtra("raceString", gson.toJson(races.get(position)));
-                getActivity().startActivity(intent);
+                getActivity().startActivityForResult(intent, 2);
             }
         });
     }
@@ -206,7 +206,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
-                } else {
+                }else {
                     recyclerView.setVisibility(View.GONE);
                     noData.setVisibility(View.VISIBLE);
                 }

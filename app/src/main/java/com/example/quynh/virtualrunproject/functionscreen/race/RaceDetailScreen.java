@@ -291,6 +291,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                     joinRaceBtn.setVisibility(View.GONE);
                     cancelRaceBtn.setVisibility(View.VISIBLE);
                     Toast.makeText(RaceDetailScreen.this, "Bạn đã tham gia cuộc đua", Toast.LENGTH_LONG).show();
+                    setResult(RESULT_OK);
+                    finish();
                 }else{
                     Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
                 }
@@ -308,6 +310,8 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                     joinRaceBtn.setVisibility(View.VISIBLE);
                     cancelRaceBtn.setVisibility(View.GONE);
                     Toast.makeText(RaceDetailScreen.this, "Bạn đã hủy đăng ký tham gia cuộc đua", Toast.LENGTH_LONG).show();
+                    setResult(RESULT_OK);
+                    finish();
                 }else{
                     Toast.makeText(RaceDetailScreen.this, "There are some error", Toast.LENGTH_LONG).show();
                 }

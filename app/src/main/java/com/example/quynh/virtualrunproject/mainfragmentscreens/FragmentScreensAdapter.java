@@ -43,4 +43,8 @@ public class FragmentScreensAdapter extends FragmentStatePagerAdapter {
         return mFragmentList.size();
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 }

@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.quynh.virtualrunproject.MainActivity;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.OngoingRaceHostingAdapter;
 import com.example.quynh.virtualrunproject.customGUI.RacesAdapter;
@@ -41,7 +42,7 @@ import java.util.List;
  * Created by quynh on 3/24/2019.
  */
 
-public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class OngoingRunFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,7 +53,6 @@ public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.O
     private RecyclerView recyclerView;
     private List<Race> races;
     private OngoingRaceHostingAdapter adapter;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout noData;
 
     @Override
@@ -70,9 +70,6 @@ public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.O
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
         noData = (LinearLayout) view.findViewById(R.id.no_data);
     }
 
@@ -83,7 +80,7 @@ public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.O
                 Gson gson = new Gson();
                 Intent intent = new Intent(getActivity(), EditRaceInfoScreen.class);
                 intent.putExtra("race", gson.toJson(races.get(position)));
-                startActivityForResult(intent, 1);
+                getParentFragment().getActivity().startActivityForResult(intent, 2);
             }
 
             @Override
@@ -143,13 +140,9 @@ public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.O
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
-                }else{
+                } else {
                     recyclerView.setVisibility(View.GONE);
                     noData.setVisibility(View.VISIBLE);
-                }
-
-                if (swipeRefreshLayout.isRefreshing()) {
-                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -162,17 +155,11 @@ public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.O
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == getActivity().RESULT_OK){
-            resetFragment();
-        }
-    }
-
-    @Override
-    public void onRefresh() {
-        races.clear();
-        setupRaceInfo();
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == 1 && resultCode == getActivity().RESULT_OK){
+//            resetFragment();
+//        }
+//    }
 }
