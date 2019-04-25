@@ -27,6 +27,7 @@ import java.util.Map;
 public class HostingServices {
     public static void getOngoingRacesUserHosting(int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/hosting/ongoing?userId=" + userId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -49,6 +50,7 @@ public class HostingServices {
 
     public static void getPastRacesUserHosting(int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/hosting/past?userId=" + userId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -72,6 +74,7 @@ public class HostingServices {
     public static void cancelHosting(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/hosting/cancel";
         Map<String, String> params = new HashMap<>();

@@ -27,6 +27,7 @@ import java.util.Map;
 public class DonateAccountServices {
     public static void getRaceDonationRecord(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/donate/account?raceId=" + raceId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -51,6 +52,7 @@ public class DonateAccountServices {
     public static void addDonateAccount(DonateAccount account, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/donate/account/add";
         Gson gson = new Gson();

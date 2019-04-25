@@ -19,7 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.example.quynh.virtualrunproject.R;
@@ -28,7 +30,9 @@ import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecycler
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.functionscreen.adminscreens.EndedRacesScreen;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
+import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.GetVerifyCodeScreen;
 import com.example.quynh.virtualrunproject.helper.RemoveAccentHandler;
 import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
@@ -62,6 +66,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText nameSearched;
     private ImageView imgSearch;
+    private LinearLayout noData;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         filterBtn = (Button) view.findViewById(R.id.filter_btn);
         nameSearched = (EditText) view.findViewById(R.id.name_searched);
         imgSearch = (ImageView) view.findViewById(R.id.img_search);
+        noData = (LinearLayout) view.findViewById(R.id.no_data);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.racesList);
         settingAdapter();
@@ -91,6 +97,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void onClick(View v) {
                 //searchRaces(RemoveAccentHandler.removeAccent(nameSearched.getText().toString()));
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
                 Race race1 = new Race();
                 race1.setName((nameSearched.getText().toString()));
                 searchRaces(race1);
@@ -105,9 +113,11 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
 
                 if (fromDistance.getText().toString().equalsIgnoreCase("")) {
-                    fromDistance.setError("This does not filled yet");
+                    fromDistance.setError("Thông tin bắt buộc");
                 } else if (toDistance.getText().toString().equalsIgnoreCase("")) {
-                    toDistance.setError("This does not filled yet");
+                    toDistance.setError("Thông tin bắt buộc");
+                } else if (Integer.valueOf(toDistance.getText().toString()) < Integer.valueOf(fromDistance.getText().toString())) {
+                    Toast.makeText(getActivity(), "Khoảng cách cần nhập hợp lý", Toast.LENGTH_LONG).show();
                 } else {
                     double from = Double.valueOf(fromDistance.getText().toString());
                     double to = Double.valueOf(toDistance.getText().toString());
@@ -125,11 +135,16 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     Gson gson = new Gson();
                     races.clear();
                     RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
-                    if (response != null || !response.toString().equals("")) {
+                    if (!racesListDAO.getRaces().isEmpty()) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        noData.setVisibility(View.GONE);
                         for (Race race : racesListDAO.getRaces()) {
                             races.add(race);
                         }
                         adapter.notifyDataSetChanged();
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        noData.setVisibility(View.VISIBLE);
                     }
                 }
             });
@@ -144,11 +159,16 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 Log.d("RacesFragment", "onResponse: " + response);
                 races.clear();
                 RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
-                if (response != null || !response.toString().equals("")) {
+                if (!racesListDAO.getRaces().isEmpty()) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.GONE);
                     for (Race race : racesListDAO.getRaces()) {
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    noData.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -180,10 +200,15 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 Log.d("RacesFragment", "onResponse: " + response);
                 RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
                 if (!racesListDAO.getRaces().isEmpty()) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.GONE);
                     for (Race race : racesListDAO.getRaces()) {
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    noData.setVisibility(View.VISIBLE);
                 }
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
@@ -201,6 +226,8 @@ public class RacesFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
             Race race1 = new Race();
             race1.setName((nameSearched.getText().toString()));
             searchRaces(race1);

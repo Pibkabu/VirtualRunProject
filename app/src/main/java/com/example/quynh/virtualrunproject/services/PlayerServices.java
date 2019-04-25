@@ -28,6 +28,7 @@ import java.util.Map;
 public class PlayerServices {
     public static void getPlayerRecordWithId(int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/id?userId=" + userId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -50,6 +51,7 @@ public class PlayerServices {
 
     public static void getParticipateProfile(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/profile?raceId=" + raceId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -72,6 +74,7 @@ public class PlayerServices {
 
     public static void getAttendingRaces(int userId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/attending/ongoing?userId=" + userId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -94,6 +97,7 @@ public class PlayerServices {
 
     public static void getRaceParticipants(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/race?raceId=" + raceId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -116,6 +120,7 @@ public class PlayerServices {
 
     public static void getFinishResult(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/race/finish?raceId=" + raceId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -139,6 +144,7 @@ public class PlayerServices {
     public static void playerRegister(Player player, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/register";
         Map<String, String> params = new HashMap<>();
@@ -166,6 +172,7 @@ public class PlayerServices {
     public static void cancelRegister(Player player, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/register/cancel";
         Map<String, String> params = new HashMap<>();
@@ -193,6 +200,7 @@ public class PlayerServices {
     public static void sendResult(Player player, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/players/sendResult";
         Map<String, String> params = new HashMap<>();

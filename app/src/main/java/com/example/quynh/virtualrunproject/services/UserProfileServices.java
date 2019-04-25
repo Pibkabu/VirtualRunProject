@@ -29,6 +29,7 @@ public class UserProfileServices {
     public static void getAllUserProfile(final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/profile";
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -53,6 +54,7 @@ public class UserProfileServices {
     public static void getUserProfileWithId(int id, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/profile/id?" + "id=" + id;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -77,6 +79,7 @@ public class UserProfileServices {
     public static void addUserProfile(UserProfile profile, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Map<String, String> params = new HashMap<>();
@@ -104,6 +107,7 @@ public class UserProfileServices {
 
     public static void updateUserProfile(UserProfile profile, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         Map<String, String> params = new HashMap<>();

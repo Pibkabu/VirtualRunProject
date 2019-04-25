@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                     finish();
                 }
             });
+            registerDialog.setCancelable(false);
             registerDialog.show();
         }
     }

@@ -56,9 +56,9 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
         holder.raceTitle.setText(races.get(position).getName());
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", races.get(position).getEndTime().toString());
-        String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+        String startTime = DateFormatHandler.dateToString("dd-MM", startDate) + " ("
                 + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
-        String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+        String endTime = DateFormatHandler.dateToString("dd-MM", endDate) + " ("
                 + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
 
         holder.startTime.setText(startTime + " Đến");

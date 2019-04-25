@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -57,7 +59,7 @@ import static com.sweetzpot.stravazpot.authenticaton.api.ApprovalPrompt.AUTO;
  * Created by quynh on 2/26/2019.
  */
 
-public class AttendingRaceFragment extends Fragment {
+public class AttendingRaceFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +73,8 @@ public class AttendingRaceFragment extends Fragment {
     private List<Race> races;
     private Player record;
     private Race race;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout noData;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -82,7 +86,9 @@ public class AttendingRaceFragment extends Fragment {
     private void setupView(View view) {
         racesList = (RecyclerView) view.findViewById(R.id.racesList);
         races = new ArrayList<>();
-
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        noData = (LinearLayout) view.findViewById(R.id.no_data);
     }
 
     private void getAttending(){
@@ -94,6 +100,8 @@ public class AttendingRaceFragment extends Fragment {
             public void onReceive(JSONObject response) {
                 RacesListDAO dao = gson.fromJson(response.toString(), RacesListDAO.class);
                 if(!dao.getRaces().isEmpty()){
+                    racesList.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.GONE);
                     races = dao.getRaces();
                     adapter = new AttendingRaceAdapter(races, new OnButtonClickRecyclerViewAdapter() {
                         @Override
@@ -105,6 +113,13 @@ public class AttendingRaceFragment extends Fragment {
                     racesList.setLayoutManager(new LinearLayoutManager(getContext()));
                     racesList.setAdapter(adapter);
                     racesList.setNestedScrollingEnabled(false);
+                }else{
+                    racesList.setVisibility(View.GONE);
+                    noData.setVisibility(View.VISIBLE);
+                }
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -170,8 +185,6 @@ public class AttendingRaceFragment extends Fragment {
         getStravaInfoTask.execute(data.getStringExtra(StravaLoginActivity.RESULT_CODE));
     }
 
-
-
     private void getStravaRecord(final String accessToken){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(getActivity());
         loadingDialog.show();
@@ -219,5 +232,11 @@ public class AttendingRaceFragment extends Fragment {
             Log.d("StravaCode", data.getStringExtra(StravaLoginActivity.RESULT_CODE));
             getStravaInfo(data);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        races.clear();
+        getAttending();
     }
 }

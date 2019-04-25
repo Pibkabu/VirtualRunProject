@@ -107,9 +107,9 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
         Date startDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getStartTime().toString());
         Date endDate = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", race.getEndTime().toString());
-        String startTime = DateFormatHandler.dateToString("dd MM", startDate) + " ("
+        String startTime = DateFormatHandler.dateToString("dd-MM", startDate) + " ("
                 + DateFormatHandler.dateToString("HH:mm a", startDate) + ") Giờ Việt Nam";
-        String endTime = DateFormatHandler.dateToString("dd MM", endDate) + " ("
+        String endTime = DateFormatHandler.dateToString("dd-MM", endDate) + " ("
                 + DateFormatHandler.dateToString("HH:mm a", endDate) + ") Giờ Việt Nam";
         raceTime.setText(startTime + " đến " + endTime);
         description.setText(race.getDescription());

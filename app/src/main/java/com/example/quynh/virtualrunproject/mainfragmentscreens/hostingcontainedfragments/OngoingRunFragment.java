@@ -9,12 +9,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.OngoingRaceHostingAdapter;
@@ -39,7 +41,7 @@ import java.util.List;
  * Created by quynh on 3/24/2019.
  */
 
-public class OngoingRunFragment extends Fragment{
+public class OngoingRunFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class OngoingRunFragment extends Fragment{
     private RecyclerView recyclerView;
     private List<Race> races;
     private OngoingRaceHostingAdapter adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout noData;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -66,6 +70,10 @@ public class OngoingRunFragment extends Fragment{
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        noData = (LinearLayout) view.findViewById(R.id.no_data);
     }
 
     private void setupAction(){
@@ -129,10 +137,19 @@ public class OngoingRunFragment extends Fragment{
             public void onReceive(JSONObject response) {
                 RacesListDAO dao = gson.fromJson(response.toString(), RacesListDAO.class);
                 if(!dao.getRaces().isEmpty()){
+                    recyclerView.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.GONE);
                     for (Race race : dao.getRaces()){
                         races.add(race);
                     }
                     adapter.notifyDataSetChanged();
+                }else{
+                    recyclerView.setVisibility(View.GONE);
+                    noData.setVisibility(View.VISIBLE);
+                }
+
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -151,5 +168,11 @@ public class OngoingRunFragment extends Fragment{
         if(requestCode == 1 && resultCode == getActivity().RESULT_OK){
             resetFragment();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        races.clear();
+        setupRaceInfo();
     }
 }

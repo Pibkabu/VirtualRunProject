@@ -35,6 +35,7 @@ public class UserAccountServices {
 
     public static void getAllUserAccount(final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/user";
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -57,6 +58,7 @@ public class UserAccountServices {
 
     public static void getUserAccountWithEmail(String email, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/user/email?email=" + email;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -80,6 +82,7 @@ public class UserAccountServices {
     public static void addUserAccount(UserAccount account, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/user/add";
         Map<String, String> params = new HashMap<>();
@@ -107,6 +110,7 @@ public class UserAccountServices {
     public static void accountLogin(UserAccount account, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/user/login";
         Map<String, String> params = new HashMap<>();
@@ -134,6 +138,7 @@ public class UserAccountServices {
     public static void changePassword(UserAccount account, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/user/changepassword";
         Map<String, String> params = new HashMap<>();

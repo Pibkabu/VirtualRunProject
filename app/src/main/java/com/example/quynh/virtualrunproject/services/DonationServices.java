@@ -26,6 +26,7 @@ import java.util.Map;
 public class DonationServices {
     public static void getRaceDonationRecord(int raceId, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/donation?raceId=" + raceId;
         CustomRequest customRequest = new CustomRequest(URL, null, new Response.Listener<JSONObject>() {
@@ -50,6 +51,7 @@ public class DonationServices {
     public static void addDonateAccount(int raceId, String email, String description, double money, final Context context, final OnReceiveResponse receiveResponse){
         final MyLoadingDialog loadingDialog = new MyLoadingDialog(context);
         //dialog.show();
+        loadingDialog.setCancelable(false);
         loadingDialog.show();
         String URL = ConnectionAddress.connection + "/donation/add";
         Map<String, String> params = new HashMap<>();
