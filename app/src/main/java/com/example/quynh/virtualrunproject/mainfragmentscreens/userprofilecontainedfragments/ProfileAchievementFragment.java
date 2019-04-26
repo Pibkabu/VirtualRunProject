@@ -42,6 +42,7 @@ public class ProfileAchievementFragment extends Fragment {
     private TextView seeAllAchievement;
     private UserAccountPrefs accountPrefs;
     private List<Player> players;
+    private UserAccount account;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class ProfileAchievementFragment extends Fragment {
 
         players = new ArrayList<>();
         final Gson gson = new Gson();
-        UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+        account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
         PlayerServices.getPlayerRecordWithId(account.getUserId(), getActivity(), new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
@@ -110,6 +111,7 @@ public class ProfileAchievementFragment extends Fragment {
                 PlayerListDAO dao = new PlayerListDAO(players);
                 Gson gson = new Gson();
                 intent.putExtra("playerRecords", gson.toJson(dao));
+                intent.putExtra("UserId", account.getUserId());
                 getActivity().startActivity(intent);
             }
         });

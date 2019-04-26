@@ -19,11 +19,15 @@ import android.widget.TextView;
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.customGUI.AdminRacesAdapter;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
+import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.RaceResultScreen;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
+import com.example.quynh.virtualrunproject.services.RaceServices;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,25 +54,45 @@ public class AllRaceScreen extends AppCompatActivity implements TextView.OnEdito
         setupRaceList();
     }
 
-    private void search(String name){
-        Iterator<Race> iter = races.iterator();
+    private void search(Race name){
+//        Iterator<Race> iter = races.iterator();
+//
+//        while (iter.hasNext()) {
+//            Race race = iter.next();
+//
+//            if (!race.getName().toLowerCase().contains(name.toLowerCase())){
+//                iter.remove();
+//                adapter.notifyDataSetChanged();
+//            }
+//        }
+//
+//        if(!races.isEmpty()){
+//            recyclerView.setVisibility(View.VISIBLE);
+//            noData.setVisibility(View.GONE);
+//        }else{
+//            recyclerView.setVisibility(View.GONE);
+//            noData.setVisibility(View.VISIBLE);
+//        }
 
-        while (iter.hasNext()) {
-            Race race = iter.next();
-
-            if (!race.getName().toLowerCase().contains(name.toLowerCase())){
-                iter.remove();
-                adapter.notifyDataSetChanged();
+        RaceServices.searchRacesWithName(name, this, new OnReceiveResponse() {
+            @Override
+            public void onReceive(JSONObject response) {
+                Gson gson = new Gson();
+                races.clear();
+                RacesListDAO racesListDAO = gson.fromJson(response.toString(), RacesListDAO.class);
+                if (!racesListDAO.getRaces().isEmpty()) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.GONE);
+                    for (Race race : racesListDAO.getRaces()) {
+                        races.add(race);
+                    }
+                    adapter.notifyDataSetChanged();
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    noData.setVisibility(View.VISIBLE);
+                }
             }
-        }
-
-        if(!races.isEmpty()){
-            recyclerView.setVisibility(View.VISIBLE);
-            noData.setVisibility(View.GONE);
-        }else{
-            recyclerView.setVisibility(View.GONE);
-            noData.setVisibility(View.VISIBLE);
-        }
+        });
     }
 
     private void setupRaceList() {
@@ -116,7 +140,9 @@ public class AllRaceScreen extends AppCompatActivity implements TextView.OnEdito
             public void onClick(View v) {
                 InputMethodManager inputManager = (InputMethodManager) AllRaceScreen.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(AllRaceScreen.this.getCurrentFocus().getWindowToken(), 0);
-                search(nameSearched.getText().toString());
+                Race race = new Race();
+                race.setName(nameSearched.getText().toString());
+                search(race);
             }
         });
         nameSearched.setOnEditorActionListener(this);
@@ -139,7 +165,9 @@ public class AllRaceScreen extends AppCompatActivity implements TextView.OnEdito
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
             InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
-            search(nameSearched.getText().toString());
+            Race race = new Race();
+            race.setName(nameSearched.getText().toString());
+            search(race);
             return true;
         }
         return false;

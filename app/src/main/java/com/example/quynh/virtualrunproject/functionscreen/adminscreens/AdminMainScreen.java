@@ -63,11 +63,11 @@ public class AdminMainScreen extends AppCompatActivity
 
     private void setupData() {
         final Gson gson = new Gson();
-        UserAccountServices.getAllUserAccount(this, new OnReceiveResponse() {
+        UserProfileServices.getAllUserProfile(this, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
-                UserAccountDAO dao = gson.fromJson(response.toString(), UserAccountDAO.class);
-                numbersOfUsers.setText(String.valueOf(dao.getAccounts().size()));
+                UserProfileDAO dao = gson.fromJson(response.toString(), UserProfileDAO.class);
+                numbersOfUsers.setText(String.valueOf(dao.getProfiles().size()));
             }
         });
 

@@ -25,6 +25,9 @@ import com.example.quynh.virtualrunproject.customGUI.ProfileRegisterDialog;
 import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserProfile;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.CreateRaceScreen;
+import com.example.quynh.virtualrunproject.functionscreen.supports.ContactScreen;
+import com.example.quynh.virtualrunproject.functionscreen.supports.IntroductionScreen;
+import com.example.quynh.virtualrunproject.functionscreen.supports.TutorialScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ChangePasswordScreen;
 import com.example.quynh.virtualrunproject.functionscreen.useraccountandprofile.ProfileChangeScreen;
 import com.example.quynh.virtualrunproject.mainfragmentscreens.FragmentScreensAdapter;
@@ -204,11 +207,14 @@ public class MainActivity extends AppCompatActivity
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }else if (id == R.id.introduction) {
-
+            intent = new Intent(this, IntroductionScreen.class);
+            startActivity(intent);
         }else if (id == R.id.tutorial) {
-
+            intent = new Intent(this, TutorialScreen.class);
+            startActivity(intent);
         }else if (id == R.id.contact_us) {
-
+            intent = new Intent(this, ContactScreen.class);
+            startActivity(intent);
         }
 
         drawer.closeDrawer(GravityCompat.START);
@@ -314,17 +320,19 @@ public class MainActivity extends AppCompatActivity
             if(UserProfileFragment.displayName != null){
                 UserProfileFragment.displayName.setText(profile.getDisplayName());
             }
-            try{
-                Glide.with(this).load(profile.getUserImage())
-                        .apply(RequestOptions.skipMemoryCacheOf(true))
-                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                        .into(userProfilePic);
-                Glide.with(this).load(profile.getUserImage())
-                        .apply(RequestOptions.skipMemoryCacheOf(true))
-                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                        .into(UserProfileFragment.profilePic);
-            }catch (Exception e){
-                Log.e("GildeError", "setupView: ", e);
+            if(!profile.getUserImage().equalsIgnoreCase("")){
+                try{
+                    Glide.with(this).load(profile.getUserImage())
+                            .apply(RequestOptions.skipMemoryCacheOf(true))
+                            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                            .into(userProfilePic);
+                    Glide.with(this).load(profile.getUserImage())
+                            .apply(RequestOptions.skipMemoryCacheOf(true))
+                            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                            .into(UserProfileFragment.profilePic);
+                }catch (Exception e){
+                    Log.e("GildeError", "setupView: ", e);
+                }
             }
             mainContents.setCurrentItem(2);
             viewPagerTabChanged(2);

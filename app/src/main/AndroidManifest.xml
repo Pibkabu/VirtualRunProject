@@ -84,7 +84,10 @@
         <activity android:name=".functionscreen.adminscreens.AgeChartScreen" />
         <activity android:name=".functionscreen.adminscreens.AllRaceScreen" />
         <activity android:name=".functionscreen.useraccountandprofile.UserProfileListScreen" />
-        <activity android:name=".functionscreen.useraccountandprofile.ChangePasswordScreen"></activity>
+        <activity android:name=".functionscreen.useraccountandprofile.ChangePasswordScreen" />
+        <activity android:name=".functionscreen.supports.IntroductionScreen" />
+        <activity android:name=".functionscreen.supports.TutorialScreen" />
+        <activity android:name=".functionscreen.supports.ContactScreen"></activity>
     </application>
 
 </manifest>
