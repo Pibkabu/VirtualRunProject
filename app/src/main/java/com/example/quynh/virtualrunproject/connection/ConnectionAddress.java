@@ -5,7 +5,7 @@ package com.example.quynh.virtualrunproject.connection;
  */
 
 public class ConnectionAddress {
-    //public static String connection = "http://192.168.43.195:8080";
-    public static String connection = "https://virtualrace.herokuapp.com";
+    public static String connection = "http://192.168.43.195:8080";
+    //public static String connection = "https://virtualrace.herokuapp.com";
     //public static String connection = "https://git.heroku.com/virtualrace.git";
 }

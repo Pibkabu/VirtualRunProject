@@ -16,6 +16,7 @@ import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.dao.PlayerListDAO;
 import com.example.quynh.virtualrunproject.entity.Player;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.services.PlayerServices;
 import com.google.gson.Gson;
 
@@ -31,6 +32,7 @@ public class RaceResultScreen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RaceResultAdapter adapter;
     private List<Player> records;
+    private Race race;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +51,21 @@ public class RaceResultScreen extends AppCompatActivity {
                 finish();
             }
         });
+        raceName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RaceResultScreen.this, RaceDetailScreen.class);
+                Gson gson = new Gson();
+                intent.putExtra("raceString", gson.toJson(race));
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupInfo() {
         Intent intent = getIntent();
         final Gson gson = new Gson();
-        Race race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
+        race = gson.fromJson(intent.getStringExtra("raceString"), Race.class);
 
         raceName.setText(race.getName());
         Glide.with(this).load(race.getRaceImage()).into(image);

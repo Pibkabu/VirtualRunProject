@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -38,7 +39,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class AdminMainScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private DrawerLayout drawer;
     private ImageView menu;
@@ -49,6 +50,7 @@ public class AdminMainScreen extends AppCompatActivity
     private TextView numbersOfRaces;
     private RacesListDAO dao;
     private CardView users, races, gender, age;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class AdminMainScreen extends AppCompatActivity
         races.setOnClickListener(this);
         gender.setOnClickListener(this);
         age.setOnClickListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     private void setupView() {
@@ -105,6 +108,7 @@ public class AdminMainScreen extends AppCompatActivity
         races = (CardView) findViewById(R.id.races);
         gender = (CardView) findViewById(R.id.gender);
         age = (CardView) findViewById(R.id.age);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         PushDownAnim.setPushDownAnimTo(users);
         PushDownAnim.setPushDownAnimTo(races);
@@ -216,5 +220,10 @@ public class AdminMainScreen extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        setupData();
     }
 }
