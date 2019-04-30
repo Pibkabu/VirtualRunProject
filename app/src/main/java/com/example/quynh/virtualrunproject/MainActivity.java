@@ -320,6 +320,7 @@ public class MainActivity extends AppCompatActivity
             if(UserProfileFragment.displayName != null){
                 UserProfileFragment.displayName.setText(profile.getDisplayName());
             }
+            Log.d("TestImageShit", "onActivityResult: " + profile.getUserImage());
             if(!profile.getUserImage().equalsIgnoreCase("")){
                 try{
                     Glide.with(this).load(profile.getUserImage())

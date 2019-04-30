@@ -205,7 +205,10 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                 playerIcons.setNestedScrollingEnabled(false);
                 if(!players.isEmpty()){
                     for (Player player : players){
-                        if(player.getUserAndRaceMaped().getUserId() == account.getUserId()){
+                        if(player.getUserAndRaceMaped().getUserId() == account.getUserId() && player.getRankInRace() > 0){
+                            joinRaceBtn.setVisibility(View.GONE);
+                            cancelRaceBtn.setVisibility(View.GONE);
+                        }else if(player.getUserAndRaceMaped().getUserId() == account.getUserId()){
                             joinRaceBtn.setVisibility(View.GONE);
                             cancelRaceBtn.setVisibility(View.VISIBLE);
                         }

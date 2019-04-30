@@ -2,6 +2,7 @@ package com.example.quynh.virtualrunproject.functionscreen.adminscreens;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -85,12 +86,12 @@ public class AgeChartScreen extends AppCompatActivity {
     }
 
     private int getProfileAge(UserProfile profile){
-        Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", profile.getDOB().toString());
+        Date date = DateFormatHandler.stringToDate("yyyy-MM-dd HH:ss:mm", profile.getDOB().toString());
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         calendar.setTime(date);
         int profileYear = calendar.get(Calendar.YEAR);
-        return currentYear - profileYear;
+        return (currentYear - profileYear);
     }
 
     private void setupChart() {
@@ -100,9 +101,9 @@ public class AgeChartScreen extends AppCompatActivity {
         for (UserProfile profile : profiles){
             if(getProfileAge(profile) < 18){
                 lessThan18.add(profile);
-            }else if(getProfileAge(profile) >= 18 || getProfileAge(profile) <= 25){
+            }else if(getProfileAge(profile) >= 18 && getProfileAge(profile) <= 25){
                 from18to25.add(profile);
-            }else{
+            }else if(getProfileAge(profile) > 25){
                 greaterThan25.add(profile);
             }
         }

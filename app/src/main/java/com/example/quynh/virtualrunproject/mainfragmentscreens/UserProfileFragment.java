@@ -64,13 +64,15 @@ public class UserProfileFragment extends Fragment {
         displayName = view.findViewById(R.id.user_display_name);
         displayName.setText(profile.getDisplayName());
         profilePic = (CircleImageView) view.findViewById(R.id.user_profile_pic);
-        try{
-            Glide.with(this).load(profile.getUserImage())
-                    .apply(RequestOptions.skipMemoryCacheOf(true))
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
-                    .into(profilePic);
-        }catch (Exception e){
-            Log.e("GildeError", "setupView: ", e);
+        if(!profile.getUserImage().equalsIgnoreCase("")){
+            try{
+                Glide.with(this).load(profile.getUserImage())
+                        .apply(RequestOptions.skipMemoryCacheOf(true))
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE))
+                        .into(profilePic);
+            }catch (Exception e){
+                Log.e("GildeError", "setupView: ", e);
+            }
         }
 
         editProfileBtn = (Button) view.findViewById(R.id.edit_profile_btn);
