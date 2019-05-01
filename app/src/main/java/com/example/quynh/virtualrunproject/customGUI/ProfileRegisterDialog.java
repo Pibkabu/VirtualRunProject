@@ -1,5 +1,6 @@
 package com.example.quynh.virtualrunproject.customGUI;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -41,7 +42,7 @@ import java.util.List;
  * Created by quynh on 2/19/2019.
  */
 
-public class ProfileRegisterDialog extends Dialog implements TextView.OnEditorActionListener{
+public class ProfileRegisterDialog extends AlertDialog implements TextView.OnEditorActionListener{
 
     private EditText txtEmail, txtDisplayName, txtFirstName, txtLastName, txtPhone, txtAddress;
     private Spinner gender;
