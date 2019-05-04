@@ -103,7 +103,7 @@ public class AttendingRaceFragment extends Fragment implements SwipeRefreshLayou
                     racesList.setVisibility(View.VISIBLE);
                     noData.setVisibility(View.GONE);
                     races = dao.getRaces();
-                    adapter = new AttendingRaceAdapter(races, new OnButtonClickRecyclerViewAdapter() {
+                    adapter = new AttendingRaceAdapter(races, getActivity(), new OnButtonClickRecyclerViewAdapter() {
                         @Override
                         public void OnButtonClick(int position) {
                             race = races.get(position);

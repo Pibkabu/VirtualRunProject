@@ -25,6 +25,7 @@ import com.example.quynh.virtualrunproject.mainfragmentscreens.userprofilecontai
 import com.example.quynh.virtualrunproject.mainfragmentscreens.userprofilecontainedfragments.AttendingRaceFragment;
 import com.example.quynh.virtualrunproject.userlogintracker.UserProfilePrefs;
 import com.google.gson.Gson;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -78,6 +79,8 @@ public class UserProfileFragment extends Fragment {
         editProfileBtn = (Button) view.findViewById(R.id.edit_profile_btn);
         tabLayout = (TabLayout) view.findViewById(R.id.tablayout);
         tablayoutContent = (ViewPager) view.findViewById(R.id.tablayout_content);
+
+        PushDownAnim.setPushDownAnimTo(editProfileBtn);
     }
 
     private void setupViewPager(ViewPager viewPager) {

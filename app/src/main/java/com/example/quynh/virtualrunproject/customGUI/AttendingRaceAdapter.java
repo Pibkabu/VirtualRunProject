@@ -1,5 +1,6 @@
 package com.example.quynh.virtualrunproject.customGUI;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnButtonClickRecyclerViewAdapter;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.helper.DateFormatHandler;
+import com.google.gson.Gson;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Calendar;
@@ -37,9 +41,10 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
         this.context = context;
     }
 
-    public AttendingRaceAdapter(List<Race> races, OnButtonClickRecyclerViewAdapter listener) {
+    public AttendingRaceAdapter(List<Race> races, FragmentActivity context, OnButtonClickRecyclerViewAdapter listener) {
         this.races = races;
         this.listener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -77,6 +82,16 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
             }
         });
 
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RaceDetailScreen.class);
+                Gson gson = new Gson();
+                intent.putExtra("raceString", gson.toJson(races.get(position)));
+                context.startActivity(intent);
+            }
+        });
+
         PushDownAnim.setPushDownAnimTo(holder.sendResultBtn);
     }
 
@@ -91,6 +106,7 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
         private TextView endTime;
         private TextView cannotSendResultYet;
         private Button sendResultBtn;
+        private LinearLayout layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +115,7 @@ public class AttendingRaceAdapter extends RecyclerView.Adapter<AttendingRaceAdap
             this.endTime = (TextView) itemView.findViewById(R.id.end_time);
             this.cannotSendResultYet = (TextView) itemView.findViewById(R.id.cannot_send_result_yet);
             this.sendResultBtn = (Button) itemView.findViewById(R.id.send_result_btn);
+            this.layout = (LinearLayout) itemView.findViewById(R.id.layout);
         }
     }
 }

@@ -105,12 +105,10 @@ public class RaceDonationScreen extends AppCompatActivity {
             public void onReceive(JSONObject response) {
                 DonationDAO dao = gson.fromJson(response.toString(), DonationDAO.class);
                 infos = dao.getInfos();
-                if (infos != null && !infos.isEmpty()) {
-                    adapter = new DonationAdapter(infos);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(RaceDonationScreen.this));
-                    recyclerView.setAdapter(adapter);
-                    recyclerView.setNestedScrollingEnabled(false);
-                }
+                adapter = new DonationAdapter(infos);
+                recyclerView.setLayoutManager(new LinearLayoutManager(RaceDonationScreen.this));
+                recyclerView.setAdapter(adapter);
+                recyclerView.setNestedScrollingEnabled(false);
             }
         });
     }
@@ -167,6 +165,7 @@ public class RaceDonationScreen extends AppCompatActivity {
                                     RaceDonationScreen.this, new OnReceiveResponse() {
                                         @Override
                                         public void onReceive(JSONObject response) {
+                                            alertDialog.cancel();
                                             DonationDAO.DonationInfo info = gson.fromJson(response.toString(), DonationDAO.DonationInfo.class);
                                             if (info.getProfile().getUserId() != 0) {
                                                 infos.add(info);

@@ -68,7 +68,6 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
     private TextView txtDateOfBirth;
     private String userImage;
     private UserProfile profile;
-    private boolean choosePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,6 +256,18 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         }
     }
 
+    private boolean checkDOB(){
+        Date DOB = DateFormatHandler.stringToDate("yyyy-MM-dd", txtDateOfBirth.getText().toString());
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(DOB);
+        int profileYear = calendar.get(Calendar.YEAR);
+        if((currentYear < profileYear) || (currentYear - profileYear < 5)){
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -272,15 +283,37 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         if((month + 1) >= 10){
-                            txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                            if(dayOfMonth >= 10){
+                                txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                            }else{
+                                txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + "0" + dayOfMonth);
+                            }
                         }else{
-                            txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + dayOfMonth);
+                            if(dayOfMonth >= 10){
+                                txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + dayOfMonth);
+                            }else{
+                                txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + "0" + dayOfMonth);
+                            }
                         }
                     }
                 });
                 break;
             case R.id.update:
-                update();
+                if(txtDisplayName.getText().toString().equalsIgnoreCase("")){
+                    txtDisplayName.setError("Thông tin bắt buộc");
+                }else if(txtFirstName.getText().toString().equalsIgnoreCase("")){
+                    txtFirstName.setError("Thông tin bắt buộc");
+                }else if(txtLastName.getText().toString().equalsIgnoreCase("")){
+                    txtLastName.setError("Thông tin bắt buộc");
+                }else if(txtPhone.getText().toString().equalsIgnoreCase("")){
+                    txtPhone.setError("Thông tin bắt buộc");
+                }else if(txtAddress.getText().toString().equalsIgnoreCase("")){
+                    txtAddress.setError("Thông tin bắt buộc");
+                }else if(!checkDOB()){
+                    Toast.makeText(ProfileChangeScreen.this, "Ngày sinh không hợp lý", Toast.LENGTH_LONG).show();
+                }else{
+                    update();
+                }
                 break;
             case R.id.update_cancel:
                 finish();
