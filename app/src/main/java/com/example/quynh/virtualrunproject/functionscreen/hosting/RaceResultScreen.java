@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class RaceResultScreen extends AppCompatActivity {

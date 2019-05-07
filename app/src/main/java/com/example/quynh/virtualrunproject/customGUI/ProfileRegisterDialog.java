@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quynh.virtualrunproject.R;
 import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
@@ -94,6 +95,18 @@ public class ProfileRegisterDialog extends AlertDialog implements TextView.OnEdi
         gender.setAdapter(adapter);
     }
 
+    private boolean checkDOB(){
+        Date DOB = DateFormatHandler.stringToDate("yyyy-MM-dd", txtDateOfBirth.getText().toString());
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(DOB);
+        int profileYear = calendar.get(Calendar.YEAR);
+        if((currentYear < profileYear) || (currentYear - profileYear < 10)){
+            return false;
+        }
+        return true;
+    }
+
     private void showDatePickerDialog(DatePickerDialog.OnDateSetListener dateSetListener){
         //Date date = DateFormatHandler.stringToDate("dd/MM/yyyy", time);
         Calendar calendar = Calendar.getInstance();
@@ -155,9 +168,17 @@ public class ProfileRegisterDialog extends AlertDialog implements TextView.OnEdi
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         if((month + 1) >= 10){
-                            txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                            if(dayOfMonth >= 10){
+                                txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                            }else{
+                                txtDateOfBirth.setText(year + "-" + (month + 1) + "-" + "0" + dayOfMonth);
+                            }
                         }else{
-                            txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + dayOfMonth);
+                            if(dayOfMonth >= 10){
+                                txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + dayOfMonth);
+                            }else{
+                                txtDateOfBirth.setText(year + "-" + "0" + (month + 1) + "-" + "0" + dayOfMonth);
+                            }
                         }
                     }
                 });
@@ -177,6 +198,8 @@ public class ProfileRegisterDialog extends AlertDialog implements TextView.OnEdi
                     txtPhone.setError("Thông tin bắt buộc");
                 }else if(txtAddress.getText().toString().equalsIgnoreCase("")){
                     txtAddress.setError("Thông tin bắt buộc");
+                }else if(!checkDOB()){
+                    Toast.makeText(context, "Ngày sinh không hợp lý", Toast.LENGTH_LONG).show();
                 }else{
                     addUserProfile();
                 }

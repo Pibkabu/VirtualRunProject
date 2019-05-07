@@ -77,7 +77,6 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
 
         setupView();
         setupRaceInfo();
-        checkDate();
         setupAction();
     }
 
@@ -214,6 +213,7 @@ public class RaceDetailScreen extends AppCompatActivity implements View.OnClickL
                         }
                     }
                 }
+                checkDate();
             }
         });
     }

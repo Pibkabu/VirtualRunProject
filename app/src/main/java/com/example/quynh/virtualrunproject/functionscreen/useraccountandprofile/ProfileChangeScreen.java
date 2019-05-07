@@ -262,7 +262,7 @@ public class ProfileChangeScreen extends AppCompatActivity implements TextView.O
         int currentYear = calendar.get(Calendar.YEAR);
         calendar.setTime(DOB);
         int profileYear = calendar.get(Calendar.YEAR);
-        if((currentYear < profileYear) || (currentYear - profileYear < 5)){
+        if((currentYear < profileYear) || (currentYear - profileYear < 10)){
             return false;
         }
         return true;

@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class RaceResultAdapter extends RecyclerView.Adapter<RaceResultAdapter.Vi
 
     private List<Player> records;
     private Context context;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     public RaceResultAdapter(List<Player> records) {
         this.records = records;
@@ -64,8 +66,8 @@ public class RaceResultAdapter extends RecyclerView.Adapter<RaceResultAdapter.Vi
             holder.txtRank.setVisibility(View.VISIBLE);
             holder.txtRank.setText(String.valueOf(records.get(position).getRankInRace()));
         }
-        holder.txtTravelDistance.setText(String.valueOf(records.get(position).getTravelDistance()));
-        holder.txtTravelTime.setText(String.valueOf(records.get(position).getTravelTime()));
+        holder.txtTravelDistance.setText(String.valueOf(df2.format(records.get(position).getTravelDistance())));
+        holder.txtTravelTime.setText(String.valueOf(df2.format(records.get(position).getTravelTime())));
 
         final Gson gson = new Gson();
         UserProfileServices.getUserProfileWithId(records.get(position).getUserAndRaceMaped().getUserId(), context, new OnReceiveResponse() {

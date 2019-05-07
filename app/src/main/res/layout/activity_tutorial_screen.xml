@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.example.quynh.virtualrunproject.functionscreen.supports.TutorialScreen">
 
     <include layout="@layout/custom_header"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="Làm thế nào để bạn gửi kết quả chạy của mình cho chúng tôi?"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="-	Bạn cần cài đặt app Strava để ghi lại kết quả quá trình chạy của mình." />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="-	Đăng nhập vào app Virtual Race và đăng nhập bằng tài khoản đã đăng ký." />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="-	Bấm vào nút “Cá Nhân” ở góc phải phía cuối màn hình để truy cập vào trang ‘thông tin cá nhân”." />
+
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="-	Trong trang “Thông tin cá nhân” chọn tab “Đang tham gia” để xem đươc danh sách những đường chạy bạn đã đăng ký." />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="-	Chọn đường chạy bạn muốn gửi kết quả chạy và bấm vào nút “Gửi kết quả” để gửi kết quả chạy của bạn cho chúng tôi thông qua bên thứ ba là Strava." />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
