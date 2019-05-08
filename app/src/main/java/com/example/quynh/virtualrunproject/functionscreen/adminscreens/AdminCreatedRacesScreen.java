@@ -26,12 +26,14 @@ import com.example.quynh.virtualrunproject.custominterface.OnReceiveResponse;
 import com.example.quynh.virtualrunproject.custominterface.OnSwipeButtonClickAdapter;
 import com.example.quynh.virtualrunproject.dao.RacesListDAO;
 import com.example.quynh.virtualrunproject.entity.Race;
+import com.example.quynh.virtualrunproject.entity.UserAccount;
 import com.example.quynh.virtualrunproject.entity.UserHost;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.EditRaceInfoScreen;
 import com.example.quynh.virtualrunproject.functionscreen.hosting.RaceResultScreen;
 import com.example.quynh.virtualrunproject.functionscreen.race.RaceDetailScreen;
 import com.example.quynh.virtualrunproject.services.HostingServices;
 import com.example.quynh.virtualrunproject.services.RaceServices;
+import com.example.quynh.virtualrunproject.userlogintracker.UserAccountPrefs;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -139,7 +141,10 @@ public class AdminCreatedRacesScreen extends AppCompatActivity implements TextVi
     }
 
     private void setupRaces() {
-        RaceServices.getALlEndedRaces(this, new OnReceiveResponse() {
+        UserAccountPrefs accountPrefs = new UserAccountPrefs(this);
+        final Gson gson = new Gson();
+        UserAccount account = gson.fromJson(accountPrefs.getUserAccount(), UserAccount.class);
+        HostingServices.getOngoingRacesUserHosting(account.getUserId(), this, new OnReceiveResponse() {
             @Override
             public void onReceive(JSONObject response) {
                 final Gson gson = new Gson();

@@ -70,6 +70,9 @@ public class AdminMainScreen extends AppCompatActivity
             public void onReceive(JSONObject response) {
                 UserProfileDAO dao = gson.fromJson(response.toString(), UserProfileDAO.class);
                 numbersOfUsers.setText(String.valueOf(dao.getProfiles().size()));
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
 
@@ -78,6 +81,9 @@ public class AdminMainScreen extends AppCompatActivity
             public void onReceive(JSONObject response) {
                 dao = gson.fromJson(response.toString(), RacesListDAO.class);
                 numbersOfRaces.setText(String.valueOf(dao.getRaces().size()));
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
     }

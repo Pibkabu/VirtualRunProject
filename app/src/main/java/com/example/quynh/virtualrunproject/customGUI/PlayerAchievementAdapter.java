@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
 
     private List<Player> records;
     private Context context;
+    private static DecimalFormat df2 = new DecimalFormat("#.##");
 
     public PlayerAchievementAdapter(List<Player> records, Context context) {
         this.records = records;
@@ -48,7 +50,7 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        Player player = records.get(position);
+        final Player player = records.get(position);
         holder.txtRanking.setText(String.valueOf(player.getRankInRace()));
         RaceServices.getRaceById(player.getUserAndRaceMaped().getRaceId(), context, new OnReceiveResponse() {
             @Override
@@ -56,8 +58,11 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
                 final Gson gson = new Gson();
                 final Race race = gson.fromJson(response.toString(), Race.class);
                 holder.txtRaceName.setText(race.getName());
-                Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", race.getStartTime().toString());
-                holder.txtTime.setText(DateFormatHandler.dateToString("dd/MM/yyyy", date));
+//                Date date = DateFormatHandler.stringToDate("yyyy-MM-dd", race.getStartTime().toString());
+//                holder.txtTime.setText(DateFormatHandler.dateToString("dd/MM/yyyy", date));
+
+                holder.txtResult.setText(df2.format(player.getTravelDistance()));
+                holder.txtTime.setText(df2.format(player.getTravelTime()));
 
                 holder.txtRaceName.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -80,12 +85,14 @@ public class PlayerAchievementAdapter extends RecyclerView.Adapter<PlayerAchieve
         private TextView txtRanking;
         private TextView txtRaceName;
         private TextView txtTime;
+        private TextView txtResult;
 
         public ViewHolder(View itemView) {
             super(itemView);
             this.txtRanking = (TextView) itemView.findViewById(R.id.txt_ranking);
             this.txtRaceName = (TextView) itemView.findViewById(R.id.txt_race_name);
             this.txtTime = (TextView) itemView.findViewById(R.id.txt_time);
+            this.txtResult = (TextView) itemView.findViewById(R.id.txt_result);
         }
     }
 }

@@ -18,15 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:weightSum="6"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:text="Xếp hạng"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -35,15 +28,34 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Tên đường chạy"/>
+                android:text="Xếp hạng"/>
 
             <TextView
-                android:layout_width="90dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="Thời gian"/>
+                android:text="Tên đường chạy"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Kết quả (km)"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Thời gian (phút)"/>
 
         </LinearLayout>
 

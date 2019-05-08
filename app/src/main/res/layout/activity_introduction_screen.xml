@@ -33,14 +33,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Chúng tôi là một nhóm nhỏ gồm gia đình, bạn bè, tất cả đều có mức độ thể lực và khả năng khác nhau. Nhưng chúng tôi có chung một đam mê, đó là thích được chạy và thích ganh đua, Vì thế chúng tôi tạo ra Virtual Run.
-
-Virtual Run cũng giống hệt như những cuộc thi chạy khác nhưng chúng tôi cung cấp cho các bạn sự linh hoạt của việc đăng ký các cuộc đua, cho phép bạn chạy mọi nơi, mọi lúc và tại bất kỳ nơi nào trên thế giới!
-
-Chúng tôi không chỉ là một nhóm. Chúng tôi là một gia đình và sẽ cổ vũ bạn, giúp bạn có thêm động lực trong khi bạn đạt được và chinh phục mục tiêu của mình. Bạn có thể là một phần của một phong trào có thể thay đổi một phần cuộc sống của bạn, cũng như cơ thể của bạn. Virtual Run được chúng tôi tạo ra như một sang kiến để bạn có thể tự tạo sân chơi cho mình, rèn luyện bản thân  ngoài ra còn có thể giúp đỡ người khác bằng cách mở quyên góp từ thiện, gây quỹ trong đường chạy, thông qua đó có thể giúp đỡ cho nhiều tổ chức từ thiện và cá nhân để họ có được một cuộc sống tốt hơn.
-
-Tham gia với chúng tôi và tự tạo đường đua cho chính mình để mọi người cũng có thể tham gia cùng bạn. Gửi kết quả của bạn đến với chúng thôi thông qua ứng dụng chạy theo dõi GPS – Strava.
-
+                android:text="Chúng tôi là một nhóm nhỏ gồm gia đình, bạn bè, tất cả đều có mức độ thể lực và khả năng khác nhau. Nhưng chúng tôi có chung một đam mê, đó là thích được chạy và thích ganh đua, Vì thế chúng tôi tạo ra Virtual Run. \n\n
+Virtual Run cũng giống hệt như những cuộc thi chạy khác nhưng chúng tôi cung cấp cho các bạn sự linh hoạt của việc đăng ký các cuộc đua, cho phép bạn chạy mọi nơi, mọi lúc và tại bất kỳ nơi nào trên thế giới! \n\n
+Chúng tôi không chỉ là một nhóm. Chúng tôi là một gia đình và sẽ cổ vũ bạn, giúp bạn có thêm động lực trong khi bạn đạt được và chinh phục mục tiêu của mình. Bạn có thể là một phần của một phong trào có thể thay đổi một phần cuộc sống của bạn, cũng như cơ thể của bạn. Virtual Run được chúng tôi tạo ra như một sang kiến để bạn có thể tự tạo sân chơi cho mình, rèn luyện bản thân  ngoài ra còn có thể giúp đỡ người khác bằng cách mở quyên góp từ thiện, gây quỹ trong đường chạy, thông qua đó có thể giúp đỡ cho nhiều tổ chức từ thiện và cá nhân để họ có được một cuộc sống tốt hơn. \n\n
+Tham gia với chúng tôi và tự tạo đường đua cho chính mình để mọi người cũng có thể tham gia cùng bạn. Gửi kết quả của bạn đến với chúng thôi thông qua ứng dụng chạy theo dõi GPS – Strava. \n\n
 Cảm ơn vì đã tin tưởng và ủng hộ chúng tôi! VRA Team
 "/>
 
